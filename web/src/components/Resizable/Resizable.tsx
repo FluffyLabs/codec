@@ -7,7 +7,7 @@ type ResizableProps = {
 };
 
 const SPLIT_THRESHOLD = 99;
-const INITIAL_SPLIT = window.innerWidth <= 768 ? SPLIT_THRESHOLD : 70.0;
+const INITIAL_SPLIT = window.innerWidth <= 768 ? SPLIT_THRESHOLD : 50.0;
 
 export function Resizable({ left, right }: ResizableProps) {
   const [isDragging, setDragging] = useState(false);
