@@ -26,9 +26,12 @@ function newKind<T>(name: string, clazz: T) {
   return { name, clazz };
 }
 
+const headerKind = newKind("Header", Header);
+const blockKind = newKind("Block", Block);
+
 const kinds = [
-  newKind("Header", Header),
-  newKind("Block", Block),
+  headerKind,
+  blockKind,
   newKind("Extrinsic", Extrinsic),
   newKind("EpochMarker", EpochMarker),
   newKind("AvailabilityAssurance", assurances.AvailabilityAssurance),
@@ -93,12 +96,16 @@ export function App() {
 
   useEffect(() => {
     try {
-      const clazz = kinds[kind];
-      if (!clazz) {
+      const kindDescriptor = kinds[kind];
+      if (!kindDescriptor) {
         throw new Error(`Invalid codec kind: ${kind}`);
       }
       const spec = chainSpecs[chainSpec];
-      const decoded = codec.Decoder.decodeObject(clazz.Codec, bytes.BytesBlob.parseBlob(input), spec.spec);
+      const decoded = codec.Decoder.decodeObject(
+        kindDescriptor.clazz.Codec,
+        bytes.BytesBlob.parseBlob(input),
+        spec.spec
+      );
       setResult(
         JSON.stringify(
           decoded,
@@ -158,11 +165,11 @@ type CodecInputProps = {
 function CodecInput({ onChange, value, error, kind, setKind, chainSpec, setChainSpec }: CodecInputProps) {
   const setBlock = useCallback(() => {
     onChange(TEST_BLOCK);
-    setKind(kinds.indexOf(Block));
+    setKind(kinds.indexOf(blockKind));
   }, [onChange, setKind]);
   const setHeader = useCallback(() => {
     onChange(TEST_HEADER);
-    setKind(kinds.indexOf(Header));
+    setKind(kinds.indexOf(headerKind));
   }, [onChange, setKind]);
 
   const load = useCallback(() => {
@@ -252,7 +259,7 @@ function KindFinder({
     const blob = bytes.BytesBlob.parseBlob(value);
     for (const kind of kinds) {
       try {
-        codec.Decoder.decodeObject(kind.Codec, blob, spec);
+        codec.Decoder.decodeObject(kind.clazz.Codec, blob, spec);
         return kind;
       } catch {}
     }
