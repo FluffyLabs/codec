@@ -1,0 +1,29 @@
+{
+  "name": "fluffy-codec-web",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "qa": "biome ci",
+    "qa-fix": "npm run format; npm run lint",
+    "format": "biome format --write",
+    "lint": "biome lint --write; biome check --write",
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "preview": "vite preview",
+    "test": "echo yolo"
+  },
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-tooltip": "^5.27.1"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "1.9.3",
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "@vitejs/plugin-react": "^4.3.1",
+    "typescript": "^5.2.2",
+    "vite": "^5.3.4"
+  }
+}
