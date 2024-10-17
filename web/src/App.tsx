@@ -104,7 +104,7 @@ export function App() {
       const decoded = codec.Decoder.decodeObject(
         kindDescriptor.clazz.Codec,
         bytes.BytesBlob.parseBlob(input),
-        spec.spec
+        spec.spec,
       );
       setResult(
         JSON.stringify(
