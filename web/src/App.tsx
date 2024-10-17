@@ -22,43 +22,59 @@ import {
 import { Banner } from "./components/Banner/Banner";
 import { Resizable } from "./components/Resizable/Resizable";
 
+function newKind<T>(name: string, clazz: T) {
+  return { name, clazz };
+}
+
 const kinds = [
-  Header,
-  Block,
-  Extrinsic,
-  EpochMarker,
-  assurances.AvailabilityAssurance,
-  class AssurancesExtrinsic extends Array {
-    static Codec = assurances.assurancesExtrinsicCodec;
-  },
-  disputes.Culprit,
-  disputes.Fault,
-  disputes.Judgement,
-  disputes.Verdict,
-  disputes.DisputesExtrinsic,
-  gaurantees.Credential,
-  gaurantees.ReportGuarantee,
-  class GuaranteesExtrinsic extends Array {
-    static Codec = gaurantees.guaranteesExtrinsicCodec;
-  },
-  preimage.Preimage,
-  class PreimageExtrinsic extends Array {
-    static Codec = preimage.preimagesExtrinsicCodec;
-  },
-  refineContext.RefineContext,
-  tickets.SignedTicket,
-  tickets.Ticket,
-  class TicketExtrinsic extends Array {
-    static Codec = tickets.ticketsExtrinsicCodec;
-  },
-  workItem.ImportSpec,
-  workItem.WorkItem,
-  workItem.WorkItemExtrinsicSpec,
-  workPackage.WorkPackage,
-  workReport.WorkPackageSpec,
-  workReport.WorkReport,
-  workResult.WorkExecResult,
-  workResult.WorkResult,
+  newKind("Header", Header),
+  newKind("Block", Block),
+  newKind("Extrinsic", Extrinsic),
+  newKind("EpochMarker", EpochMarker),
+  newKind("AvailabilityAssurance", assurances.AvailabilityAssurance),
+  newKind(
+    "AssurancesExtrinsic",
+    class AssurancesExtrinsic extends Array {
+      static Codec = assurances.assurancesExtrinsicCodec;
+    },
+  ),
+  newKind("Culprit", disputes.Culprit),
+  newKind("Fault", disputes.Fault),
+  newKind("Judgement", disputes.Judgement),
+  newKind("Verdict", disputes.Verdict),
+  newKind("DisputesExtrinsic", disputes.DisputesExtrinsic),
+  newKind("Credential", gaurantees.Credential),
+  newKind("ReportGuarantee", gaurantees.ReportGuarantee),
+  newKind(
+    "GuaranteesExtrinsic",
+    class GuaranteesExtrinsic extends Array {
+      static Codec = gaurantees.guaranteesExtrinsicCodec;
+    },
+  ),
+  newKind("Preimage", preimage.Preimage),
+  newKind(
+    "PreimageExtrinsic",
+    class PreimageExtrinsic extends Array {
+      static Codec = preimage.preimagesExtrinsicCodec;
+    },
+  ),
+  newKind("RefineContext", refineContext.RefineContext),
+  newKind("SignedTicket", tickets.SignedTicket),
+  newKind("Ticket", tickets.Ticket),
+  newKind(
+    "TicketExtrinsic",
+    class TicketExtrinsic extends Array {
+      static Codec = tickets.ticketsExtrinsicCodec;
+    },
+  ),
+  newKind("ImportSpec", workItem.ImportSpec),
+  newKind("WorkItem", workItem.WorkItem),
+  newKind("WorkItemExtrinsicSpec", workItem.WorkItemExtrinsicSpec),
+  newKind("WorkPackage", workPackage.WorkPackage),
+  newKind("WorkPackageSpec", workReport.WorkPackageSpec),
+  newKind("WorkReport", workReport.WorkReport),
+  newKind("WorkExecResult", workResult.WorkExecResult),
+  newKind("WorkResult", workResult.WorkResult),
 ];
 
 const chainSpecs = [
