@@ -18,7 +18,7 @@ export function Banner() {
         data-tooltip-content="Report an issue or fork on Github"
         data-tooltip-place="bottom"
         target="_blank"
-        href="https://github.com/fluffylabs/graypaper-reader"
+        href="https://github.com/fluffylabs/codec"
         rel="noreferrer"
       >
         <img src={github} alt="Github logo" width="45" height="45" />
