@@ -1,4 +1,4 @@
-import { bytes, codec, context } from "@typeberry/block";
+import { bytes, codec, config } from "@typeberry/block";
 import type { FastifyReply, FastifyRequest } from "fastify";
 import { createErrorResponse } from "./error";
 import { kinds } from "./kinds";
@@ -15,15 +15,15 @@ export function jsonToCodec(req: FastifyRequest<Req>, reply: FastifyReply<Res>) 
     return;
   }
 
-  const objectToEncode = JSON.parse(req.body.json, (_key, value) => {
-    if (typeof value === "string" && value.startsWith("0x")) {
-      return bytes.Bytes.parseBytes(value, value.length / 2 - 1);
-    }
-    return value;
-  });
-
   try {
-    const encoded = codec.Encoder.encodeObject(descriptor.Codec, objectToEncode, context.tinyChainSpec);
+    const objectToEncode = JSON.parse(req.body.json, (_key, value) => {
+      if (typeof value === "string" && value.startsWith("0x")) {
+        return bytes.Bytes.parseBytes(value, value.length / 2 - 1);
+      }
+      return value;
+    });
+
+    const encoded = codec.Encoder.encodeObject(descriptor.Codec, objectToEncode, config.tinyChainSpec);
 
     return { data: { codec: encoded.toString() } };
   } catch (e) {
@@ -31,7 +31,7 @@ export function jsonToCodec(req: FastifyRequest<Req>, reply: FastifyReply<Res>) 
       reply.status(400).send(createErrorResponse("Incorrect input data", e.message));
       return;
     }
-    req.log.error(e);
+
     reply.status(500).send(createErrorResponse("An unexpected error occurred", "We do not know yet ¯_(ツ)_/¯"));
   }
 }

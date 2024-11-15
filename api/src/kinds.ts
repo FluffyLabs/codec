@@ -72,3 +72,5 @@ export const kinds = [
   newKind("WorkExecResult", workResult.WorkExecResult),
   newKind("WorkResult", workResult.WorkResult),
 ] as const;
+
+export const kindNames = kinds.map((kind) => kind.name);

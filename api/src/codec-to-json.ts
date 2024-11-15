@@ -1,4 +1,4 @@
-import { bytes, codec, context } from "@typeberry/block";
+import { bytes, codec, config } from "@typeberry/block";
 import type { FastifyReply, FastifyRequest } from "fastify";
 import { createErrorResponse } from "./error";
 import { kinds } from "./kinds";
@@ -15,13 +15,13 @@ export function codecToJson(req: FastifyRequest<Req>, reply: FastifyReply<Res>) 
     return;
   }
 
-  const decoded = codec.Decoder.decodeObject(
-    descriptor.Codec,
-    bytes.BytesBlob.parseBlob(req.body.codec),
-    context.tinyChainSpec,
-  );
-
   try {
+    const decoded = codec.Decoder.decodeObject(
+      descriptor.Codec,
+      bytes.BytesBlob.parseBlob(req.body.codec),
+      config.tinyChainSpec,
+    );
+
     const decodedAsString = JSON.stringify(decoded, (_key, value) => {
       if (value instanceof bytes.BytesBlob) {
         return value.toString();

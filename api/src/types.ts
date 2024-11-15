@@ -1,5 +1,5 @@
-import { kinds } from "./kinds";
+import { kindNames } from "./kinds";
 
 export const getTypes = async () => {
-  return kinds.map((kind) => ({ id: kind.name }));
+  return kindNames;
 };

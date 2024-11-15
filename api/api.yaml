@@ -31,7 +31,7 @@ paths:
         name: id
         required: true
         schema:
-          enum: ['Header', 'Block', 'Extrinsic', 'EpochMarker', 'AvailabilityAssurance', 'AssurancesExtrinsic', 'Culprit', 'Fault', 'Judgement', 'Verdict', 'DisputesExtrinsic', 'Credential', 'ReportGuarantee', 'GuaranteesExtrinsic', 'Preimage', 'PreimageExtrinsic', 'RefineContext', 'SignedTicket', 'Ticket', 'TicketExtrinsic', 'ImportSpec', 'WorkItem', 'WorkItemExtrinsicSpec', 'WorkPackage', 'WorkPackageSpec', 'WorkReport', 'WorkExecResult', 'WorkResult']
+          enum: ["Header","Block","Extrinsic","EpochMarker","AvailabilityAssurance","AssurancesExtrinsic","Culprit","Fault","Judgement","Verdict","DisputesExtrinsic","Credential","ReportGuarantee","GuaranteesExtrinsic","Preimage","PreimageExtrinsic","RefineContext","SignedTicket","Ticket","TicketExtrinsic","ImportSpec","WorkItem","WorkItemExtrinsicSpec","WorkPackage","WorkPackageSpec","WorkReport","WorkExecResult","WorkResult"]
           type: string   
       requestBody:
         content:
@@ -63,7 +63,7 @@ paths:
         name: id
         required: true
         schema:
-          enum: ['Header', 'Block', 'Extrinsic', 'EpochMarker', 'AvailabilityAssurance', 'AssurancesExtrinsic', 'Culprit', 'Fault', 'Judgement', 'Verdict', 'DisputesExtrinsic', 'Credential', 'ReportGuarantee', 'GuaranteesExtrinsic', 'Preimage', 'PreimageExtrinsic', 'RefineContext', 'SignedTicket', 'Ticket', 'TicketExtrinsic', 'ImportSpec', 'WorkItem', 'WorkItemExtrinsicSpec', 'WorkPackage', 'WorkPackageSpec', 'WorkReport', 'WorkExecResult', 'WorkResult']
+          enum: ["Header","Block","Extrinsic","EpochMarker","AvailabilityAssurance","AssurancesExtrinsic","Culprit","Fault","Judgement","Verdict","DisputesExtrinsic","Credential","ReportGuarantee","GuaranteesExtrinsic","Preimage","PreimageExtrinsic","RefineContext","SignedTicket","Ticket","TicketExtrinsic","ImportSpec","WorkItem","WorkItemExtrinsicSpec","WorkPackage","WorkPackageSpec","WorkReport","WorkExecResult","WorkResult"]
           type: string
       requestBody:
         content:
@@ -120,8 +120,6 @@ components:
       type: object
     CodecParams:
       description: "Parameters for decoding a CODEC value to JSON."
-      # example:
-      #   codec: "0x66ce79ce829d0c80590356df94f6e958864ed7ac6661b688fe20e6f19f8b4ad48fb9fc0a814d2f71de2e84e7c43fd57bcbd31256d039e00bb08529c940173a03d2eaa7802aa688b35f8a82714b04cd36dff723b781ce61e8cddc98553090a0f068849c1af9e9759948f278f42aa0636b3e5c815d930aec18074205c8c30b221e42260e0f285b91ae7516b00d4c8c2c9f724f912da1def39fe4c45ff3b0caef3c4d18bb2a9f6879224bfa044505e2e3dd55200a4b4e4311505b6fd9953c78652b2ad978c04ef60043af294f81329b4364b5103cff71ec34a7166a18183ad32534ef9ad951d96ce1ec673eedc6f0bb4a55802800a2b9d49db7dd392d5e70e0cd8f5b4f9ee3aab227b61a286ed73a1e7f3f0eb08538657e4f2a683829c83b148405f21cb947443857956afc5b30db8a24d1cf154e9f4ee99e066caaa901571003a97178adf85fed49ef36a99380cd244502"
       properties:
         codec:
           description: CODEC Hex value (0x prefixed)
