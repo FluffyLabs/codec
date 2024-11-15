@@ -1,0 +1,29 @@
+{
+  "name": "@typeberry/codec-api",
+  "version": "0.0.1",
+  "description": "Simple webserver that allows to encode/decode using JAM codec",
+  "main": "dist/index.cjs",
+  "dependencies": {
+    "@fastify/swagger": "^9.2.0",
+    "@fastify/swagger-ui": "^5.1.0",
+    "@typeberry/block": "0.0.1-271b679",
+    "fastify": "^5.1.0",
+    "fastify-openapi-glue": "^4.7.2"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^1.9.4",
+    "pkgroll": "^2.5.1",
+    "tsx": "^4.19.2"
+  },
+  "scripts": {
+    "qa": "biome ci",
+    "qa-fix": "npm run format; npm run lint",
+    "format": "biome format --write",
+    "lint": "biome lint --write; biome check --write",
+    "dev": "tsx src/index.ts",
+    "build": "pkgroll",
+    "start": "node dist/index.cjs"
+  },
+  "author": "Fluffy Labs",
+  "license": "MPL-2.0"
+}
