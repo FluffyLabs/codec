@@ -16,11 +16,9 @@ export function jsonToCodec(req: FastifyRequest<Req>, reply: FastifyReply<Res>) 
     return;
   }
 
-  const rawJson = JSON.stringify(req.body.json);
-  const parsedData = parse(rawJson);
   try {
-    const encoded = codec.Encoder.encodeObject(descriptor.Codec, parsedData, config.tinyChainSpec);
-
+    const parsedData = parse(req.rawBody);
+    const encoded = codec.Encoder.encodeObject(descriptor.Codec, parsedData.json, config.tinyChainSpec);
     return { data: { codec: encoded.toString() } };
   } catch (e) {
     if (e instanceof Error) {

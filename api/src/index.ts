@@ -17,6 +17,13 @@ const SWAGGER_PATH = "/docs";
 const start = async () => {
   const fastify = Fastify({ logger: true });
 
+  await fastify.register(import("fastify-raw-body"), {
+    field: "rawBody",
+    global: true,
+    encoding: "utf8", // set it to false to set rawBody as a Buffer **Default utf8**
+    runFirst: true,
+  });
+
   await fastify.register(fastifySwagger, {
     mode: "static",
     specification: {
