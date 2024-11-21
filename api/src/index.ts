@@ -1,3 +1,4 @@
+import "json-bigint-patch";
 import Fastify from "fastify";
 const OpenApiGlue = import("fastify-openapi-glue"); // dynamic import is needed because it is esm module
 import path from "node:path";
