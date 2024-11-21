@@ -1,6 +1,7 @@
-import { bytes, codec, config } from "@typeberry/block";
+import { codec, config } from "@typeberry/block";
 import type { FastifyReply, FastifyRequest } from "fastify";
 import { createErrorResponse } from "./error";
+import { parse } from "./json-parser";
 import { kinds } from "./kinds";
 
 type Req = { Params: { id: string }; Body: { json: string } };
@@ -16,15 +17,8 @@ export function jsonToCodec(req: FastifyRequest<Req>, reply: FastifyReply<Res>) 
   }
 
   try {
-    const objectToEncode = JSON.parse(req.body.json, (_key, value) => {
-      if (typeof value === "string" && value.startsWith("0x")) {
-        return bytes.Bytes.parseBytes(value, value.length / 2 - 1);
-      }
-      return value;
-    });
-
-    const encoded = codec.Encoder.encodeObject(descriptor.Codec, objectToEncode, config.tinyChainSpec);
-
+    const parsedData = parse(req.rawBody);
+    const encoded = codec.Encoder.encodeObject(descriptor.Codec, parsedData.json, config.tinyChainSpec);
     return { data: { codec: encoded.toString() } };
   } catch (e) {
     if (e instanceof Error) {

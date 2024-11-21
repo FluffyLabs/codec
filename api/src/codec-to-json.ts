@@ -1,6 +1,7 @@
 import { bytes, codec, config } from "@typeberry/block";
 import type { FastifyReply, FastifyRequest } from "fastify";
 import { createErrorResponse } from "./error";
+import { serialize } from "./json-parser";
 import { kinds } from "./kinds";
 
 type Req = { Params: { id: string }; Body: { codec: string } };
@@ -22,20 +23,7 @@ export function codecToJson(req: FastifyRequest<Req>, reply: FastifyReply<Res>) 
       config.tinyChainSpec,
     );
 
-    const decodedAsString = JSON.stringify(decoded, (_key, value) => {
-      if (value instanceof bytes.BytesBlob) {
-        return value.toString();
-      }
-      if (value instanceof bytes.Bytes) {
-        return value.toString();
-      }
-      if (typeof value === "bigint") {
-        return value.toString();
-      }
-      return value;
-    });
-
-    return { data: { json: decodedAsString } };
+    return reply.serializer(serialize).send({ data: { json: decoded } });
   } catch (e) {
     if (e instanceof Error) {
       reply.status(400).send(createErrorResponse("Incorrect input data", e.message));
