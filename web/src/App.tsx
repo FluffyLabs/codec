@@ -78,6 +78,19 @@ const kinds = [
   newKind("WorkReport", workReport.WorkReport),
   newKind("WorkExecResult", workResult.WorkExecResult),
   newKind("WorkResult", workResult.WorkResult),
+  newKind("u8", { Codec: codec.codec.u8 }),
+  newKind("u16", { Codec: codec.codec.u16 }),
+  newKind("u24", { Codec: codec.codec.u24 }),
+  newKind("u32", { Codec: codec.codec.u32 }),
+  newKind("varU32", { Codec: codec.codec.varU32 }),
+  newKind("varU64", { Codec: codec.codec.varU64 }),
+  newKind("i8", { Codec: codec.codec.i8 }),
+  newKind("i16", { Codec: codec.codec.i16 }),
+  newKind("i24", { Codec: codec.codec.i24 }),
+  newKind("i32", { Codec: codec.codec.i32 }),
+  newKind("Bytes<32>", { Codec: codec.codec.bytes(32) }),
+  newKind("BytesBlob", { Codec: codec.codec.blob }),
+  newKind("BitVec<?>", { Codec: codec.codec.bitVecVarLen }),
 ];
 
 const chainSpecs = [
@@ -256,7 +269,12 @@ function KindFinder({
 }: { value: string; chainSpec: number; setKind: (idx: number) => void }) {
   const foundKind = useMemo(() => {
     const spec = chainSpecs[chainSpec].spec;
-    const blob = bytes.BytesBlob.parseBlob(value);
+    let blob: bytes.BytesBlob;
+    try {
+      blob = bytes.BytesBlob.parseBlob(value);
+    } catch (e) {
+      return null;
+    }
     for (const kind of kinds) {
       try {
         codec.Decoder.decodeObject(kind.clazz.Codec, blob, spec);
