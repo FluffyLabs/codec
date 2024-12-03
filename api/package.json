@@ -14,8 +14,10 @@
   },
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",
+    "@types/node": "^22.10.1",
     "pkgroll": "^2.5.1",
-    "tsx": "^4.19.2"
+    "tsx": "^4.19.2",
+    "yaml": "^2.6.1"
   },
   "scripts": {
     "qa": "biome ci",
@@ -24,7 +26,8 @@
     "lint": "biome lint --write; biome check --write",
     "dev": "tsx src/index.ts",
     "build": "pkgroll",
-    "start": "node dist/index.cjs"
+    "start": "node dist/index.cjs",
+    "test": "tsx --test $(find src -type f -name '*.test.ts')"
   },
   "author": "Fluffy Labs",
   "license": "MPL-2.0"
