@@ -31,7 +31,7 @@ paths:
         name: id
         required: true
         schema:
-          enum: ["Header","Block", "Extrinsic", "EpochMarker","AvailabilityAssurance","AssurancesExtrinsic","Culprit","Fault","Judgement","Verdict","DisputesExtrinsic","Credential","ReportGuarantee","GuaranteesExtrinsic","Preimage","PreimageExtrinsic","RefineContext","SignedTicket","Ticket","TicketExtrinsic","ImportSpec","WorkItem","WorkItemExtrinsicSpec","WorkPackage","WorkPackageSpec","WorkReport","WorkExecResult","WorkResult"]
+          enum: ["Header","Block", "Extrinsic", "EpochMarker","AvailabilityAssurance","AssurancesExtrinsic","Culprit","Fault","Judgement","Verdict","DisputesExtrinsic","Credential","ReportGuarantee","GuaranteesExtrinsic","Preimage","PreimageExtrinsic","RefineContext","SignedTicket","Ticket","TicketExtrinsic","ImportSpec","WorkItem","WorkItemExtrinsicSpec","WorkPackage","WorkPackageSpec","WorkReport","WorkExecResult","WorkResult", "u8", "u16", "u24", "u32", "varU32", "varU64", "i8", "i16", "i24", "i32", "Bytes<32>", "BytesBlob", "BitVec<?>"]
           type: string   
       requestBody:
         content:
@@ -63,7 +63,7 @@ paths:
         name: id
         required: true
         schema:
-          enum: ["Header","Block","Extrinsic","EpochMarker","AvailabilityAssurance","AssurancesExtrinsic","Culprit","Fault","Judgement","Verdict","DisputesExtrinsic","Credential","ReportGuarantee","GuaranteesExtrinsic","Preimage","PreimageExtrinsic","RefineContext","SignedTicket","Ticket","TicketExtrinsic","ImportSpec","WorkItem","WorkItemExtrinsicSpec","WorkPackage","WorkPackageSpec","WorkReport","WorkExecResult","WorkResult"]
+          enum: ["Header","Block","Extrinsic","EpochMarker","AvailabilityAssurance","AssurancesExtrinsic","Culprit","Fault","Judgement","Verdict","DisputesExtrinsic","Credential","ReportGuarantee","GuaranteesExtrinsic","Preimage","PreimageExtrinsic","RefineContext","SignedTicket","Ticket","TicketExtrinsic","ImportSpec","WorkItem","WorkItemExtrinsicSpec","WorkPackage","WorkPackageSpec","WorkReport","WorkExecResult","WorkResult", "u8", "u16", "u24", "u32", "varU32", "varU64", "i8", "i16", "i24", "i32", "Bytes<32>", "BytesBlob", "BitVec<?>"]
           type: string
       requestBody:
         content:
