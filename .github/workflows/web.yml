@@ -3,9 +3,16 @@ name: Node.js CI
 on:
   push:
     branches: [ "main" ]
+    paths: [
+      'web/**',
+      '.github/workflows/web.yml'
+    ]
   pull_request:
     branches: [ "main" ]
-
+    paths: [
+      'web/**',
+      '.github/workflows/web.yml'
+    ]
 jobs:
   build:
     runs-on: ubuntu-latest
