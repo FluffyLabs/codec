@@ -4,6 +4,7 @@ import {
   Extrinsic,
   Header,
   assurances,
+  codec,
   disputes,
   gaurantees,
   preimage,
@@ -19,12 +20,9 @@ function newKind<T>(name: string, clazz: T) {
   return { name, clazz };
 }
 
-const headerKind = newKind("Header", Header);
-const blockKind = newKind("Block", Block);
-
 export const kinds = [
-  headerKind,
-  blockKind,
+  newKind("Header", Header),
+  newKind("Block", Block),
   newKind("Extrinsic", Extrinsic),
   newKind("EpochMarker", EpochMarker),
   newKind("AvailabilityAssurance", assurances.AvailabilityAssurance),
@@ -71,6 +69,19 @@ export const kinds = [
   newKind("WorkReport", workReport.WorkReport),
   newKind("WorkExecResult", workResult.WorkExecResult),
   newKind("WorkResult", workResult.WorkResult),
+  newKind("u8", { Codec: codec.codec.u8 }),
+  newKind("u16", { Codec: codec.codec.u16 }),
+  newKind("u24", { Codec: codec.codec.u24 }),
+  newKind("u32", { Codec: codec.codec.u32 }),
+  newKind("varU32", { Codec: codec.codec.varU32 }),
+  newKind("varU64", { Codec: codec.codec.varU64 }),
+  newKind("i8", { Codec: codec.codec.i8 }),
+  newKind("i16", { Codec: codec.codec.i16 }),
+  newKind("i24", { Codec: codec.codec.i24 }),
+  newKind("i32", { Codec: codec.codec.i32 }),
+  newKind("Bytes<32>", { Codec: codec.codec.bytes(32) }),
+  newKind("BytesBlob", { Codec: codec.codec.blob }),
+  newKind("BitVec<?>", { Codec: codec.codec.bitVecVarLen }),
 ] as const;
 
 export const kindNames = kinds.map((kind) => kind.name);
