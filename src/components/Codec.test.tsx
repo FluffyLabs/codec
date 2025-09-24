@@ -138,7 +138,7 @@ describe("Codec", () => {
     render(
       <MemoryRouter>
         <Codec />
-      </MemoryRouter>
+      </MemoryRouter>,
     );
 
     // Check that the main codec input elements are present
@@ -155,7 +155,7 @@ describe("Codec", () => {
     render(
       <MemoryRouter>
         <Codec />
-      </MemoryRouter>
+      </MemoryRouter>,
     );
 
     // Check that Block is selected by default (as set in Codec component)
