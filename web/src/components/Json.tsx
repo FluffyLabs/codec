@@ -5,4 +5,3 @@ export function Json({ result }: { result: string }) {
     </div>
   );
 }
-

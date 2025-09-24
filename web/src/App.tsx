@@ -1,8 +1,9 @@
-import { useState } from "react";
-import { Header, AppsSidebar, Button } from "@fluffylabs/shared-ui";
-import { Settings } from "lucide-react";
+import { AppsSidebar, Button, Header } from "@fluffylabs/shared-ui";
 import { utils } from "@typeberry/lib";
-import {Codec} from "./components/Codec/Codec";
+import { Settings } from "lucide-react";
+import { useState } from "react";
+import logo from "./assets/logo.svg";
+import { Codec } from "./components/Codec";
 import SettingsDialog from "./components/SettingsDialog";
 
 const VersionDisplay = () => {
@@ -19,19 +20,13 @@ const VersionDisplay = () => {
 const AppHeader = ({ onOpenSettings }: { onOpenSettings: () => void }) => {
   return (
     <Header
-      toolNameSrc={"Codec"}
+      toolNameSrc={logo}
       ghRepoName="codec"
       keepNameWhenSmall
       endSlot={
         <div className="flex items-center">
           <VersionDisplay />
-          <Button
-            onClick={onOpenSettings}
-            size="sm"
-            aria-label="Settings"
-            title="Settings"
-            forcedColorScheme="dark"
-          >
+          <Button onClick={onOpenSettings} size="sm" aria-label="Settings" title="Settings" forcedColorScheme="dark">
             <Settings className="h-4 w-4" />
           </Button>
         </div>
@@ -50,11 +45,7 @@ const AppContent = () => {
       </div>
       <div className="flex h-full">
         <div className="max-sm:hidden">
-          <AppsSidebar
-            activeLink="codec"
-            className="h-full"
-            enableDarkModeToggle={true}
-          />
+          <AppsSidebar activeLink="codec" className="h-full" enableDarkModeToggle={true} />
         </div>
 
         <div className="w-full h-[calc(100dvh-87px)] overflow-hidden text-left">
@@ -62,16 +53,11 @@ const AppContent = () => {
         </div>
       </div>
 
-      <SettingsDialog
-        isOpen={isSettingsOpen}
-        onClose={() => setIsSettingsOpen(false)}
-      />
+      <SettingsDialog isOpen={isSettingsOpen} onClose={() => setIsSettingsOpen(false)} />
     </div>
   );
 };
 
 export function App() {
-  return (
-    <AppContent />
-  );
+  return <AppContent />;
 }

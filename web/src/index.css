@@ -21,23 +21,24 @@ html {
   -moz-osx-font-smoothing: grayscale;
 }
 
-:root, html.light {
-    overflow: hidden;
-    color-scheme: light;
-    --foreground: #213547;
-    --color-foreground: #213547;
-    --background: #f8f8f8;
-    --color-background: #f8f8f8;
-    --border: #bababa;
+:root,
+html.light {
+  overflow: hidden;
+  color-scheme: light;
+  --foreground: #213547;
+  --color-foreground: #213547;
+  --background: #f8f8f8;
+  --color-background: #f8f8f8;
+  --border: #bababa;
 }
 
 html.dark {
-    color-scheme: dark;
-    --foreground: #bababa;
-    --color-foreground: #bababa;
-    --background: #242424;
-    --color-background: #242424;
-    --border: #444;
+  color-scheme: dark;
+  --foreground: #bababa;
+  --color-foreground: #bababa;
+  --background: #242424;
+  --color-background: #242424;
+  --border: #444;
 }
 
 .dark .dark-bg-background {
@@ -45,9 +46,9 @@ html.dark {
 }
 
 @layer base {
-    * {
-        border-color: var(--border);
-    }
+  * {
+    border-color: var(--border);
+  }
 }
 
 body {

@@ -1,4 +1,4 @@
-import {cn} from "@fluffylabs/shared-ui";
+import { cn } from "@fluffylabs/shared-ui";
 import * as React from "react";
 
 // TODO [ToDr] Remove completely / use shared ui.

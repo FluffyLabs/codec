@@ -1,7 +1,7 @@
-import { useEffect, useMemo, useState } from 'react';
-import { X } from 'lucide-react';
-import { utils } from '@typeberry/lib';
-import {Button} from '@fluffylabs/shared-ui';
+import { Button } from "@fluffylabs/shared-ui";
+import { utils } from "@typeberry/lib";
+import { X } from "lucide-react";
+import { useEffect, useMemo, useState } from "react";
 
 interface SettingsDialogProps {
   isOpen: boolean;
@@ -13,12 +13,12 @@ const SettingsDialog = ({ isOpen, onClose }: SettingsDialogProps) => {
   const [selectedSuite, setSelectedSuite] = useState<string>(window.process.env.TEST_SUITE ?? "");
 
   const gpOptions = useMemo(() => {
-    const values = Object.values(utils.GpVersion).filter((v) => typeof v === 'string') as string[];
+    const values = Object.values(utils.GpVersion).filter((v) => typeof v === "string") as string[];
     return [...new Set(values)];
   }, []);
 
   const suiteOptions = useMemo(() => {
-    const values = Object.values(utils.TestSuite).filter((v) => typeof v === 'string') as string[];
+    const values = Object.values(utils.TestSuite).filter((v) => typeof v === "string") as string[];
     return [...new Set(values)];
   }, []);
 
@@ -31,8 +31,8 @@ const SettingsDialog = ({ isOpen, onClose }: SettingsDialogProps) => {
   if (!isOpen) return null;
 
   const handleApply = () => {
-    window.sessionStorage.setItem('GP_VERSION', selectedGpVersion);
-    window.sessionStorage.setItem('TEST_SUITE', selectedSuite);
+    window.sessionStorage.setItem("GP_VERSION", selectedGpVersion);
+    window.sessionStorage.setItem("TEST_SUITE", selectedSuite);
     window.location.reload();
   };
 
@@ -52,7 +52,9 @@ const SettingsDialog = ({ isOpen, onClose }: SettingsDialogProps) => {
 
         <div className="p-4 space-y-6 text-left">
           <div className="space-y-2">
-            <label htmlFor="gp-version-select" className="text-sm text-muted-foreground">Gray Paper Version</label>
+            <label htmlFor="gp-version-select" className="text-sm text-muted-foreground">
+              Gray Paper Version
+            </label>
             <select
               id="gp-version-select"
               className="w-full bg-background border border-border rounded-md px-3 py-2 text-foreground"
@@ -72,7 +74,9 @@ const SettingsDialog = ({ isOpen, onClose }: SettingsDialogProps) => {
           </div>
 
           <div className="space-y-2">
-            <label htmlFor="test-suite-select" className="text-sm text-muted-foreground">Test Vector Suite</label>
+            <label htmlFor="test-suite-select" className="text-sm text-muted-foreground">
+              Test Vector Suite
+            </label>
             <select
               id="test-suite-select"
               className="w-full bg-background border border-border rounded-md px-3 py-2 text-foreground"
@@ -93,9 +97,7 @@ const SettingsDialog = ({ isOpen, onClose }: SettingsDialogProps) => {
         </div>
 
         <div className="p-4 border-t border-border flex justify-start space-x-2">
-          <Button onClick={handleApply}>
-            Reload
-          </Button>
+          <Button onClick={handleApply}>Reload</Button>
         </div>
       </div>
     </div>

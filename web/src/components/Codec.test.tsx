@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
-import { App } from "./App";
+import { Codec } from "./Codec";
 
 // Mock the @fluffylabs/shared-ui Header component
 vi.mock("@fluffylabs/shared-ui", () => ({
@@ -94,9 +94,9 @@ vi.mock("@typeberry/lib", () => ({
   },
 }));
 
-describe("App", () => {
+describe("Codec", () => {
   it("renders the app with header and main content", () => {
-    render(<App />);
+    render(<Codec />);
 
     // Check that the header is rendered
     expect(screen.getByTestId("mock-header")).toBeInTheDocument();
@@ -118,7 +118,7 @@ describe("App", () => {
   });
 
   it("displays the correct default values", () => {
-    render(<App />);
+    render(<Codec />);
 
     // Check that Header is selected by default (first in the list)
     const jamObjectSelect = screen.getByDisplayValue("Header");
