@@ -7,11 +7,37 @@ import { ALL_CHAIN_SPECS, kinds } from "./constants";
 import { TEST_HEADER } from "./examples/header";
 
 export function Codec() {
-  const [input, setInput] = useState(TEST_HEADER);
+  const getInitialState = () => {
+    const urlParams = new URLSearchParams(window.location.search);
+
+    const urlKind = urlParams.get("kind");
+    const validKind = urlKind && kinds.find((k) => k.name === urlKind) ? urlKind : "Block";
+
+    const urlFlavor = urlParams.get("flavor");
+    const validChainSpec =
+      urlFlavor && ["tiny", "full"].includes(urlFlavor.toLowerCase())
+        ? urlFlavor.toLowerCase() === "tiny"
+          ? "Tiny"
+          : "Full"
+        : "Tiny";
+
+    const urlData = urlParams.get("data");
+    const validData = urlData || TEST_HEADER;
+
+    return {
+      kind: validKind,
+      chainSpec: validChainSpec,
+      input: validData,
+    };
+  };
+
+  const initialState = getInitialState();
+
+  const [input, setInput] = useState(initialState.input);
   const [error, setError] = useState<string | null>(null);
-  const [kind, setKind] = useState("Block");
+  const [kind, setKind] = useState(initialState.kind);
   const [result, setResult] = useState("");
-  const [chainSpec, setChainSpec] = useState("Tiny");
+  const [chainSpec, setChainSpec] = useState(initialState.chainSpec);
 
   useEffect(() => {
     try {
