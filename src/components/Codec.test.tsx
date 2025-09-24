@@ -2,13 +2,43 @@ import { render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 import { Codec } from "./Codec";
 
-// Mock the @fluffylabs/shared-ui Header component
+// Mock the @fluffylabs/shared-ui components
 vi.mock("@fluffylabs/shared-ui", () => ({
   Header: ({ endSlot }: { endSlot: React.ReactNode }) => (
     <div data-testid="mock-header">
       <div data-testid="header-endslot">{endSlot}</div>
     </div>
   ),
+  Button: ({ children, onClick, variant, ...props }: { children: React.ReactNode; onClick?: () => void; variant?: string; [key: string]: any }) => (
+    <button onClick={onClick} data-variant={variant} {...props}>
+      {children}
+    </button>
+  ),
+  ButtonGroup: ({ children }: { children: React.ReactNode }) => (
+    <div data-testid="button-group">{children}</div>
+  ),
+  DropdownMenu: ({ children }: { children: React.ReactNode }) => (
+    <div data-testid="dropdown-menu">{children}</div>
+  ),
+  DropdownMenuTrigger: ({ children, asChild }: { children: React.ReactNode; asChild?: boolean }) => (
+    <div data-testid="dropdown-menu-trigger">{children}</div>
+  ),
+  DropdownMenuContent: ({ children, className }: { children: React.ReactNode; className?: string }) => (
+    <div data-testid="dropdown-menu-content" className={className}>{children}</div>
+  ),
+  DropdownMenuRadioGroup: ({ children, value, onValueChange }: { children: React.ReactNode; value?: string; onValueChange?: (value: string) => void }) => (
+    <div data-testid="dropdown-menu-radio-group" data-value={value}>{children}</div>
+  ),
+  DropdownMenuRadioItem: ({ children, value }: { children: React.ReactNode; value: string }) => (
+    <div data-testid="dropdown-menu-radio-item" data-value={value}>{children}</div>
+  ),
+  DropdownMenuLabel: ({ children }: { children: React.ReactNode }) => (
+    <div data-testid="dropdown-menu-label">{children}</div>
+  ),
+  DropdownMenuSeparator: () => (
+    <div data-testid="dropdown-menu-separator" />
+  ),
+  cn: (...classes: any[]) => classes.filter(Boolean).join(' '),
 }));
 
 // Mock the @typeberry/lib imports with minimal functionality
@@ -95,24 +125,15 @@ vi.mock("@typeberry/lib", () => ({
 }));
 
 describe("Codec", () => {
-  it("renders the app with header and main content", () => {
+  it("renders the codec interface with main content", () => {
     render(<Codec />);
 
-    // Check that the header is rendered
-    expect(screen.getByTestId("mock-header")).toBeInTheDocument();
-
-    // Check that "JAM Codec" appears in the header
-    expect(screen.getByText("JAM Codec")).toBeInTheDocument();
-
     // Check that the main codec input elements are present
-    expect(screen.getByText("Configuration")).toBeInTheDocument();
-    expect(screen.getByText("JAM Object")).toBeInTheDocument();
-    expect(screen.getByText("Chain Spec")).toBeInTheDocument();
-    expect(screen.getByText("Data")).toBeInTheDocument();
-    expect(screen.getByText("Bytes blob as hex string")).toBeInTheDocument();
+    expect(screen.getByText("JAM Object: Block")).toBeInTheDocument();
+    expect(screen.getByText("Parameters: Tiny")).toBeInTheDocument();
+    expect(screen.getByText("From file")).toBeInTheDocument();
 
     // Check that the example buttons are present
-    expect(screen.getByText("Load codec test vector")).toBeInTheDocument();
     expect(screen.getByText("Block Example")).toBeInTheDocument();
     expect(screen.getByText("Header Example")).toBeInTheDocument();
   });
@@ -120,12 +141,10 @@ describe("Codec", () => {
   it("displays the correct default values", () => {
     render(<Codec />);
 
-    // Check that Header is selected by default (first in the list)
-    const jamObjectSelect = screen.getByDisplayValue("Header");
-    expect(jamObjectSelect).toBeInTheDocument();
+    // Check that Block is selected by default (as set in Codec component)
+    expect(screen.getByText("JAM Object: Block")).toBeInTheDocument();
 
     // Check that Tiny chain spec is selected by default
-    const chainSpecSelect = screen.getByDisplayValue("Tiny");
-    expect(chainSpecSelect).toBeInTheDocument();
+    expect(screen.getByText("Parameters: Tiny")).toBeInTheDocument();
   });
 });
