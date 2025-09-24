@@ -2,7 +2,9 @@
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
 <svg
-   viewBox="0 0 210 297"
+   width="68.483002"
+   height="68.518982"
+   viewBox="0 0 18.11946 18.128981"
    version="1.1"
    id="svg1"
    xmlns="http://www.w3.org/2000/svg"
@@ -10,220 +12,47 @@
   <defs
      id="defs1" />
   <g
-     id="layer1">
-    <g
-       transform="matrix(0.13640142,0,0,0.13461618,88.056932,69.292939)"
-       id="g21">
-      <svg
-         viewBox="0 0 128 128"
-         fill="none"
-         version="1.1"
-         id="svg21"
-         width="100%"
-         height="100%">
-        <rect
-           x="24"
-           y="24"
-           width="80"
-           height="80"
-           rx="16"
-           ry="16"
-           fill="none"
-           stroke="#00f0e2"
-           stroke-width="8"
-           id="rect1" />
-        <rect
-           x="46"
-           y="46"
-           width="36"
-           height="36"
-           rx="8"
-           ry="8"
-           fill="none"
-           stroke="#00f0e2"
-           stroke-width="8"
-           id="rect2" />
-        <line
-           x1="32"
-           y1="16"
-           x2="32"
-           y2="32"
-           stroke="#00f0e2"
-           stroke-width="8"
-           stroke-linecap="round"
-           id="line2" />
-        <line
-           x1="32"
-           y1="96"
-           x2="32"
-           y2="112"
-           stroke="#00f0e2"
-           stroke-width="8"
-           stroke-linecap="round"
-           id="line3" />
-        <line
-           x1="48"
-           y1="16"
-           x2="48"
-           y2="32"
-           stroke="#00f0e2"
-           stroke-width="8"
-           stroke-linecap="round"
-           id="line4" />
-        <line
-           x1="48"
-           y1="96"
-           x2="48"
-           y2="112"
-           stroke="#00f0e2"
-           stroke-width="8"
-           stroke-linecap="round"
-           id="line5" />
-        <line
-           x1="64"
-           y1="16"
-           x2="64"
-           y2="32"
-           stroke="#00f0e2"
-           stroke-width="8"
-           stroke-linecap="round"
-           id="line6" />
-        <line
-           x1="64"
-           y1="96"
-           x2="64"
-           y2="112"
-           stroke="#00f0e2"
-           stroke-width="8"
-           stroke-linecap="round"
-           id="line7" />
-        <line
-           x1="80"
-           y1="16"
-           x2="80"
-           y2="32"
-           stroke="#00f0e2"
-           stroke-width="8"
-           stroke-linecap="round"
-           id="line8" />
-        <line
-           x1="80"
-           y1="96"
-           x2="80"
-           y2="112"
-           stroke="#00f0e2"
-           stroke-width="8"
-           stroke-linecap="round"
-           id="line9" />
-        <line
-           x1="96"
-           y1="16"
-           x2="96"
-           y2="32"
-           stroke="#00f0e2"
-           stroke-width="8"
-           stroke-linecap="round"
-           id="line10" />
-        <line
-           x1="96"
-           y1="96"
-           x2="96"
-           y2="112"
-           stroke="#00f0e2"
-           stroke-width="8"
-           stroke-linecap="round"
-           id="line11" />
-        <line
-           x1="16"
-           y1="32"
-           x2="32"
-           y2="32"
-           stroke="#00f0e2"
-           stroke-width="8"
-           stroke-linecap="round"
-           id="line12" />
-        <line
-           x1="96"
-           y1="32"
-           x2="112"
-           y2="32"
-           stroke="#00f0e2"
-           stroke-width="8"
-           stroke-linecap="round"
-           id="line13" />
-        <line
-           x1="16"
-           y1="48"
-           x2="32"
-           y2="48"
-           stroke="#00f0e2"
-           stroke-width="8"
-           stroke-linecap="round"
-           id="line14" />
-        <line
-           x1="96"
-           y1="48"
-           x2="112"
-           y2="48"
-           stroke="#00f0e2"
-           stroke-width="8"
-           stroke-linecap="round"
-           id="line15" />
-        <line
-           x1="16"
-           y1="64"
-           x2="32"
-           y2="64"
-           stroke="#00f0e2"
-           stroke-width="8"
-           stroke-linecap="round"
-           id="line16" />
-        <line
-           x1="96"
-           y1="64"
-           x2="112"
-           y2="64"
-           stroke="#00f0e2"
-           stroke-width="8"
-           stroke-linecap="round"
-           id="line17" />
-        <line
-           x1="16"
-           y1="80"
-           x2="32"
-           y2="80"
-           stroke="#00f0e2"
-           stroke-width="8"
-           stroke-linecap="round"
-           id="line18" />
-        <line
-           x1="96"
-           y1="80"
-           x2="112"
-           y2="80"
-           stroke="#00f0e2"
-           stroke-width="8"
-           stroke-linecap="round"
-           id="line19" />
-        <line
-           x1="16"
-           y1="96"
-           x2="32"
-           y2="96"
-           stroke="#00f0e2"
-           stroke-width="8"
-           stroke-linecap="round"
-           id="line20" />
-        <line
-           x1="96"
-           y1="96"
-           x2="112"
-           y2="96"
-           stroke="#00f0e2"
-           stroke-width="8"
-           stroke-linecap="round"
-           id="line21" />
-      </svg>
-    </g>
+     id="layer1"
+     transform="translate(-5.4335785,-6.0371149)">
+    <path
+       d="m 20.965681,9.4932349 h -0.86069 V 20.716085 h 0.86069 v -0.8668 h 2.58736 v -0.86111 h -2.58736 v -1.72789 h 2.58736 v -0.86111 h -2.58736 v -2.58903 h 2.58736 v -0.86677 h -2.58736 v -1.72226 h 2.58736 v -0.86677 h -2.58736 z"
+       fill="#00f0e2"
+       id="path6"
+       style="stroke-width:0.264583" />
+    <path
+       d="m 8.8890375,20.715955 v 0.86111 h 0.860423 v 2.58903 h 0.8606905 v -2.58903 h 1.72694 v 2.58903 h 0.86624 v -2.58903 h 2.58736 v 2.58903 h 0.86069 v -2.58903 h 1.72694 v 2.58903 h 0.86042 v -2.58903 h 0.86625 v -0.86098 z"
+       fill="#00f0e2"
+       id="path7"
+       style="stroke-width:0.264583" />
+    <path
+       d="m 18.376201,10.353785 h -7.7679 v 0.8668 H 9.7476105 v 7.76706 h 0.8606905 v -0.86111 h 1.72667 v -0.8668 h 1.72694 v -0.86112 h 0.86069 v -0.86111 h 0.86624 v -0.86678 h 0.86043 v -0.86113 h 0.86069 v -1.72789 h 0.86624 v 6.90594 h 0.86069 v -7.76706 h -0.86069 z m -5.17498,4.31694 h -1.72667 v -0.86113 h 1.72667 z m 2.58762,-1.72791 h -4.31429 v -0.86111 h 4.31429 z"
+       fill="#00f0e2"
+       id="path8"
+       style="stroke-width:0.264583" />
+    <path
+       d="m 18.377261,18.987905 h -7.76817 v 0.86112 h 7.76817 z"
+       fill="#00f0e2"
+       id="path9"
+       style="stroke-width:0.264583" />
+    <path
+       d="m 17.509961,17.259835 h -0.86043 v 0.8668 h 0.86043 z"
+       fill="#00f0e2"
+       id="path10"
+       style="stroke-width:0.264583" />
+    <path
+       d="m 15.789371,17.259835 h -0.86625 v 0.8668 h 0.86625 z"
+       fill="#00f0e2"
+       id="path11"
+       style="stroke-width:0.264583" />
+    <path
+       d="m 20.104991,9.4932349 v -0.86143 h -0.86625 v -2.59469 h -0.86042 v 2.59469 h -1.72694 v -2.59469 h -0.86069 v 2.59469 h -2.58736 v -2.59469 h -0.86624 v 2.59469 h -1.72694 v -2.59469 H 9.7494605 v 2.59469 h -0.860423 v 0.86111 z"
+       fill="#00f0e2"
+       id="path12"
+       style="stroke-width:0.264583" />
+    <path
+       d="m 8.8871855,9.4932349 h -0.866246 v 0.8611101 h -2.587361 v 0.86677 h 2.587361 v 1.72226 h -2.587361 v 0.86677 h 2.587361 v 2.58903 h -2.587361 v 0.86111 h 2.587361 v 1.72789 h -2.587361 v 0.86111 h 2.587361 v 0.8668 h 0.866246 z"
+       fill="#00f0e2"
+       id="path13"
+       style="stroke-width:0.264583" />
   </g>
 </svg>
