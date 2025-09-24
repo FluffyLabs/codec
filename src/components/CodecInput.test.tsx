@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import { describe, expect, it, vi } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 import { CodecInput } from "./CodecInput";
 
 // Mock the @fluffylabs/shared-ui components
@@ -103,23 +103,19 @@ vi.mock("@typeberry/lib", () => ({
 
 // Mock child components
 vi.mock("./ChainSpecSelect", () => ({
-  ChainSpecSelect: ({ setChainSpec, chainSpec }: { setChainSpec: (spec: string) => void; chainSpec: string }) => (
+  ChainSpecSelect: ({ chainSpec }: { setChainSpec: (spec: string) => void; chainSpec: string }) => (
     <div data-testid="chain-spec-select">ChainSpec: {chainSpec}</div>
   ),
 }));
 
 vi.mock("./JamObjectSelect", () => ({
-  JamObjectSelect: ({ setKind, kind }: { setKind: (kind: string) => void; kind: string }) => (
+  JamObjectSelect: ({ kind }: { setKind: (kind: string) => void; kind: string }) => (
     <div data-testid="jam-object-select">JAM Object: {kind}</div>
   ),
 }));
 
 vi.mock("./KindFinder", () => ({
-  KindFinder: ({
-    value,
-    chainSpec,
-    setKind,
-  }: { value: string; chainSpec: string; setKind: (kind: string) => void }) => (
+  KindFinder: () => (
     <div data-testid="kind-finder">KindFinder</div>
   ),
 }));

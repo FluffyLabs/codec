@@ -21,7 +21,7 @@ vi.mock("@fluffylabs/shared-ui", () => ({
   ),
   ButtonGroup: ({ children }: { children: React.ReactNode }) => <div data-testid="button-group">{children}</div>,
   DropdownMenu: ({ children }: { children: React.ReactNode }) => <div data-testid="dropdown-menu">{children}</div>,
-  DropdownMenuTrigger: ({ children, asChild }: { children: React.ReactNode; asChild?: boolean }) => (
+  DropdownMenuTrigger: ({ children }: { children: React.ReactNode; asChild?: boolean }) => (
     <div data-testid="dropdown-menu-trigger">{children}</div>
   ),
   DropdownMenuContent: ({ children, className }: { children: React.ReactNode; className?: string }) => (
@@ -32,7 +32,6 @@ vi.mock("@fluffylabs/shared-ui", () => ({
   DropdownMenuRadioGroup: ({
     children,
     value,
-    onValueChange,
   }: { children: React.ReactNode; value?: string; onValueChange?: (value: string) => void }) => (
     <div data-testid="dropdown-menu-radio-group" data-value={value}>
       {children}

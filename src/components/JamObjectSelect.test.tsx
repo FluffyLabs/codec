@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import { describe, expect, it, vi } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 import { JamObjectSelect } from "./JamObjectSelect";
 
 // Mock the @fluffylabs/shared-ui components
@@ -15,7 +15,7 @@ vi.mock("@fluffylabs/shared-ui", () => ({
     </button>
   ),
   DropdownMenu: ({ children }: { children: React.ReactNode }) => <div data-testid="dropdown-menu">{children}</div>,
-  DropdownMenuTrigger: ({ children, asChild }: { children: React.ReactNode; asChild?: boolean }) => (
+  DropdownMenuTrigger: ({ children }: { children: React.ReactNode; asChild?: boolean }) => (
     <div data-testid="dropdown-menu-trigger">{children}</div>
   ),
   DropdownMenuContent: ({ children, className }: { children: React.ReactNode; className?: string }) => (
@@ -26,7 +26,6 @@ vi.mock("@fluffylabs/shared-ui", () => ({
   DropdownMenuRadioGroup: ({
     children,
     value,
-    onValueChange,
   }: { children: React.ReactNode; value?: string; onValueChange?: (value: string) => void }) => (
     <div data-testid="dropdown-menu-radio-group" data-value={value}>
       {children}
