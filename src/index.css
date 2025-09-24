@@ -1,0 +1,66 @@
+@import "tailwindcss";
+@import "@fluffylabs/shared-ui/style.css";
+@import "./colors.css";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+.text-brand-dark {
+  color: var(--color-brand-dark);
+}
+
+html {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light dark;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+:root,
+html.light {
+  overflow: hidden;
+  color-scheme: light;
+  --foreground: #213547;
+  --color-foreground: #213547;
+  --background: #f8f8f8;
+  --color-background: #f8f8f8;
+  --border: #bababa;
+}
+
+html.dark {
+  color-scheme: dark;
+  --foreground: #bababa;
+  --color-foreground: #bababa;
+  --background: #242424;
+  --color-background: #242424;
+  --border: #444;
+}
+
+.dark .dark-bg-background {
+  background-color: var(--background);
+}
+
+@layer base {
+  * {
+    border-color: var(--border);
+  }
+}
+
+body {
+  margin: 0;
+  display: flex;
+  place-items: center;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+#root {
+  width: 100%;
+  margin: 0 auto;
+  text-align: center;
+}

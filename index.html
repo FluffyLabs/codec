@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/src/assets/icon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>JAM Codec</title>
+
+  </head>
+  <body>
+    <div id="root"></div>
+    <script>
+      window.process = {
+        env: {
+          GP_VERSION: sessionStorage.getItem('GP_VERSION') ?? '0.7.0',
+          TEST_SUITE: sessionStorage.getItem('TEST_SUITE') ?? 'w3f-davxy',
+        }
+      };
+    </script>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

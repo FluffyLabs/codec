@@ -1,15 +1,13 @@
 # JAM Codec
 
-A future home for JAM codec implementation for TypeScript and a some tooling around it.
+Live encode / decode in the browser.
 
-## Web Codec
+# Running locally
 
-A deployment of this code is available at https://codec.fluffylabs.dev
+```bash
+$ npm ci      # install dependencies
+$ npm run dev # run the development version
+```
 
-Newer version of a tool with the same purpose is available at https://papi.fluffylabs.dev
-Sources: https://github.com/tomusdrw/papi-console
 
 
-## Codec as API
-
-https://codec-api.fluffylabs.dev/docs
