@@ -1,13 +1,17 @@
 import { block, codec, config } from "@typeberry/lib";
 
 type Clazz = {
-  Codec: codec.Codec<any>,
+  // biome-ignore lint/suspicious/noExplicitAny: we can't properly name the type here.
+  Codec: codec.Codec<any>;
 };
 
-function newKind(name: string, clazz: Clazz): {
-    name: string;
-    clazz: Clazz;
-  } {
+function newKind(
+  name: string,
+  clazz: Clazz,
+): {
+  name: string;
+  clazz: Clazz;
+} {
   return { name, clazz };
 }
 

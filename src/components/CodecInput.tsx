@@ -2,13 +2,13 @@ import { Button, ButtonGroup, cn } from "@fluffylabs/shared-ui";
 import { bytes } from "@typeberry/lib";
 import { UploadIcon } from "lucide-react";
 import { useCallback } from "react";
-import { Textarea } from "./ui/Textarea";
 import { ChainSpecSelect } from "./ChainSpecSelect";
 import { JamObjectSelect } from "./JamObjectSelect";
 import { KindFinder } from "./KindFinder";
 import { blockKind, headerKind, kinds } from "./constants";
 import { TEST_BLOCK } from "./examples/block";
 import { TEST_HEADER } from "./examples/header";
+import { Textarea } from "./ui/Textarea";
 
 type CodecInputProps = {
   onChange: (v: string) => void;

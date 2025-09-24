@@ -1,8 +1,8 @@
 import { bytes, codec } from "@typeberry/lib";
 import { useEffect, useState } from "react";
+import { CodecInput } from "./CodecInput";
 import { Json } from "./Json";
 import { Resizable } from "./Resizable/Resizable";
-import { CodecInput } from "./CodecInput";
 import { ALL_CHAIN_SPECS, kinds } from "./constants";
 import { TEST_HEADER } from "./examples/header";
 
