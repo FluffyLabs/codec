@@ -115,9 +115,7 @@ vi.mock("./JamObjectSelect", () => ({
 }));
 
 vi.mock("./KindFinder", () => ({
-  KindFinder: () => (
-    <div data-testid="kind-finder">KindFinder</div>
-  ),
+  KindFinder: () => <div data-testid="kind-finder">KindFinder</div>,
 }));
 
 vi.mock("./ui/Textarea", () => ({
