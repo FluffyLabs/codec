@@ -8,6 +8,7 @@ import { KindFinder } from "./KindFinder";
 import { blockKind, headerKind, kinds } from "./constants";
 import { TEST_BLOCK } from "./examples/block";
 import { TEST_HEADER } from "./examples/header";
+import { Checkbox } from "./ui/Checkbox";
 import { Textarea } from "./ui/Textarea";
 
 type CodecInputProps = {
@@ -18,9 +19,21 @@ type CodecInputProps = {
   setKind: (name: string) => void;
   chainSpec: string;
   setChainSpec: (idx: string) => void;
+  isBytesEditable: boolean;
+  setIsBytesEditable: (editable: boolean) => void;
 };
 
-export function CodecInput({ onChange, value, error, kind, setKind, chainSpec, setChainSpec }: CodecInputProps) {
+export function CodecInput({
+  onChange,
+  value,
+  error,
+  kind,
+  setKind,
+  chainSpec,
+  setChainSpec,
+  isBytesEditable,
+  setIsBytesEditable,
+}: CodecInputProps) {
   const setBlock = useCallback(() => {
     onChange(TEST_BLOCK);
     setKind(kinds.find((v) => v === blockKind)?.name ?? "Block");
@@ -73,6 +86,9 @@ export function CodecInput({ onChange, value, error, kind, setKind, chainSpec, s
           </Button>
         </ButtonGroup>
       </div>
+      <div className="flex justify-end mb-2">
+        <Checkbox label="Bytes" checked={isBytesEditable} onChange={(e) => setIsBytesEditable(e.target.checked)} />
+      </div>
       <Textarea
         className={cn(
           {
@@ -82,6 +98,7 @@ export function CodecInput({ onChange, value, error, kind, setKind, chainSpec, s
         )}
         onChange={(ev) => onChange(ev.target.value)}
         value={value}
+        readOnly={!isBytesEditable}
       />
 
       {error && <KindFinder value={value} chainSpec={chainSpec} setKind={setKind} />}

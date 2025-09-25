@@ -15,6 +15,8 @@ export function Codec() {
   const [kind, setKind] = useState("Block");
   const [result, setResult] = useState("");
   const [chainSpec, setChainSpec] = useState("Tiny");
+  const [isBytesEditable, setIsBytesEditable] = useState(true);
+  const [isJsonEditable, setIsJsonEditable] = useState(false);
 
   useEffect(() => {
     const urlKind = searchParams.get("kind");
@@ -57,6 +59,38 @@ export function Codec() {
   const handleSetInput = (newInput: string) => {
     setInput(newInput);
     updateUrlParams(kind, chainSpec, newInput);
+  };
+
+  const handleJsonToHex = (jsonString: string) => {
+    try {
+      const kindDescriptor = kinds.find((v) => v.name === kind);
+      if (!kindDescriptor) {
+        throw new Error(`Invalid codec kind: ${kind}`);
+      }
+      const spec = ALL_CHAIN_SPECS.find((x) => x.name === chainSpec);
+
+      const jsonObject = JSON.parse(jsonString, (_key, value) => {
+        if (typeof value === "string" && value.startsWith("0x")) {
+          try {
+            return bytes.BytesBlob.parseBlob(value);
+          } catch {
+            try {
+              return bytes.Bytes.parseBytes(value, value.length / 2 - 1);
+            } catch {
+              return value; // Keep as string if parsing fails
+            }
+          }
+        }
+        return value;
+      });
+
+      const encoded = codec.Encoder.encodeObject(kindDescriptor.clazz.Codec, jsonObject, spec?.spec);
+
+      setInput(encoded.toString());
+      setError(null);
+    } catch (e) {
+      setError(`${e}`);
+    }
   };
 
   useEffect(() => {
@@ -102,14 +136,30 @@ export function Codec() {
         <CodecInput
           onChange={handleSetInput}
           value={input}
-          error={error}
+          error={isBytesEditable ? error : null}
           kind={kind}
           setKind={handleSetKind}
           chainSpec={chainSpec}
           setChainSpec={handleSetChainSpec}
+          isBytesEditable={isBytesEditable}
+          setIsBytesEditable={(editable) => {
+            setIsBytesEditable(editable);
+            if (editable) setIsJsonEditable(false);
+          }}
         />
       }
-      right={<Json result={result} />}
+      right={
+        <Json
+          result={result}
+          isJsonEditable={isJsonEditable}
+          setIsJsonEditable={(editable) => {
+            setIsJsonEditable(editable);
+            if (editable) setIsBytesEditable(false);
+          }}
+          onJsonChange={handleJsonToHex}
+          error={isJsonEditable ? error : null}
+        />
+      }
     />
   );
 }
