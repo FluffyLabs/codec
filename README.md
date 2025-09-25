@@ -3,7 +3,7 @@
 
   # JAM Codec
 
-  **A powerful web-based codec tool for JAM (Join-Accumulate Machine) data structures**
+  **A web-based codec tool for JAM (Join-Accumulate Machine) data structures**
 
   [![Build Status](https://img.shields.io/badge/build-passing-brightgreen)](#)
   [![Tests](https://img.shields.io/badge/tests-28%20passing-brightgreen)](#)
@@ -14,7 +14,7 @@
 
 ## 🚀 Overview
 
-JAM Codec is a sophisticated web application that provides live encoding and decoding capabilities for JAM (Join-Accumulate Machine) data structures directly in your browser. Built with modern web technologies, it offers a seamless experience for working with various JAM object types and chain specifications.
+JAM Codec is a web application that provides live encoding and decoding capabilities for JAM (Join-Accumulate Machine) data structures directly in your browser.
 
 ### ✨ Key Features
 
@@ -23,8 +23,6 @@ JAM Codec is a sophisticated web application that provides live encoding and dec
 - **⚙️ Chain Specification Support**: Compatible with different protocol parameters (Tiny, Full)
 - **📁 File Import**: Load binary data directly from files
 - **🎯 Auto-Detection**: Intelligent type detection for unknown data
-- **🎨 Responsive UI**: Modern, intuitive interface with dark mode support
-- **⚡ Fast Performance**: Built with Vite for optimal loading and development experience
 
 ### 🏗️ Supported JAM Object Types
 
