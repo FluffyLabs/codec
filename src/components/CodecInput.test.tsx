@@ -132,6 +132,23 @@ vi.mock("./ui/Textarea", () => ({
   }) => <textarea value={value} onChange={onChange} className={className} {...props} />,
 }));
 
+vi.mock("./ui/Checkbox", () => ({
+  Checkbox: ({
+    label,
+    checked,
+    onChange,
+  }: {
+    label?: string;
+    checked: boolean;
+    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  }) => (
+    <label>
+      <input type="checkbox" checked={checked} onChange={onChange} />
+      {label && <span>{label}</span>}
+    </label>
+  ),
+}));
+
 describe("CodecInput", () => {
   const defaultProps = {
     onChange: vi.fn(),
@@ -141,6 +158,8 @@ describe("CodecInput", () => {
     setKind: vi.fn(),
     chainSpec: "Tiny",
     setChainSpec: vi.fn(),
+    isBytesEditable: true,
+    setIsBytesEditable: vi.fn(),
   };
 
   beforeEach(() => {
