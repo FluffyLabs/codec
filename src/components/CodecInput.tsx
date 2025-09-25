@@ -8,6 +8,7 @@ import { KindFinder } from "./KindFinder";
 import { blockKind, headerKind, kinds } from "./constants";
 import { TEST_BLOCK } from "./examples/block";
 import { TEST_HEADER } from "./examples/header";
+import { Checkbox } from "./ui/Checkbox";
 import { Textarea } from "./ui/Textarea";
 
 type CodecInputProps = {
@@ -18,9 +19,21 @@ type CodecInputProps = {
   setKind: (name: string) => void;
   chainSpec: string;
   setChainSpec: (idx: string) => void;
+  isBytesEditable: boolean;
+  setIsBytesEditable: (editable: boolean) => void;
 };
 
-export function CodecInput({ onChange, value, error, kind, setKind, chainSpec, setChainSpec }: CodecInputProps) {
+export function CodecInput({
+  onChange,
+  value,
+  error,
+  kind,
+  setKind,
+  chainSpec,
+  setChainSpec,
+  isBytesEditable,
+  setIsBytesEditable,
+}: CodecInputProps) {
   const setBlock = useCallback(() => {
     onChange(TEST_BLOCK);
     setKind(kinds.find((v) => v === blockKind)?.name ?? "Block");
@@ -53,8 +66,18 @@ export function CodecInput({ onChange, value, error, kind, setKind, chainSpec, s
     });
   }, [onChange]);
 
+  const isValid = !isBytesEditable || error === null;
+
   return (
     <div className="w-full flex flex-col p-4 gap-4 overflow-auto">
+      <div className="flex justify-end mb-2">
+        <Checkbox
+          label="Bytes"
+          checked={isBytesEditable}
+          onChange={(e) => setIsBytesEditable(e.target.checked)}
+          disabled={!isBytesEditable && error !== null}
+        />
+      </div>
       <div className="flex flex-row justify-between gap-4 overflow-auto">
         <JamObjectSelect setKind={setKind} kind={kind} />
         <ChainSpecSelect setChainSpec={setChainSpec} chainSpec={chainSpec} />
@@ -76,17 +99,18 @@ export function CodecInput({ onChange, value, error, kind, setKind, chainSpec, s
       <Textarea
         className={cn(
           {
-            "ring-2 ring-red-700": error !== null,
+            "ring-2 ring-red-700": !isValid,
           },
           "flex-1 font-mono bg-[#ddd] dark:bg-secondary",
         )}
         onChange={(ev) => onChange(ev.target.value)}
         value={value}
+        readOnly={!isBytesEditable}
       />
 
-      {error && <KindFinder value={value} chainSpec={chainSpec} setKind={setKind} />}
+      {!isValid && <KindFinder value={value} chainSpec={chainSpec} setKind={setKind} />}
 
-      {error && (
+      {!isValid && (
         <div className="p-4 font-mono border-destructive rounded-sm border-1 border-destructive text-red-500 bg-destructive/40">
           {error}
         </div>
