@@ -5,8 +5,8 @@
 
   **A web-based codec tool for JAM (Join-Accumulate Machine) data structures**
 
-  [![Build Status](https://img.shields.io/badge/build-passing-brightgreen)](#)
-  [![Tests](https://img.shields.io/badge/tests-28%20passing-brightgreen)](#)
+  [![CI](https://github.com/FluffyLabs/codec/actions/workflows/web.yml/badge.svg)](https://github.com/FluffyLabs/codec/actions/workflows/web.yml)
+  [![Deploy](https://github.com/FluffyLabs/codec/actions/workflows/deploy.yml/badge.svg)](https://github.com/FluffyLabs/codec/actions/workflows/deploy.yml)
   [![TypeScript](https://img.shields.io/badge/TypeScript-5.2-blue)](#)
   [![React](https://img.shields.io/badge/React-19-blue)](#)
   [![Vite](https://img.shields.io/badge/Vite-7.1-yellow)](#)
