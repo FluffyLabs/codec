@@ -1,4 +1,5 @@
 import { render, screen } from "@testing-library/react";
+import { MemoryRouter } from "react-router-dom";
 import { describe, expect, it, vi } from "vitest";
 import { Codec } from "./Codec";
 
@@ -134,7 +135,11 @@ vi.mock("@typeberry/lib", () => ({
 
 describe("Codec", () => {
   it("renders the codec interface with main content", () => {
-    render(<Codec />);
+    render(
+      <MemoryRouter>
+        <Codec />
+      </MemoryRouter>,
+    );
 
     // Check that the main codec input elements are present
     expect(screen.getByText("JAM Object: Block")).toBeInTheDocument();
@@ -147,7 +152,11 @@ describe("Codec", () => {
   });
 
   it("displays the correct default values", () => {
-    render(<Codec />);
+    render(
+      <MemoryRouter>
+        <Codec />
+      </MemoryRouter>,
+    );
 
     // Check that Block is selected by default (as set in Codec component)
     expect(screen.getByText("JAM Object: Block")).toBeInTheDocument();
