@@ -1,22 +1,32 @@
 import { bytes, codec } from "@typeberry/lib";
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import { CodecInput } from "./CodecInput";
-import { Json } from "./Json";
-import { Resizable } from "./Resizable/Resizable";
-import { ALL_CHAIN_SPECS, kinds } from "./constants";
-import { TEST_HEADER } from "./examples/header";
+import { CodecInput } from "../components/CodecInput";
+import { Json } from "../components/Json";
+import { Resizable } from "../components/Resizable/Resizable";
+import { ALL_CHAIN_SPECS, kinds } from "../components/constants";
+import { TEST_HEADER } from "../components/examples/header";
 
 export function Codec() {
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const [input, setInput] = useState(TEST_HEADER);
-  const [error, setError] = useState<string | null>(null);
-  const [kind, setKind] = useState("Block");
-  const [result, setResult] = useState("");
-  const [chainSpec, setChainSpec] = useState("Tiny");
+  // bytes input and it's json decoding
+  const [bytesInput, setBytesInput] = useState(TEST_HEADER);
+  const [bytesResult, setBytesResult] = useState("");
+  // json input and it's hex-encoding
+  const [jsonInput, setJsonInput] = useState("{}");
+  const [jsonResult, setJsonResult] = useState("");
+  // editability
   const [isBytesEditable, setIsBytesEditable] = useState(true);
   const [isJsonEditable, setIsJsonEditable] = useState(false);
+
+  // we choose the actual values displayed based on editability.
+  const valueBytes = isBytesEditable ? bytesInput : jsonResult;
+  const valueJson = isBytesEditable ? bytesResult : jsonInput;
+
+  const [error, setError] = useState<string | null>(null);
+  const [kind, setKind] = useState("Block");
+  const [chainSpec, setChainSpec] = useState("Tiny");
 
   useEffect(() => {
     const urlKind = searchParams.get("kind");
@@ -35,7 +45,7 @@ export function Codec() {
 
     setKind(validKind);
     setChainSpec(validChainSpec);
-    setInput(validData);
+    handleSetInput(validData, false);
   }, [searchParams]);
 
   const updateUrlParams = (newKind: string, newChainSpec: string, newInput: string) => {
@@ -48,20 +58,64 @@ export function Codec() {
 
   const handleSetKind = (newKind: string) => {
     setKind(newKind);
-    updateUrlParams(newKind, chainSpec, input);
+    updateUrlParams(newKind, chainSpec, bytesInput);
   };
 
   const handleSetChainSpec = (newChainSpec: string) => {
     setChainSpec(newChainSpec);
-    updateUrlParams(kind, newChainSpec, input);
+    updateUrlParams(kind, newChainSpec, bytesInput);
   };
 
-  const handleSetInput = (newInput: string) => {
-    setInput(newInput);
-    updateUrlParams(kind, chainSpec, newInput);
+  const handleSetInput = (newInput: string, updateUrl = true) => {
+    setBytesInput(newInput);
+    setBytesResult("");
+
+    if (updateUrl) {
+      updateUrlParams(kind, chainSpec, newInput);
+    }
+
+    // update the result
+    try {
+      const kindDescriptor = kinds.find((v) => v.name === kind);
+      if (!kindDescriptor) {
+        throw new Error(`Invalid codec kind: ${kind}`);
+      }
+      const spec = ALL_CHAIN_SPECS.find((x) => x.name === chainSpec);
+      const decoded = codec.Decoder.decodeObject<unknown>(
+        kindDescriptor.clazz.Codec,
+        bytes.BytesBlob.parseBlob(bytesInput),
+        spec?.spec,
+      );
+      const json = JSON.stringify(
+        decoded,
+        (_key, value) => {
+          if (value instanceof bytes.BytesBlob) {
+            return value.toString();
+          }
+          if (value instanceof bytes.Bytes) {
+            return value.toString();
+          }
+          if (typeof value === "bigint") {
+            return value.toString();
+          }
+          return value;
+        },
+        2,
+      );
+      setBytesResult(json);
+      setJsonInput(json);
+      setError(null);
+    } catch (e) {
+      setBytesResult("");
+      setError(`${e}`);
+    }
   };
 
   const handleJsonToHex = (jsonString: string) => {
+    // always update textarea
+    setJsonInput(jsonString);
+    setJsonResult("");
+
     try {
       const kindDescriptor = kinds.find((v) => v.name === kind);
       if (!kindDescriptor) {
@@ -74,11 +128,7 @@ export function Codec() {
           try {
             return bytes.BytesBlob.parseBlob(value);
           } catch {
-            try {
-              return bytes.Bytes.parseBytes(value, value.length / 2 - 1);
-            } catch {
-              return value; // Keep as string if parsing fails
-            }
+            return value; // Keep as string if parsing fails
           }
         }
         return value;
@@ -86,57 +136,23 @@ export function Codec() {
 
       const encoded = codec.Encoder.encodeObject(kindDescriptor.clazz.Codec, jsonObject, spec?.spec);
 
-      setInput(encoded.toString());
+      const bytesValue = encoded.toString();
       setError(null);
+      setJsonResult(bytesValue);
+      setBytesInput(bytesValue);
+      updateUrlParams(kind, chainSpec, bytesValue);
     } catch (e) {
       setError(`${e}`);
     }
   };
-
-  useEffect(() => {
-    try {
-      const kindDescriptor = kinds.find((v) => v.name === kind);
-      if (!kindDescriptor) {
-        throw new Error(`Invalid codec kind: ${kind}`);
-      }
-      const spec = ALL_CHAIN_SPECS.find((x) => x.name === chainSpec);
-      const decoded = codec.Decoder.decodeObject<unknown>(
-        kindDescriptor.clazz.Codec,
-        bytes.BytesBlob.parseBlob(input),
-        spec?.spec,
-      );
-      setResult(
-        JSON.stringify(
-          decoded,
-          (_key, value) => {
-            if (value instanceof bytes.BytesBlob) {
-              return value.toString();
-            }
-            if (value instanceof bytes.Bytes) {
-              return value.toString();
-            }
-            if (typeof value === "bigint") {
-              return value.toString();
-            }
-            return value;
-          },
-          2,
-        ),
-      );
-      setError(null);
-    } catch (e) {
-      setResult("");
-      setError(`${e}`);
-    }
-  }, [input, kind, chainSpec]);
 
   return (
     <Resizable
       left={
         <CodecInput
           onChange={handleSetInput}
-          value={input}
-          error={isBytesEditable ? error : null}
+          value={valueBytes}
+          error={error}
           kind={kind}
           setKind={handleSetKind}
           chainSpec={chainSpec}
@@ -150,14 +166,14 @@ export function Codec() {
       }
       right={
         <Json
-          result={result}
+          result={valueJson}
           isJsonEditable={isJsonEditable}
           setIsJsonEditable={(editable) => {
             setIsJsonEditable(editable);
             if (editable) setIsBytesEditable(false);
           }}
           onJsonChange={handleJsonToHex}
-          error={isJsonEditable ? error : null}
+          error={error}
         />
       }
     />

@@ -11,9 +11,14 @@ type JsonProps = {
 
 export function Json({ result, isJsonEditable, setIsJsonEditable, onJsonChange, error }: JsonProps) {
   return (
-    <div className="flex flex-col h-full p-4 gap-4">
+    <div className="flex flex-col h-full w-full p-4 gap-4">
       <div className="flex justify-start">
-        <Checkbox label="JSON" checked={isJsonEditable} onChange={(e) => setIsJsonEditable(e.target.checked)} />
+        <Checkbox
+          label="JSON"
+          checked={isJsonEditable}
+          onChange={(e) => setIsJsonEditable(e.target.checked)}
+          disabled={!isJsonEditable && error !== null}
+        />
       </div>
       {isJsonEditable ? (
         <Textarea
@@ -22,7 +27,7 @@ export function Json({ result, isJsonEditable, setIsJsonEditable, onJsonChange, 
           value={result}
         />
       ) : (
-        <div className="flex-1 overflow-y-scroll overflow-x-auto p-4 m-4 bg-[#ddd] dark:bg-secondary">
+        <div className="flex-1 overflow-y-scroll overflow-x-auto p-2 bg-[#ddd] dark:bg-secondary rounded-sm">
           <pre>{result}</pre>
         </div>
       )}

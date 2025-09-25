@@ -3,8 +3,8 @@ import { utils } from "@typeberry/lib";
 import { Settings } from "lucide-react";
 import { useState } from "react";
 import logo from "./assets/logo.svg";
-import { Codec } from "./components/Codec";
 import SettingsDialog from "./components/SettingsDialog";
+import { Codec } from "./pages/Codec";
 
 const VersionDisplay = () => {
   const currentVersion = utils.CURRENT_VERSION as string;
