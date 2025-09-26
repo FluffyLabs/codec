@@ -7,7 +7,12 @@ import { Resizable } from "../components/Resizable/Resizable";
 import { ALL_CHAIN_SPECS, kinds } from "../components/constants";
 import { TEST_HEADER } from "../components/examples/header";
 
-export function Codec() {
+interface CodecProps {
+  isDiffEnabled: boolean;
+  setIsDiffEnabled: (enabled: boolean) => void;
+}
+
+export function Codec({ isDiffEnabled }: CodecProps) {
   const [searchParams, setSearchParams] = useSearchParams();
 
   // bytes input and it's json decoding
@@ -19,6 +24,8 @@ export function Codec() {
   // editability
   const [isBytesEditable, setIsBytesEditable] = useState(true);
   const [isJsonEditable, setIsJsonEditable] = useState(false);
+  const [previousBytesResult, setPreviousBytesResult] = useState("");
+  const [previousJsonResult, setPreviousJsonResult] = useState("");
 
   // we choose the actual values displayed based on editability.
   const valueBytes = isBytesEditable ? bytesInput : jsonResult;
@@ -68,6 +75,7 @@ export function Codec() {
 
   const handleSetInput = (newInput: string, updateUrl = true) => {
     setBytesInput(newInput);
+    setPreviousJsonResult(bytesResult);
     setBytesResult("");
 
     if (updateUrl) {
@@ -114,6 +122,8 @@ export function Codec() {
   const handleJsonToHex = (jsonString: string) => {
     // always update textarea
     setJsonInput(jsonString);
+    setPreviousJsonResult(valueJson);
+    setPreviousBytesResult(jsonResult);
     setJsonResult("");
 
     try {
@@ -162,6 +172,8 @@ export function Codec() {
             setIsBytesEditable(editable);
             if (editable) setIsJsonEditable(false);
           }}
+          isDiffEnabled={isDiffEnabled}
+          previousValue={isBytesEditable ? "" : previousBytesResult}
         />
       }
       right={
@@ -174,6 +186,8 @@ export function Codec() {
           }}
           onJsonChange={handleJsonToHex}
           error={error}
+          isDiffEnabled={isDiffEnabled}
+          previousValue={isJsonEditable ? "" : previousJsonResult}
         />
       }
     />

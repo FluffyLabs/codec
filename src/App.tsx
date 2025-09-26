@@ -4,6 +4,7 @@ import { Settings } from "lucide-react";
 import { useState } from "react";
 import logo from "./assets/logo.svg";
 import SettingsDialog from "./components/SettingsDialog";
+import { Checkbox } from "./components/ui/Checkbox";
 import { Codec } from "./pages/Codec";
 
 const VersionDisplay = () => {
@@ -17,15 +18,31 @@ const VersionDisplay = () => {
   );
 };
 
-const AppHeader = ({ onOpenSettings }: { onOpenSettings: () => void }) => {
+const AppHeader = ({
+  onOpenSettings,
+  isDiffEnabled,
+  setIsDiffEnabled,
+}: {
+  onOpenSettings: () => void;
+  isDiffEnabled: boolean;
+  setIsDiffEnabled: (enabled: boolean) => void;
+}) => {
   return (
     <Header
       toolNameSrc={logo}
       ghRepoName="codec"
       keepNameWhenSmall
       endSlot={
-        <div className="flex items-center">
+        <div className="flex items-center gap-4">
           <VersionDisplay />
+          <div className="flex items-center">
+            <Checkbox
+              label="Show Diff"
+              checked={isDiffEnabled}
+              onChange={(e) => setIsDiffEnabled(e.target.checked)}
+              className="text-white"
+            />
+          </div>
           <Button onClick={onOpenSettings} size="sm" aria-label="Settings" title="Settings" forcedColorScheme="dark">
             <Settings className="h-4 w-4" />
           </Button>
@@ -37,11 +54,16 @@ const AppHeader = ({ onOpenSettings }: { onOpenSettings: () => void }) => {
 
 const AppContent = () => {
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+  const [isDiffEnabled, setIsDiffEnabled] = useState(true);
 
   return (
     <div className="flex flex-col overflow-hidden h-[100dvh] bg-secondary dark:bg-[#242424]">
       <div className="h-[87px]">
-        <AppHeader onOpenSettings={() => setIsSettingsOpen(true)} />
+        <AppHeader
+          onOpenSettings={() => setIsSettingsOpen(true)}
+          isDiffEnabled={isDiffEnabled}
+          setIsDiffEnabled={setIsDiffEnabled}
+        />
       </div>
       <div className="flex h-full">
         <div className="max-sm:hidden">
@@ -49,7 +71,7 @@ const AppContent = () => {
         </div>
 
         <div className="w-full h-[calc(100dvh-87px)] overflow-hidden text-left">
-          <Codec />
+          <Codec isDiffEnabled={isDiffEnabled} setIsDiffEnabled={setIsDiffEnabled} />
         </div>
       </div>
 
@@ -58,6 +80,6 @@ const AppContent = () => {
   );
 };
 
-export function App() {
+export default function App() {
   return <AppContent />;
 }
