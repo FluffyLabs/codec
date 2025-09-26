@@ -3,6 +3,7 @@ import { bytes } from "@typeberry/lib";
 import { UploadIcon } from "lucide-react";
 import { useCallback } from "react";
 import { ChainSpecSelect } from "./ChainSpecSelect";
+import { DiffHighlight } from "./DiffHighlight";
 import { JamObjectSelect } from "./JamObjectSelect";
 import { KindFinder } from "./KindFinder";
 import { blockKind, headerKind, kinds } from "./constants";
@@ -21,6 +22,8 @@ type CodecInputProps = {
   setChainSpec: (idx: string) => void;
   isBytesEditable: boolean;
   setIsBytesEditable: (editable: boolean) => void;
+  isDiffEnabled: boolean;
+  previousValue: string;
 };
 
 export function CodecInput({
@@ -33,6 +36,8 @@ export function CodecInput({
   setChainSpec,
   isBytesEditable,
   setIsBytesEditable,
+  isDiffEnabled,
+  previousValue,
 }: CodecInputProps) {
   const setBlock = useCallback(() => {
     onChange(TEST_BLOCK);
@@ -96,17 +101,40 @@ export function CodecInput({
           </Button>
         </ButtonGroup>
       </div>
-      <Textarea
-        className={cn(
-          {
-            "ring-2 ring-red-700": !isValid,
-          },
-          "flex-1 font-mono bg-[#ddd] dark:bg-secondary",
-        )}
-        onChange={(ev) => onChange(ev.target.value)}
-        value={value}
-        readOnly={!isBytesEditable}
-      />
+      {isBytesEditable ? (
+        <Textarea
+          className={cn(
+            {
+              "ring-2 ring-red-700": !isValid,
+            },
+            "flex-1 font-mono bg-[#ddd] dark:bg-secondary",
+          )}
+          onChange={(ev) => onChange(ev.target.value)}
+          value={value}
+        />
+      ) : isDiffEnabled && previousValue ? (
+        <div
+          className={cn(
+            {
+              "ring-2 ring-red-700": !isValid,
+            },
+            "flex-1 font-mono bg-[#ddd] dark:bg-secondary rounded-sm p-2 overflow-y-scroll overflow-x-auto",
+          )}
+        >
+          <DiffHighlight currentText={value} previousText={previousValue} />
+        </div>
+      ) : (
+        <Textarea
+          className={cn(
+            {
+              "ring-2 ring-red-700": !isValid,
+            },
+            "flex-1 font-mono bg-[#ddd] dark:bg-secondary",
+          )}
+          value={value}
+          readOnly={true}
+        />
+      )}
 
       {!isValid && <KindFinder value={value} chainSpec={chainSpec} setKind={setKind} />}
 

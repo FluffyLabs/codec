@@ -1,3 +1,4 @@
+import { DiffHighlight } from "./DiffHighlight";
 import { Checkbox } from "./ui/Checkbox";
 import { Textarea } from "./ui/Textarea";
 
@@ -7,9 +8,20 @@ type JsonProps = {
   setIsJsonEditable: (editable: boolean) => void;
   onJsonChange: (json: string) => void;
   error: string | null;
+  isDiffEnabled: boolean;
+  previousValue: string;
 };
 
-export function Json({ result, isJsonEditable, setIsJsonEditable, onJsonChange, error }: JsonProps) {
+export function Json({
+  result,
+  isJsonEditable,
+  setIsJsonEditable,
+  onJsonChange,
+  error,
+  isDiffEnabled,
+  previousValue,
+}: JsonProps) {
+
   return (
     <div className="flex flex-col h-full w-full p-4 gap-4">
       <div className="flex justify-start">
@@ -26,6 +38,10 @@ export function Json({ result, isJsonEditable, setIsJsonEditable, onJsonChange, 
           onChange={(ev) => onJsonChange(ev.target.value)}
           value={result}
         />
+      ) : isDiffEnabled && previousValue ? (
+        <div className="flex-1 overflow-y-scroll overflow-x-auto p-2 bg-[#ddd] dark:bg-secondary rounded-sm">
+          <DiffHighlight currentText={result} previousText={previousValue} />
+        </div>
       ) : (
         <div className="flex-1 overflow-y-scroll overflow-x-auto p-2 bg-[#ddd] dark:bg-secondary rounded-sm">
           <pre>{result}</pre>
