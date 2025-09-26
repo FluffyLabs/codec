@@ -21,20 +21,6 @@ export function Json({
   isDiffEnabled,
   previousValue,
 }: JsonProps) {
-  console.log("Json debug DETAILED:", {
-    isJsonEditable,
-    isDiffEnabled,
-    previousValue: `${previousValue?.substring(0, 50)}...`,
-    previousValueLength: previousValue?.length,
-    resultLength: result?.length,
-    conditionCheck: isDiffEnabled && previousValue,
-    previousValueTruthy: !!previousValue,
-    shouldUseDiff: !isJsonEditable && isDiffEnabled && previousValue,
-    renderPath: isJsonEditable ? "textarea" : (isDiffEnabled && previousValue ? "diff" : "plain"),
-    valuesEqual: previousValue === result,
-    previousValueEnd: previousValue?.substring(previousValue.length - 50),
-    resultEnd: result?.substring(result.length - 50),
-  });
 
   return (
     <div className="flex flex-col h-full w-full p-4 gap-4">
