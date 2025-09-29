@@ -159,15 +159,25 @@ vi.mock("./ui/Checkbox", () => ({
     label,
     checked,
     onChange,
+    disabled,
   }: {
     label?: string;
     checked: boolean;
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    disabled?: boolean;
   }) => (
     <label>
-      <input type="checkbox" checked={checked} onChange={onChange} />
+      <input type="checkbox" checked={checked} onChange={onChange} disabled={disabled} />
       {label && <span>{label}</span>}
     </label>
+  ),
+}));
+
+vi.mock("./DiffHighlight", () => ({
+  DiffHighlight: ({
+    value,
+  }: { value: string; previousValue: string | null; isEnabled: boolean; component?: string; className?: string }) => (
+    <div data-testid="diff-highlight">{value}</div>
   ),
 }));
 
@@ -175,28 +185,39 @@ describe("CodecInput", () => {
   const defaultProps = {
     onChange: vi.fn(),
     value: "test-value",
+    previousValue: null,
+    controls: <div data-testid="controls">Controls</div>,
     error: null,
-    kind: "Block",
     setKind: vi.fn(),
     chainSpec: "Tiny",
-    setChainSpec: vi.fn(),
     isBytesEditable: true,
     setIsBytesEditable: vi.fn(),
+    isDiffEnabled: false,
   };
 
   beforeEach(() => {
     vi.clearAllMocks();
   });
 
-  it("renders all main elements", () => {
+  it("renders main elements when bytes editable", () => {
     render(<CodecInput {...defaultProps} />);
 
-    expect(screen.getByTestId("jam-object-select")).toBeInTheDocument();
-    expect(screen.getByTestId("chain-spec-select")).toBeInTheDocument();
-    expect(screen.getByText("From file")).toBeInTheDocument();
-    expect(screen.getByText("Block Example")).toBeInTheDocument();
-    expect(screen.getByText("Header Example")).toBeInTheDocument();
+    expect(screen.getByTestId("controls")).toBeInTheDocument();
     expect(screen.getByDisplayValue("test-value")).toBeInTheDocument();
+    expect(screen.getByLabelText(/bytes/i)).toBeInTheDocument();
+  });
+
+  it("renders diff highlight when not editable and diff enabled", () => {
+    const props = {
+      ...defaultProps,
+      isBytesEditable: false,
+      isDiffEnabled: true,
+      previousValue: "previous-value",
+    };
+    render(<CodecInput {...props} />);
+
+    expect(screen.getByTestId("diff-highlight")).toBeInTheDocument();
+    expect(screen.queryByDisplayValue("test-value")).not.toBeInTheDocument();
   });
 
   it("renders error state correctly", () => {
@@ -217,11 +238,22 @@ describe("CodecInput", () => {
     expect(screen.queryByTestId("kind-finder")).not.toBeInTheDocument();
   });
 
-  it("renders button group with example buttons", () => {
+  it("shows checkbox state correctly", () => {
     render(<CodecInput {...defaultProps} />);
 
-    expect(screen.getByTestId("button-group")).toBeInTheDocument();
-    expect(screen.getByText("Block Example")).toBeInTheDocument();
-    expect(screen.getByText("Header Example")).toBeInTheDocument();
+    const checkbox = screen.getByRole("checkbox");
+    expect(checkbox).toBeChecked();
+  });
+
+  it("disables checkbox when error exists and not bytes editable", () => {
+    const propsWithError = {
+      ...defaultProps,
+      isBytesEditable: false,
+      error: "Test error",
+    };
+    render(<CodecInput {...propsWithError} />);
+
+    const checkbox = screen.getByRole("checkbox");
+    expect(checkbox).toBeDisabled();
   });
 });

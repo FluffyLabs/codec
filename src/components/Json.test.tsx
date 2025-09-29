@@ -31,29 +31,53 @@ vi.mock("./ui/Textarea", () => ({
   }) => <textarea value={value} onChange={onChange} className={className} />,
 }));
 
+vi.mock("./DiffHighlight", () => ({
+  DiffHighlight: ({ value }: { value: string; previousValue: string | null; isEnabled: boolean }) => (
+    <div data-testid="diff-highlight">{value}</div>
+  ),
+}));
+
 describe("Json", () => {
   const defaultProps = {
-    result: '{"test": "value"}',
+    value: '{"test": "value"}',
+    previousValue: null,
     isJsonEditable: false,
     setIsJsonEditable: vi.fn(),
     onJsonChange: vi.fn(),
     error: null,
+    isDiffEnabled: false,
   };
 
-  it("renders json result in pre tag when not editable", () => {
+  it("renders json result via DiffHighlight when not editable", () => {
     render(<Json {...defaultProps} />);
 
-    const preElement = screen.getByText(defaultProps.result);
-    expect(preElement).toBeInTheDocument();
-    expect(preElement.tagName).toBe("PRE");
+    expect(screen.getByTestId("diff-highlight")).toBeInTheDocument();
+    expect(screen.getByText(defaultProps.value)).toBeInTheDocument();
   });
 
-  it("renders empty result", () => {
-    const emptyProps = { ...defaultProps, result: "" };
+  it("renders empty value", () => {
+    const emptyProps = { ...defaultProps, value: "" };
     render(<Json {...emptyProps} />);
 
-    const preElement = document.querySelector("pre");
-    expect(preElement).toBeInTheDocument();
-    expect(preElement?.textContent).toBe("");
+    expect(screen.getByTestId("diff-highlight")).toBeInTheDocument();
+  });
+
+  it("renders textarea when editable", () => {
+    const editableProps = { ...defaultProps, isJsonEditable: true };
+    render(<Json {...editableProps} />);
+
+    expect(screen.getByDisplayValue(defaultProps.value)).toBeInTheDocument();
+    expect(screen.queryByTestId("diff-highlight")).not.toBeInTheDocument();
+  });
+
+  it("shows error when json is editable and has error", () => {
+    const errorProps = {
+      ...defaultProps,
+      isJsonEditable: true,
+      error: "JSON parsing error",
+    };
+    render(<Json {...errorProps} />);
+
+    expect(screen.getByText("JSON parsing error")).toBeInTheDocument();
   });
 });

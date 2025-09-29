@@ -109,11 +109,12 @@ export const kinds = [
   ),
 ];
 
+export const tinyChainSpec = {
+  name: "Tiny",
+  spec: config.tinyChainSpec,
+};
 export const ALL_CHAIN_SPECS = [
-  {
-    name: "Tiny",
-    spec: config.tinyChainSpec,
-  },
+  tinyChainSpec,
   {
     name: "Full",
     spec: config.tinyChainSpec,

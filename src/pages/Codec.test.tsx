@@ -164,7 +164,7 @@ describe("Codec", () => {
     );
 
     // Check that the main codec input elements are present
-    expect(screen.getByText("JAM Object: Block")).toBeInTheDocument();
+    expect(screen.getByText("JAM Object: Header")).toBeInTheDocument();
     expect(screen.getByText("Parameters: Tiny")).toBeInTheDocument();
     expect(screen.getByText("From file")).toBeInTheDocument();
 
@@ -180,8 +180,8 @@ describe("Codec", () => {
       </MemoryRouter>,
     );
 
-    // Check that Block is selected by default (as set in Codec component)
-    expect(screen.getByText("JAM Object: Block")).toBeInTheDocument();
+    // Check that Header is selected by default (as set in Codec component)
+    expect(screen.getByText("JAM Object: Header")).toBeInTheDocument();
 
     // Check that Tiny chain spec is selected by default
     expect(screen.getByText("Parameters: Tiny")).toBeInTheDocument();
