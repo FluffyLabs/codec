@@ -1,4 +1,4 @@
-import { block, codec, config } from "@typeberry/lib";
+import { block, codec, config, state, state_merkleization as stateSer } from "@typeberry/lib";
 
 type Clazz = {
   // biome-ignore lint/suspicious/noExplicitAny: we can't properly name the type here.
@@ -8,11 +8,13 @@ type Clazz = {
 function newKind(
   name: string,
   clazz: Clazz,
+  fullName: string = name,
 ): {
   name: string;
+  fullName: string;
   clazz: Clazz;
 } {
-  return { name, clazz };
+  return { name, fullName, clazz };
 }
 
 const headerKind = newKind("Header", block.Header);
@@ -80,6 +82,31 @@ export const kinds = [
   newKind("Bytes<32>", { Codec: codec.codec.bytes(32) }),
   newKind("BytesBlob", { Codec: codec.codec.blob }),
   newKind("BitVec<?>", { Codec: codec.codec.bitVecVarLen }),
+  // state stuff
+  newKind("C1", stateSer.serialize.authPools, "Authorization Pools"),
+  newKind("C2", stateSer.serialize.authQueues, "Authorization Queues"),
+  newKind("C3", stateSer.serialize.recentBlocks, "Recent Blocks"),
+  newKind("C4", stateSer.serialize.safrole, "Safrole Data"),
+  newKind("C5", stateSer.serialize.disputesRecords, "Disputes Records"),
+  newKind("C6", stateSer.serialize.entropy, "Entropy"),
+  newKind("C7", stateSer.serialize.designatedValidators, "Designated Validators"),
+  newKind("C8", stateSer.serialize.currentValidators, "Current Validators"),
+  newKind("C9", stateSer.serialize.previousValidators, "Previous Validators"),
+  newKind("C10", stateSer.serialize.availabilityAssignment, "Availability Assignment"),
+  newKind("C11", stateSer.serialize.timeslot, "Timeslot"),
+  newKind("C12", stateSer.serialize.privilegedServices, "Privileged Services"),
+  newKind("C13", stateSer.serialize.statistics, "Statistics"),
+  newKind("C14", stateSer.serialize.accumulationQueue, "Accumulation Queue"),
+  newKind("C15", stateSer.serialize.accumulationQueue, "Recently Accumulated"),
+  newKind("C16", stateSer.serialize.accumulationQueue, "Accumulation Output Log"),
+  newKind("C255", state.ServiceAccountInfo, "Service Account Info"),
+  newKind(
+    "Cl",
+    class LookupHistoryItem extends Array {
+      static Codec = codec.codec.sequenceVarLen(codec.codec.u32);
+    },
+    "Lookup History Item",
+  ),
 ];
 
 export const ALL_CHAIN_SPECS = [
