@@ -71,7 +71,7 @@ const AppContent = () => {
         </div>
 
         <div className="w-full h-[calc(100dvh-87px)] overflow-hidden text-left">
-          <Codec isDiffEnabled={isDiffEnabled} setIsDiffEnabled={setIsDiffEnabled} />
+          <Codec isDiffEnabled={isDiffEnabled} />
         </div>
       </div>
 

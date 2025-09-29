@@ -2,65 +2,77 @@ import { bytes, codec } from "@typeberry/lib";
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { CodecInput } from "../components/CodecInput";
+import { Controls } from "../components/Controls";
 import { Json } from "../components/Json";
 import { Resizable } from "../components/Resizable/Resizable";
-import { ALL_CHAIN_SPECS, kinds } from "../components/constants";
+import { ALL_CHAIN_SPECS, headerKind, kinds, tinyChainSpec } from "../components/constants";
 import { TEST_HEADER } from "../components/examples/header";
 
 interface CodecProps {
-  isDiffEnabled: boolean;
-  setIsDiffEnabled: (enabled: boolean) => void;
+  isDiffEnabled?: boolean;
 }
 
-export function Codec({ isDiffEnabled }: CodecProps) {
+function useValidSearchParams(searchParams: URLSearchParams) {
+  const urlKind = searchParams.get("kind")?.toLowerCase();
+  const kind = kinds.find((k) => k.name.toLowerCase() === urlKind);
+
+  const urlFlavor = searchParams.get("flavor")?.toLowerCase();
+  const chainSpec = ALL_CHAIN_SPECS.find((x) => x.name.toLowerCase() === urlFlavor);
+
+  const data = searchParams.get("data");
+
+  return {
+    kind,
+    chainSpec,
+    data,
+  };
+}
+
+export function Codec({ isDiffEnabled = false }: CodecProps) {
   const [searchParams, setSearchParams] = useSearchParams();
+  const validSearchParams = useValidSearchParams(searchParams);
 
   // bytes input and it's json decoding
-  const [bytesInput, setBytesInput] = useState(TEST_HEADER);
+  const [bytesInput, setBytesInput] = useState(validSearchParams.data ?? TEST_HEADER);
   const [bytesResult, setBytesResult] = useState("");
+  const [bytesPreviousResult, setBytesPreviousResult] = useState<string | null>(null);
   // json input and it's hex-encoding
   const [jsonInput, setJsonInput] = useState("{}");
   const [jsonResult, setJsonResult] = useState("");
+  const [jsonPreviousResult, setJsonPreviousResult] = useState<string | null>(null);
   // editability
   const [isBytesEditable, setIsBytesEditable] = useState(true);
   const [isJsonEditable, setIsJsonEditable] = useState(false);
-  const [previousBytesResult, setPreviousBytesResult] = useState("");
-  const [previousJsonResult, setPreviousJsonResult] = useState("");
 
   // we choose the actual values displayed based on editability.
   const valueBytes = isBytesEditable ? bytesInput : jsonResult;
   const valueJson = isBytesEditable ? bytesResult : jsonInput;
 
   const [error, setError] = useState<string | null>(null);
-  const [kind, setKind] = useState("Block");
-  const [chainSpec, setChainSpec] = useState("Tiny");
+  const [kind, setKind] = useState(validSearchParams.kind?.name ?? headerKind.name);
+  const [chainSpec, setChainSpec] = useState(validSearchParams.chainSpec?.name ?? tinyChainSpec.name);
 
   useEffect(() => {
-    const urlKind = searchParams.get("kind");
-    const validKind = urlKind && kinds.find((k) => k.name === urlKind) ? urlKind : "Block";
-
-    const urlFlavor = searchParams.get("flavor");
-    const validChainSpec =
-      urlFlavor && ["tiny", "full"].includes(urlFlavor.toLowerCase())
-        ? urlFlavor.toLowerCase() === "tiny"
-          ? "Tiny"
-          : "Full"
-        : "Tiny";
-
-    const urlData = searchParams.get("data");
-    const validData = urlData || TEST_HEADER;
-
-    setKind(validKind);
-    setChainSpec(validChainSpec);
-    handleSetInput(validData, false);
-  }, [searchParams]);
+    if (validSearchParams.kind !== undefined) {
+      setKind(validSearchParams.kind.name);
+    }
+    if (validSearchParams.chainSpec !== undefined) {
+      setChainSpec(validSearchParams.chainSpec.name);
+    }
+    if (validSearchParams.data !== null) {
+      handleBytesToJson(validSearchParams.data);
+    }
+  }, [validSearchParams.kind, validSearchParams.chainSpec, validSearchParams.data]);
 
   const updateUrlParams = (newKind: string, newChainSpec: string, newInput: string) => {
-    const params = new URLSearchParams();
-    params.set("kind", newKind);
-    params.set("flavor", newChainSpec.toLowerCase());
-    params.set("data", newInput);
-    setSearchParams(params);
+    setSearchParams((current) => {
+      const params = new URLSearchParams();
+      params.set("kind", newKind);
+      params.set("flavor", newChainSpec);
+      params.set("data", newInput);
+
+      return params.toString() === current.toString() ? current : params;
+    });
   };
 
   const handleSetKind = (newKind: string) => {
@@ -73,14 +85,13 @@ export function Codec({ isDiffEnabled }: CodecProps) {
     updateUrlParams(kind, newChainSpec, bytesInput);
   };
 
-  const handleSetInput = (newInput: string, updateUrl = true) => {
-    setBytesInput(newInput);
-    setPreviousJsonResult(bytesResult);
-    setBytesResult("");
-
-    if (updateUrl) {
-      updateUrlParams(kind, chainSpec, newInput);
+  const handleBytesToJson = (newInput: string) => {
+    if (bytesResult !== "") {
+      setBytesPreviousResult(bytesResult);
     }
+    setBytesInput(newInput);
+    setBytesResult("");
+    updateUrlParams(kind, chainSpec, newInput);
 
     // update the result
     try {
@@ -120,10 +131,11 @@ export function Codec({ isDiffEnabled }: CodecProps) {
   };
 
   const handleJsonToHex = (jsonString: string) => {
+    if (jsonResult !== "") {
+      setJsonPreviousResult(jsonResult);
+    }
     // always update textarea
     setJsonInput(jsonString);
-    setPreviousJsonResult(valueJson);
-    setPreviousBytesResult(jsonResult);
     setJsonResult("");
 
     try {
@@ -147,10 +159,10 @@ export function Codec({ isDiffEnabled }: CodecProps) {
       const encoded = codec.Encoder.encodeObject(kindDescriptor.clazz.Codec, jsonObject, spec?.spec);
 
       const bytesValue = encoded.toString();
-      setError(null);
       setJsonResult(bytesValue);
       setBytesInput(bytesValue);
       updateUrlParams(kind, chainSpec, bytesValue);
+      setError(null);
     } catch (e) {
       setError(`${e}`);
     }
@@ -160,34 +172,47 @@ export function Codec({ isDiffEnabled }: CodecProps) {
     <Resizable
       left={
         <CodecInput
-          onChange={handleSetInput}
+          controls={
+            <Controls
+              onChange={handleBytesToJson}
+              kind={kind}
+              setKind={handleSetKind}
+              chainSpec={chainSpec}
+              setChainSpec={handleSetChainSpec}
+            />
+          }
+          onChange={handleBytesToJson}
           value={valueBytes}
+          previousValue={jsonPreviousResult}
           error={error}
-          kind={kind}
           setKind={handleSetKind}
           chainSpec={chainSpec}
-          setChainSpec={handleSetChainSpec}
           isBytesEditable={isBytesEditable}
           setIsBytesEditable={(editable) => {
             setIsBytesEditable(editable);
-            if (editable) setIsJsonEditable(false);
+            if (editable) {
+              setIsJsonEditable(false);
+              handleBytesToJson(valueBytes);
+            }
           }}
           isDiffEnabled={isDiffEnabled}
-          previousValue={isBytesEditable ? "" : previousBytesResult}
         />
       }
       right={
         <Json
-          result={valueJson}
+          value={valueJson}
+          previousValue={bytesPreviousResult}
           isJsonEditable={isJsonEditable}
           setIsJsonEditable={(editable) => {
             setIsJsonEditable(editable);
-            if (editable) setIsBytesEditable(false);
+            if (editable) {
+              setIsBytesEditable(false);
+              handleJsonToHex(valueJson);
+            }
           }}
           onJsonChange={handleJsonToHex}
           error={error}
           isDiffEnabled={isDiffEnabled}
-          previousValue={isJsonEditable ? "" : previousJsonResult}
         />
       }
     />

@@ -38,6 +38,7 @@ describe("Json", () => {
     setIsJsonEditable: vi.fn(),
     onJsonChange: vi.fn(),
     error: null,
+    isDiffEnabled: false,
   };
 
   it("renders json result in pre tag when not editable", () => {

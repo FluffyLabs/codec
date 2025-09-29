@@ -160,6 +160,7 @@ describe("CodecInput", () => {
     setChainSpec: vi.fn(),
     isBytesEditable: true,
     setIsBytesEditable: vi.fn(),
+    isDiffEnabled: false,
   };
 
   beforeEach(() => {
