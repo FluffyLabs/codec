@@ -27,7 +27,7 @@ export function JamObjectSelect({ setKind, kind }: JamObjectSelectProps) {
         <DropdownMenuRadioGroup value={kind} onValueChange={setKind}>
           {kinds.map((k) => (
             <DropdownMenuRadioItem key={k.name} value={k.name}>
-              {k.name}
+              {k.fullName !== k.name ? `${k.fullName} (${k.name})` : `${k.name}`}
             </DropdownMenuRadioItem>
           ))}
         </DropdownMenuRadioGroup>

@@ -126,10 +126,32 @@ vi.mock("@typeberry/lib", () => ({
       bytes: vi.fn().mockReturnValue({}),
       blob: {},
       bitVecVarLen: {},
+      sequenceVarLen: vi.fn().mockReturnValue({}),
     },
   },
   config: {
     tinyChainSpec: {},
+  },
+  state: {
+    ServiceAccountInfo: { Codec: {} },
+  },
+  state_merkleization: {
+    serialize: {
+      authPools: { Codec: {} },
+      authQueues: { Codec: {} },
+      recentBlocks: { Codec: {} },
+      safrole: { Codec: {} },
+      disputesRecords: { Codec: {} },
+      entropy: { Codec: {} },
+      designatedValidators: { Codec: {} },
+      currentValidators: { Codec: {} },
+      previousValidators: { Codec: {} },
+      availabilityAssignment: { Codec: {} },
+      timeslot: { Codec: {} },
+      privilegedServices: { Codec: {} },
+      statistics: { Codec: {} },
+      accumulationQueue: { Codec: {} },
+    },
   },
 }));
 
