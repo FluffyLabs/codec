@@ -38,7 +38,7 @@ export function CodecInput({
           label="Bytes"
           checked={isBytesEditable}
           onChange={(e) => setIsBytesEditable(e.target.checked)}
-          disabled={!isBytesEditable && error !== null}
+          disabled={isBytesEditable || error !== null}
         />
       </div>
 

@@ -40,7 +40,7 @@ const AppHeader = ({
               label="Show Diff"
               checked={isDiffEnabled}
               onChange={(e) => setIsDiffEnabled(e.target.checked)}
-              className="text-white"
+              className="text-muted-foreground"
             />
           </div>
           <Button onClick={onOpenSettings} size="sm" aria-label="Settings" title="Settings" forcedColorScheme="dark">

@@ -33,7 +33,8 @@ vi.mock("./ui/Textarea", () => ({
 
 describe("Json", () => {
   const defaultProps = {
-    result: '{"test": "value"}',
+    value: '{"test": "value"}',
+    previousValue: null,
     isJsonEditable: false,
     setIsJsonEditable: vi.fn(),
     onJsonChange: vi.fn(),
@@ -44,7 +45,7 @@ describe("Json", () => {
   it("renders json result in pre tag when not editable", () => {
     render(<Json {...defaultProps} />);
 
-    const preElement = screen.getByText(defaultProps.result);
+    const preElement = screen.getByText(defaultProps.value);
     expect(preElement).toBeInTheDocument();
     expect(preElement.tagName).toBe("PRE");
   });

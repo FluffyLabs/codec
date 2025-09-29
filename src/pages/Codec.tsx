@@ -40,13 +40,13 @@ export function Codec({ isDiffEnabled = false }: CodecProps) {
   const [jsonInput, setJsonInput] = useState("{}");
   const [jsonResult, setJsonResult] = useState("");
   const [jsonPreviousResult, setJsonPreviousResult] = useState<string | null>(null);
+
   // editability
-  const [isBytesEditable, setIsBytesEditable] = useState(true);
-  const [isJsonEditable, setIsJsonEditable] = useState(false);
+  const [editMode, setEditMode] = useState<"bytes" | "json">("bytes");
 
   // we choose the actual values displayed based on editability.
-  const valueBytes = isBytesEditable ? bytesInput : jsonResult;
-  const valueJson = isBytesEditable ? bytesResult : jsonInput;
+  const valueBytes = editMode === "bytes" ? bytesInput : jsonResult;
+  const valueJson = editMode === "bytes" ? bytesResult : jsonInput;
 
   const [error, setError] = useState<string | null>(null);
   const [kind, setKind] = useState(validSearchParams.kind?.name ?? headerKind.name);
@@ -125,7 +125,6 @@ export function Codec({ isDiffEnabled = false }: CodecProps) {
       setJsonInput(json);
       setError(null);
     } catch (e) {
-      setBytesResult("");
       setError(`${e}`);
     }
   };
@@ -157,6 +156,8 @@ export function Codec({ isDiffEnabled = false }: CodecProps) {
       });
 
       const encoded = codec.Encoder.encodeObject(kindDescriptor.clazz.Codec, jsonObject, spec?.spec);
+      // make sure we can decode it back as well
+      codec.Decoder.decodeObject(kindDescriptor.clazz.Codec, encoded, spec?.spec);
 
       const bytesValue = encoded.toString();
       setJsonResult(bytesValue);
@@ -187,11 +188,10 @@ export function Codec({ isDiffEnabled = false }: CodecProps) {
           error={error}
           setKind={handleSetKind}
           chainSpec={chainSpec}
-          isBytesEditable={isBytesEditable}
+          isBytesEditable={editMode === "bytes"}
           setIsBytesEditable={(editable) => {
-            setIsBytesEditable(editable);
+            setEditMode(editable ? "bytes" : "json");
             if (editable) {
-              setIsJsonEditable(false);
               handleBytesToJson(valueBytes);
             }
           }}
@@ -202,11 +202,10 @@ export function Codec({ isDiffEnabled = false }: CodecProps) {
         <Json
           value={valueJson}
           previousValue={bytesPreviousResult}
-          isJsonEditable={isJsonEditable}
+          isJsonEditable={editMode === "json"}
           setIsJsonEditable={(editable) => {
-            setIsJsonEditable(editable);
+            setEditMode(editable ? "json" : "bytes");
             if (editable) {
-              setIsBytesEditable(false);
               handleJsonToHex(valueJson);
             }
           }}

@@ -1,7 +1,8 @@
 export interface DiffSegment {
-  type: "unchanged" | "added" | "removed";
+  type: "unchanged" | "added" | "removed" | "changed";
   content: string;
   position: number;
+  oldContent?: string; // For changed segments, store the original content
 }
 
 export interface DiffResult {
@@ -9,86 +10,74 @@ export interface DiffResult {
   hasChanges: boolean;
 }
 
-export function calculateDiff(oldText: string, newText: string): DiffResult {
-  if (oldText === newText) {
-    return {
-      segments: [{ type: "unchanged", content: newText, position: 0 }],
-      hasChanges: false,
-    };
-  }
-
+export function calculateDiff(oldValue: string, newValue: string): DiffResult {
+  const maxLength = Math.max(oldValue.length, newValue.length);
   const segments: DiffSegment[] = [];
-  let oldIndex = 0;
-  let newIndex = 0;
-  let position = 0;
 
-  while (oldIndex < oldText.length || newIndex < newText.length) {
-    if (oldIndex >= oldText.length) {
-      segments.push({
-        type: "added",
-        content: newText.slice(newIndex),
-        position,
-      });
-      break;
-    }
+  let i = 0;
+  while (i < maxLength) {
+    const oldChar = oldValue[i] || "";
+    const newChar = newValue[i] || "";
 
-    if (newIndex >= newText.length) {
-      segments.push({
-        type: "removed",
-        content: oldText.slice(oldIndex),
-        position,
-      });
-      break;
-    }
-
-    if (oldText[oldIndex] === newText[newIndex]) {
-      const matchStart = newIndex;
-      while (oldIndex < oldText.length && newIndex < newText.length && oldText[oldIndex] === newText[newIndex]) {
-        oldIndex++;
-        newIndex++;
+    if (oldChar === newChar && oldChar !== "") {
+      // Characters are the same - collect all consecutive same characters
+      let sameText = oldChar;
+      i++;
+      while (i < maxLength && oldValue[i] === newValue[i] && oldValue[i]) {
+        sameText += oldValue[i];
+        i++;
       }
-      segments.push({
-        type: "unchanged",
-        content: newText.slice(matchStart, newIndex),
-        position,
-      });
-      position = newIndex;
+      segments.push({ content: sameText, type: "unchanged", position: i });
     } else {
-      let oldEnd = oldIndex;
-      let newEnd = newIndex;
+      // Characters are different - collect consecutive changes
+      let removedText = "";
+      let addedText = "";
 
-      while (oldEnd < oldText.length && newEnd < newText.length) {
-        if (oldText[oldEnd] === newText[newEnd]) {
-          break;
-        }
-        oldEnd++;
-        newEnd++;
+      // Collect consecutive different characters
+      while (i < maxLength && (oldValue[i] || "") !== (newValue[i] || "")) {
+        if (oldValue[i]) removedText += oldValue.substring(i, i + 2);
+        if (newValue[i]) addedText += newValue.substring(i, i + 2);
+        i += 2;
       }
 
-      if (oldEnd > oldIndex) {
-        segments.push({
-          type: "removed",
-          content: oldText.slice(oldIndex, oldEnd),
-          position,
-        });
+      const actuallyRemoved = removedText.substring(addedText.length);
+      const actuallyAdded = addedText.substring(removedText.length);
+
+      // changed
+      const changedLength = Math.min(removedText.length, addedText.length);
+      const after = addedText.substring(0, changedLength);
+      const before = removedText.substring(0, changedLength);
+
+      if (changedLength > 0) {
+        segments.push({ content: after, oldContent: before, type: "changed", position: i });
       }
 
-      if (newEnd > newIndex) {
-        segments.push({
-          type: "added",
-          content: newText.slice(newIndex, newEnd),
-          position,
-        });
-        position = newEnd;
+      if (actuallyRemoved.length > 0) {
+        segments.push({ content: actuallyRemoved, type: "removed", position: i });
       }
-
-      oldIndex = oldEnd;
-      newIndex = newEnd;
+      if (actuallyAdded.length > 0) {
+        segments.push({ content: addedText, type: "added", position: i });
+      }
     }
   }
 
   return {
     segments,
-    hasChanges: true,
+    hasChanges: segments.length > 1,
   };
+
+  //
+  // return parts.map((part, index) => {
+  //   const className = part.type === 'removed'
+  //     ? 'bg-red-200 dark:bg-red-900/60 text-red-900 dark:text-red-100'
+  //     : part.type === 'added'
+  //     ? 'bg-green-200 dark:bg-green-900/60 text-green-900 dark:text-green-100'
+  //     : '';
+  //
+  //   return (
+  //     <span key={index} className={className}>
+  //       {part.text}
+  //     </span>
+  //   );
+  // });
 }

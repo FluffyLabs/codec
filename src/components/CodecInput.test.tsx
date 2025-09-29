@@ -153,6 +153,8 @@ describe("CodecInput", () => {
   const defaultProps = {
     onChange: vi.fn(),
     value: "test-value",
+    previousValue: null,
+    controls: null,
     error: null,
     kind: "Block",
     setKind: vi.fn(),

@@ -47,11 +47,60 @@ export function DiffHighlight({
             return <span key={key}>{segment.content}</span>;
           }
 
-          if (segment.type === "added") {
+          if (segment.type === "changed") {
             return (
               <span key={key}>
                 <span
                   className="bg-yellow-200 dark:bg-yellow-800"
+                  data-tooltip-id={`diff-tooltip-${key}`}
+                  data-tooltip-content={`Before: ${segment.oldContent}\nAfter: ${segment.content}`}
+                >
+                  {segment.content}
+                </span>
+                <Tooltip
+                  id={`diff-tooltip-${key}`}
+                  place="top"
+                  style={{
+                    backgroundColor: "#2563eb",
+                    color: "white",
+                    fontSize: "12px",
+                    wordBreak: "break-all",
+                    whiteSpace: "pre",
+                  }}
+                />
+              </span>
+            );
+          }
+
+          if (segment.type === "removed") {
+            return (
+              <span key={key}>
+                <span
+                  className="bg-red-200 dark:bg-red-800"
+                  data-tooltip-id={`diff-tooltip-${key}`}
+                  data-tooltip-content={`Removed: ${segment.content}`}
+                >
+                  •
+                </span>
+                <Tooltip
+                  id={`diff-tooltip-${key}`}
+                  place="top"
+                  style={{
+                    backgroundColor: "#dc2626",
+                    color: "white",
+                    fontSize: "12px",
+                    wordBreak: "break-all",
+                  }}
+                />
+              </span>
+            );
+          }
+
+          if (segment.type === "added") {
+            return (
+              <span key={key}>
+                <span
+                  className="bg-green-200 dark:bg-green-800"
                   data-tooltip-id={`diff-tooltip-${key}`}
                   data-tooltip-content={`Added: ${segment.content}`}
                 >
@@ -64,32 +113,6 @@ export function DiffHighlight({
                     backgroundColor: "#16a34a",
                     color: "white",
                     fontSize: "12px",
-                    maxWidth: "300px",
-                    wordBreak: "break-all",
-                  }}
-                />
-              </span>
-            );
-          }
-
-          if (segment.type === "removed") {
-            return (
-              <span key={key}>
-                <span
-                  className="bg-yellow-200 dark:bg-yellow-800"
-                  data-tooltip-id={`diff-tooltip-${key}`}
-                  data-tooltip-content={`Removed: ${segment.content}`}
-                >
-                  {/* Removed content is not displayed but tooltip shows what was removed */}
-                </span>
-                <Tooltip
-                  id={`diff-tooltip-${key}`}
-                  place="top"
-                  style={{
-                    backgroundColor: "#dc2626",
-                    color: "white",
-                    fontSize: "12px",
-                    maxWidth: "300px",
                     wordBreak: "break-all",
                   }}
                 />

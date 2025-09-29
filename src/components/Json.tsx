@@ -28,7 +28,7 @@ export function Json({
           label="JSON"
           checked={isJsonEditable}
           onChange={(e) => setIsJsonEditable(e.target.checked)}
-          disabled={!isJsonEditable && error !== null}
+          disabled={isJsonEditable || error !== null}
         />
       </div>
       {isJsonEditable ? (
