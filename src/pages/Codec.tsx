@@ -114,6 +114,9 @@ export function Codec({ isDiffEnabled = false }: CodecProps) {
           if (value instanceof bytes.Bytes) {
             return value.toString();
           }
+          if (value instanceof Map) {
+            return Object.fromEntries(value.entries());
+          }
           if (typeof value === "bigint") {
             return value.toString();
           }
