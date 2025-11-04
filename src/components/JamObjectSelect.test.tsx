@@ -36,6 +36,7 @@ vi.mock("@fluffylabs/shared-ui", () => ({
       {children}
     </div>
   ),
+  DropdownMenuSeparator: () => <div data-testid="dropdown-menu-separator" />,
 }));
 
 describe("JamObjectSelect", () => {
