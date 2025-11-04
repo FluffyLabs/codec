@@ -108,7 +108,12 @@ export const kinds = [
     "Lookup History Item",
   ),
   // host calls stuff
-  newKind("Host Call - Info: Account", jam.hostCallInfoAccount, "Info Service Account"),
+  newKind(
+    "Host Call - Info: Account",
+    class HostCallInfoAccount extends Object {
+      static Codec = jam.hostCallInfoAccount;
+    },
+  ),
 ];
 
 type Spec = {
