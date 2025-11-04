@@ -4,10 +4,12 @@ import {
   DropdownMenuContent,
   DropdownMenuRadioGroup,
   DropdownMenuRadioItem,
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@fluffylabs/shared-ui";
 import { ChevronDownIcon } from "lucide-react";
 import { kinds } from "./constants";
+import { ChangeEvent, KeyboardEvent, useCallback, useEffect, useState } from "react";
 
 type JamObjectSelectProps = {
   setKind: (name: string) => void;
@@ -15,6 +17,33 @@ type JamObjectSelectProps = {
 };
 
 export function JamObjectSelect({ setKind, kind }: JamObjectSelectProps) {
+  const [search, setSearch] = useState("");
+  const [filtered, setFiltered] = useState(kinds);
+
+  useEffect(() => {
+    const s = search.trim().toLowerCase();
+    if (s.length > 0) {
+      setFiltered(kinds.filter((x) => x.name.toLowerCase().includes(s) || x.fullName.toLowerCase().includes(s)));
+    } else {
+      setFiltered(kinds);
+    }
+  }, [search]);
+  const handleChange = useCallback((e: ChangeEvent<HTMLInputElement>) => setSearch(e.target.value), []);
+  const handleKey = useCallback((e: KeyboardEvent<HTMLInputElement>) => {
+    const allowedKeys = ["ArrowDown", "ArrowUp", "Enter", "Escape", "Tab"];
+
+    if (!allowedKeys.includes(e.key)) {
+      e.stopPropagation();
+    } else {
+      const item = document.querySelector(
+        e.key === "ArrowUp" ? "[data-radix-collection-item]:last-child" : "[data-radix-collection-item]",
+      );
+      if (item !== null) {
+        (item as HTMLElement).focus();
+      }
+    }
+  }, []);
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -24,9 +53,21 @@ export function JamObjectSelect({ setKind, kind }: JamObjectSelectProps) {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56">
+        <div className="w-full flex flex-row">
+          <input
+            autoFocus
+            className="p-2 m-1 border-1 rounded-sm flex-1"
+            type="text"
+            onChange={handleChange}
+            onKeyDown={handleKey}
+            value={search}
+            placeholder="search..."
+          />
+        </div>
+        <DropdownMenuSeparator />
         <DropdownMenuRadioGroup value={kind} onValueChange={setKind}>
-          {kinds.map((k) => (
-            <DropdownMenuRadioItem key={k.name} value={k.name}>
+          {filtered.map((k) => (
+            <DropdownMenuRadioItem key={k.name} value={k.name} tabIndex={-1}>
               {k.fullName !== k.name ? `${k.fullName} (${k.name})` : `${k.name}`}
             </DropdownMenuRadioItem>
           ))}

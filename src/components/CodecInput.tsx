@@ -1,8 +1,7 @@
-import { cn } from "@fluffylabs/shared-ui";
+import { cn, Textarea } from "@fluffylabs/shared-ui";
 import { DiffHighlight } from "./DiffHighlight";
 import { KindFinder } from "./KindFinder";
 import { Checkbox } from "./ui/Checkbox";
-import { Textarea } from "./ui/Textarea";
 
 type CodecInputProps = {
   onChange: (v: string) => void;
@@ -50,7 +49,7 @@ export function CodecInput({
             {
               "ring-2 ring-red-700": !isValid,
             },
-            "flex-1 font-mono bg-[#ddd] dark:bg-secondary",
+            "flex-1 font-mono bg-[#eee] dark:bg-secondary",
           )}
           onChange={(ev) => onChange(ev.target.value)}
           value={value}
@@ -58,7 +57,7 @@ export function CodecInput({
       ) : (
         <div
           className={cn(
-            "flex-1 font-mono bg-[#ddd] dark:bg-secondary rounded-sm p-2 overflow-x-none overflow-y-auto text-sm",
+            "flex-1 font-mono bg-[#eee] dark:bg-secondary rounded-sm p-2 overflow-x-none overflow-y-auto text-sm",
           )}
         >
           <DiffHighlight
