@@ -1,4 +1,4 @@
-import { block, codec, config, state, state_merkleization as stateSer } from "@typeberry/lib";
+import { block, codec, config, jam_host_calls as jam, state, state_merkleization as stateSer } from "@typeberry/lib";
 
 type Clazz = {
   // biome-ignore lint/suspicious/noExplicitAny: we can't properly name the type here.
@@ -99,7 +99,7 @@ export const kinds = [
   newKind("C14", stateSer.serialize.accumulationQueue, "Accumulation Queue"),
   newKind("C15", stateSer.serialize.accumulationQueue, "Recently Accumulated"),
   newKind("C16", stateSer.serialize.accumulationQueue, "Accumulation Output Log"),
-  newKind("C255", state.ServiceAccountInfo, "Service Account Info"),
+  newKind("C255", state.ServiceAccountInfo, "Service Account"),
   newKind(
     "Cl",
     class LookupHistoryItem extends Array {
@@ -107,18 +107,32 @@ export const kinds = [
     },
     "Lookup History Item",
   ),
+  // host calls stuff
+  newKind(
+    "Host Call - Info: Account",
+    class HostCallInfoAccount extends Object {
+      static Codec = jam.hostCallInfoAccount;
+    },
+  ),
 ];
 
-export const tinyChainSpec = {
+type Spec = {
+  readonly name: string;
+  readonly spec: config.ChainSpec;
+};
+
+export const tinyChainSpec: Spec = {
   name: "Tiny",
   spec: config.tinyChainSpec,
 };
-export const ALL_CHAIN_SPECS = [
+const _ALL_CHAIN_SPECS: Spec[] = [
   tinyChainSpec,
   {
     name: "Full",
-    spec: config.tinyChainSpec,
+    spec: config.fullChainSpec,
   },
-];
+] as const;
+
+export const ALL_CHAIN_SPECS: Spec[] = _ALL_CHAIN_SPECS;
 
 export { headerKind, blockKind };
