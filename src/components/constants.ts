@@ -124,7 +124,7 @@ const _ALL_CHAIN_SPECS: Spec[] = [
   tinyChainSpec,
   {
     name: "Full",
-    spec: config.tinyChainSpec,
+    spec: config.fullChainSpec,
   },
 ] as const;
 
