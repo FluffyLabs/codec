@@ -1,4 +1,12 @@
-import { block, codec, config, jam_host_calls as jam, state, state_vectors, state_merkleization as stateSer } from "@typeberry/lib";
+import {
+  block,
+  codec,
+  config,
+  jam_host_calls as jam,
+  state,
+  state_merkleization as stateSer,
+  state_vectors,
+} from "@typeberry/lib";
 
 type Clazz = {
   // biome-ignore lint/suspicious/noExplicitAny: we can't properly name the type here.
@@ -115,14 +123,8 @@ export const kinds = [
     },
   ),
   // test stuff
-  newKind(
-    "STF Genesis",
-    state_vectors.StateTransitionGenesis
-  ),
-  newKind(
-    "STF Vector",
-    state_vectors.StateTransition
-  ),
+  newKind("STF Genesis", state_vectors.StateTransitionGenesis),
+  newKind("STF Vector", state_vectors.StateTransition),
 ];
 
 type Spec = {

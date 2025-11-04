@@ -8,8 +8,8 @@ import {
   DropdownMenuTrigger,
 } from "@fluffylabs/shared-ui";
 import { ChevronDownIcon } from "lucide-react";
+import { type ChangeEvent, type KeyboardEvent, useCallback, useEffect, useState } from "react";
 import { kinds } from "./constants";
-import { ChangeEvent, KeyboardEvent, useCallback, useEffect, useState } from "react";
 
 type JamObjectSelectProps = {
   setKind: (name: string) => void;
