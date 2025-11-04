@@ -22,7 +22,7 @@
     "react-dom": "^19.2.0",
     "react-router-dom": "^7.9.5",
     "react-tooltip": "^5.27.1",
-    "tailwindcss": "^4.1.12"
+    "tailwindcss": "^4.1.16"
   },
   "devDependencies": {
     "@biomejs/biome": "1.9.3",
