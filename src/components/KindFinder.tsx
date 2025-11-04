@@ -38,7 +38,7 @@ export function KindFinder({
     <div className="p-4 bg-brand/20 text-neutral-700 border-1 border-brand flex rounded-sm items-center gap-2">
       <InfoIcon />
       The input looks a lot like
-      <Button variant="outline" onClick={() => setKind(foundKind.name)}>
+      <Button variant="ghost" onClick={() => setKind(foundKind.name)}>
         {foundKind.name}
       </Button>
     </div>

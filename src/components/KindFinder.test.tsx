@@ -125,6 +125,10 @@ vi.mock("@typeberry/lib", () => ({
       accumulationQueue: { Codec: {} },
     },
   },
+  state_vectors: {
+    StateTransitionGenesis: { Codec: {} },
+    StateTransition: { Codec: {} },
+  },
 }));
 
 describe("KindFinder", () => {

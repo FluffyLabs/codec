@@ -56,15 +56,15 @@ export function Controls({ onChange, setKind, kind, setChainSpec, chainSpec }: C
         <ChainSpecSelect setChainSpec={setChainSpec} chainSpec={chainSpec} />
       </div>
       <div className="flex flex-row justify-between gap-4 overflow-auto">
-        <Button onClick={load}>
+        <Button variant="secondary" onClick={load}>
           <UploadIcon className="mr-2" />
           From file
         </Button>
         <ButtonGroup>
-          <Button variant="outline" onClick={setBlock}>
+          <Button variant="tertiary" intent="neturalSoft" onClick={setBlock}>
             Block Example
           </Button>
-          <Button variant="outline" onClick={setHeader}>
+          <Button variant="tertiary" intent="neturalSoft" onClick={setHeader}>
             Header Example
           </Button>
         </ButtonGroup>

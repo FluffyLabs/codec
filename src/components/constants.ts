@@ -1,4 +1,12 @@
-import { block, codec, config, jam_host_calls as jam, state, state_merkleization as stateSer } from "@typeberry/lib";
+import {
+  block,
+  codec,
+  config,
+  jam_host_calls as jam,
+  state,
+  state_merkleization as stateSer,
+  state_vectors,
+} from "@typeberry/lib";
 
 type Clazz = {
   // biome-ignore lint/suspicious/noExplicitAny: we can't properly name the type here.
@@ -114,6 +122,9 @@ export const kinds = [
       static Codec = jam.hostCallInfoAccount;
     },
   ),
+  // test stuff
+  newKind("STF Genesis", state_vectors.StateTransitionGenesis),
+  newKind("STF Vector", state_vectors.StateTransition),
 ];
 
 type Spec = {
@@ -125,14 +136,13 @@ export const tinyChainSpec: Spec = {
   name: "Tiny",
   spec: config.tinyChainSpec,
 };
-const _ALL_CHAIN_SPECS: Spec[] = [
+
+export const ALL_CHAIN_SPECS: Spec[] = [
   tinyChainSpec,
   {
     name: "Full",
     spec: config.fullChainSpec,
   },
 ] as const;
-
-export const ALL_CHAIN_SPECS: Spec[] = _ALL_CHAIN_SPECS;
 
 export { headerKind, blockKind };

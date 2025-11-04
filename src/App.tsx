@@ -33,7 +33,7 @@ const AppHeader = ({
       ghRepoName="codec"
       keepNameWhenSmall
       endSlot={
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-4 pr-4">
           <VersionDisplay />
           <div className="flex items-center">
             <Checkbox
@@ -57,7 +57,7 @@ const AppContent = () => {
   const [isDiffEnabled, setIsDiffEnabled] = useState(true);
 
   return (
-    <div className="flex flex-col overflow-hidden h-[100dvh] bg-secondary dark:bg-[#242424]">
+    <div className="flex flex-col overflow-hidden h-[100dvh] bg-sidebar dark:bg-[#242424]">
       <div className="h-[87px]">
         <AppHeader
           onOpenSettings={() => setIsSettingsOpen(true)}

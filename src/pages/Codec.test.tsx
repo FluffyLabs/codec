@@ -47,6 +47,17 @@ vi.mock("@fluffylabs/shared-ui", () => ({
     <div data-testid="dropdown-menu-label">{children}</div>
   ),
   DropdownMenuSeparator: () => <div data-testid="dropdown-menu-separator" />,
+  Textarea: ({
+    value,
+    onChange,
+    className,
+    ...props
+  }: {
+    value: string;
+    onChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
+    className?: string;
+    [key: string]: unknown;
+  }) => <textarea value={value} onChange={onChange} className={className} {...props} />,
   cn: (...classes: unknown[]) => classes.filter(Boolean).join(" "),
 }));
 
@@ -155,6 +166,10 @@ vi.mock("@typeberry/lib", () => ({
       statistics: { Codec: {} },
       accumulationQueue: { Codec: {} },
     },
+  },
+  state_vectors: {
+    StateTransitionGenesis: { Codec: {} },
+    StateTransition: { Codec: {} },
   },
 }));
 

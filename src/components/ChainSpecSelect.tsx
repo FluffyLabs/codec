@@ -20,7 +20,7 @@ export function ChainSpecSelect({ setChainSpec, chainSpec }: ChainSpecSelectProp
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost">
+        <Button variant="secondary" intent="neturalSoft">
           Parameters: {chainSpec}
           <ChevronDownIcon className="w-4 h-4 m-2" />
         </Button>

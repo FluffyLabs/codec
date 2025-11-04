@@ -1,6 +1,6 @@
+import { Textarea } from "@fluffylabs/shared-ui";
 import { DiffHighlight } from "./DiffHighlight";
 import { Checkbox } from "./ui/Checkbox";
-import { Textarea } from "./ui/Textarea";
 
 type JsonProps = {
   value: string;
@@ -33,12 +33,12 @@ export function Json({
       </div>
       {isJsonEditable ? (
         <Textarea
-          className="flex-1 font-mono bg-[#ddd] dark:bg-secondary overflow-x-auto break-keep whitespace-pre"
+          className="flex-1 font-mono bg-[#eee] dark:bg-secondary overflow-x-auto break-keep whitespace-pre"
           onChange={(ev) => onJsonChange(ev.target.value)}
           value={value}
         />
       ) : (
-        <div className="flex-1 overflow-y-scroll overflow-x-auto p-2 bg-[#ddd] dark:bg-secondary rounded-sm text-sm">
+        <div className="flex-1 overflow-y-scroll overflow-x-auto p-2 bg-[#eee] dark:bg-secondary rounded-sm text-sm">
           <DiffHighlight value={value} previousValue={previousValue} isEnabled={isDiffEnabled} />
         </div>
       )}
