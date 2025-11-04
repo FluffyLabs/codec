@@ -111,16 +111,23 @@ export const kinds = [
   newKind("Host Call - Info: Account", jam.hostCallInfoAccount, "Info Service Account"),
 ];
 
-export const tinyChainSpec = {
+type Spec = {
+  readonly name: string;
+  readonly spec: config.ChainSpec;
+};
+
+export const tinyChainSpec: Spec = {
   name: "Tiny",
   spec: config.tinyChainSpec,
 };
-export const ALL_CHAIN_SPECS = [
+const _ALL_CHAIN_SPECS: Spec[] = [
   tinyChainSpec,
   {
     name: "Full",
     spec: config.tinyChainSpec,
   },
-];
+] as const;
+
+export const ALL_CHAIN_SPECS: Spec[] = _ALL_CHAIN_SPECS;
 
 export { headerKind, blockKind };
