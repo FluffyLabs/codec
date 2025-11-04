@@ -132,6 +132,9 @@ vi.mock("@typeberry/lib", () => ({
   config: {
     tinyChainSpec: {},
   },
+  jam_host_calls: {
+    hostCallInfoAccount: { Codec: {} },
+  },
   state: {
     ServiceAccountInfo: { Codec: {} },
   },
