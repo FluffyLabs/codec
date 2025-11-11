@@ -17,7 +17,7 @@
     "@fluffylabs/shared-ui": "^0.4.3",
     "@tailwindcss/vite": "^4.1.12",
     "@typeberry/lib": "^0.2.0-ca77d76",
-    "lucide-react": "^0.552.0",
+    "lucide-react": "^0.553.0",
     "react": "^19.0.0",
     "react-dom": "^19.2.0",
     "react-router-dom": "^7.9.5",
