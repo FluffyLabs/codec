@@ -15,7 +15,7 @@
   },
   "dependencies": {
     "@fluffylabs/shared-ui": "^0.4.3",
-    "@tailwindcss/vite": "^4.1.12",
+    "@tailwindcss/vite": "^4.1.17",
     "@typeberry/lib": "^0.2.0-ca77d76",
     "lucide-react": "^0.552.0",
     "react": "^19.0.0",
