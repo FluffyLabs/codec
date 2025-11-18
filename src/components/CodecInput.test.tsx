@@ -9,7 +9,12 @@ vi.mock("@fluffylabs/shared-ui", () => ({
     onClick,
     variant,
     ...props
-  }: { children: React.ReactNode; onClick?: () => void; variant?: string; [key: string]: unknown }) => (
+  }: {
+    children: React.ReactNode;
+    onClick?: () => void;
+    variant?: string;
+    [key: string]: unknown;
+  }) => (
     <button onClick={onClick} data-variant={variant} {...props}>
       {children}
     </button>
@@ -191,9 +196,13 @@ vi.mock("./ui/Checkbox", () => ({
 vi.mock("./DiffHighlight", () => ({
   DiffHighlight: ({
     value,
-  }: { value: string; previousValue: string | null; isEnabled: boolean; component?: string; className?: string }) => (
-    <div data-testid="diff-highlight">{value}</div>
-  ),
+  }: {
+    value: string;
+    previousValue: string | null;
+    isEnabled: boolean;
+    component?: string;
+    className?: string;
+  }) => <div data-testid="diff-highlight">{value}</div>,
 }));
 
 describe("CodecInput", () => {

@@ -9,7 +9,12 @@ vi.mock("@fluffylabs/shared-ui", () => ({
     onClick,
     variant,
     ...props
-  }: { children: React.ReactNode; onClick?: () => void; variant?: string; [key: string]: unknown }) => (
+  }: {
+    children: React.ReactNode;
+    onClick?: () => void;
+    variant?: string;
+    [key: string]: unknown;
+  }) => (
     <button onClick={onClick} data-variant={variant} {...props}>
       {children}
     </button>
@@ -26,7 +31,11 @@ vi.mock("@fluffylabs/shared-ui", () => ({
   DropdownMenuRadioGroup: ({
     children,
     value,
-  }: { children: React.ReactNode; value?: string; onValueChange?: (value: string) => void }) => (
+  }: {
+    children: React.ReactNode;
+    value?: string;
+    onValueChange?: (value: string) => void;
+  }) => (
     <div data-testid="dropdown-menu-radio-group" data-value={value}>
       {children}
     </div>

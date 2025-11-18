@@ -9,7 +9,12 @@ vi.mock("@fluffylabs/shared-ui", () => ({
     onClick,
     variant,
     ...props
-  }: { children: React.ReactNode; onClick?: () => void; variant?: string; [key: string]: unknown }) => (
+  }: {
+    children: React.ReactNode;
+    onClick?: () => void;
+    variant?: string;
+    [key: string]: unknown;
+  }) => (
     <button onClick={onClick} data-variant={variant} {...props}>
       {children}
     </button>

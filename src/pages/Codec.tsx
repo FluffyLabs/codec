@@ -1,12 +1,12 @@
 import { bytes, codec } from "@typeberry/lib";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { CodecInput } from "../components/CodecInput";
 import { Controls } from "../components/Controls";
-import { Json } from "../components/Json";
-import { Resizable } from "../components/Resizable/Resizable";
 import { ALL_CHAIN_SPECS, headerKind, kinds, tinyChainSpec } from "../components/constants";
 import { TEST_HEADER } from "../components/examples/header";
+import { Json } from "../components/Json";
+import { Resizable } from "../components/Resizable/Resizable";
 
 interface CodecProps {
   isDiffEnabled?: boolean;
@@ -51,39 +51,6 @@ export function Codec({ isDiffEnabled = false }: CodecProps) {
   const [error, setError] = useState<string | null>(null);
   const [kind, setKind] = useState(validSearchParams.kind?.name ?? headerKind.name);
   const [chainSpec, setChainSpec] = useState(validSearchParams.chainSpec?.name ?? tinyChainSpec.name);
-
-  useEffect(() => {
-    if (validSearchParams.kind !== undefined) {
-      setKind(validSearchParams.kind.name);
-    }
-    if (validSearchParams.chainSpec !== undefined) {
-      setChainSpec(validSearchParams.chainSpec.name);
-    }
-    if (validSearchParams.data !== null) {
-      handleBytesToJson(validSearchParams.data);
-    }
-  }, [validSearchParams.kind, validSearchParams.chainSpec, validSearchParams.data]);
-
-  const updateUrlParams = (newKind: string, newChainSpec: string, newInput: string) => {
-    setSearchParams((current) => {
-      const params = new URLSearchParams();
-      params.set("kind", newKind);
-      params.set("flavor", newChainSpec);
-      params.set("data", newInput);
-
-      return params.toString() === current.toString() ? current : params;
-    });
-  };
-
-  const handleSetKind = (newKind: string) => {
-    setKind(newKind);
-    updateUrlParams(newKind, chainSpec, bytesInput);
-  };
-
-  const handleSetChainSpec = (newChainSpec: string) => {
-    setChainSpec(newChainSpec);
-    updateUrlParams(kind, newChainSpec, bytesInput);
-  };
 
   const handleBytesToJson = (newInput: string) => {
     if (bytesResult !== "") {
@@ -130,6 +97,41 @@ export function Codec({ isDiffEnabled = false }: CodecProps) {
     } catch (e) {
       setError(`${e}`);
     }
+  };
+
+  const handleBytesToJsonRef = useRef(handleBytesToJson);
+
+  useEffect(() => {
+    if (validSearchParams.kind !== undefined) {
+      setKind(validSearchParams.kind.name);
+    }
+    if (validSearchParams.chainSpec !== undefined) {
+      setChainSpec(validSearchParams.chainSpec.name);
+    }
+    if (validSearchParams.data !== null) {
+      handleBytesToJsonRef.current(validSearchParams.data);
+    }
+  }, [validSearchParams.kind, validSearchParams.chainSpec, validSearchParams.data]);
+
+  const updateUrlParams = (newKind: string, newChainSpec: string, newInput: string) => {
+    setSearchParams((current) => {
+      const params = new URLSearchParams();
+      params.set("kind", newKind);
+      params.set("flavor", newChainSpec);
+      params.set("data", newInput);
+
+      return params.toString() === current.toString() ? current : params;
+    });
+  };
+
+  const handleSetKind = (newKind: string) => {
+    setKind(newKind);
+    updateUrlParams(newKind, chainSpec, bytesInput);
+  };
+
+  const handleSetChainSpec = (newChainSpec: string) => {
+    setChainSpec(newChainSpec);
+    updateUrlParams(kind, newChainSpec, bytesInput);
   };
 
   const handleJsonToHex = (jsonString: string) => {

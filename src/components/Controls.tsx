@@ -3,10 +3,10 @@ import { bytes } from "@typeberry/lib";
 import { UploadIcon } from "lucide-react";
 import { useCallback } from "react";
 import { ChainSpecSelect } from "./ChainSpecSelect";
-import { JamObjectSelect } from "./JamObjectSelect";
 import { blockKind, headerKind, kinds } from "./constants";
 import { TEST_BLOCK } from "./examples/block";
 import { TEST_HEADER } from "./examples/header";
+import { JamObjectSelect } from "./JamObjectSelect";
 
 type ControlsProps = {
   onChange: (v: string) => void;

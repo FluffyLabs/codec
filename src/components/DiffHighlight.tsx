@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import { Tooltip } from "react-tooltip";
-import { type DiffResult, calculateDiff } from "../utils/diff";
+import { calculateDiff, type DiffResult } from "../utils/diff";
 
 interface DiffHighlightProps {
   component?: "div" | "pre";
