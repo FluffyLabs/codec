@@ -1,4 +1,4 @@
-import { Textarea, cn } from "@fluffylabs/shared-ui";
+import { cn, Textarea } from "@fluffylabs/shared-ui";
 import { DiffHighlight } from "./DiffHighlight";
 import { KindFinder } from "./KindFinder";
 import { Checkbox } from "./ui/Checkbox";

@@ -4,8 +4,8 @@ import {
   config,
   jam_host_calls as jam,
   state,
-  state_merkleization as stateSer,
   state_vectors,
+  state_merkleization as stateSer,
 } from "@typeberry/lib";
 
 type Clazz = {

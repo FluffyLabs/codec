@@ -8,13 +8,17 @@ export function KindFinder({
   value,
   setKind,
   chainSpec,
-}: { value: string; chainSpec: string; setKind: (name: string) => void }) {
+}: {
+  value: string;
+  chainSpec: string;
+  setKind: (name: string) => void;
+}) {
   const foundKind = useMemo(() => {
     const spec = ALL_CHAIN_SPECS.find((v) => v.name === chainSpec);
     let blob: bytes.BytesBlob;
     try {
       blob = bytes.BytesBlob.parseBlob(value);
-    } catch (e) {
+    } catch {
       return null;
     }
     for (const kind of kinds) {
