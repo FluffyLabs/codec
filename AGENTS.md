@@ -5,7 +5,7 @@ Source lives under `src/` with `main.tsx` bootstrapping the React tree and `App.
 
 ## Build, Test, and Development Commands
 - `npm ci` installs the exact dependency graph locked in `package-lock.json`.
-- `npm run dev` launches the Vite dev server with hot module reload at http://localhost:5173.
+- `npm run dev` launches the Vite dev server with hot module reload at [http://localhost:5173](http://localhost:5173).
 - `npm run build` performs a TypeScript project build (`tsc -b`) followed by `vite build` to produce `dist/` assets.
 - `npm run preview` serves the build output locally for smoke testing.
 - `npm run qa` runs Biome in CI mode; `npm run qa-fix` applies formatting/lint fixes.
