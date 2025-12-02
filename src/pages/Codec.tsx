@@ -100,6 +100,7 @@ export function Codec({ isDiffEnabled = false }: CodecProps) {
   };
 
   const handleBytesToJsonRef = useRef(handleBytesToJson);
+  handleBytesToJsonRef.current = handleBytesToJson;
 
   useEffect(() => {
     if (validSearchParams.kind !== undefined) {
