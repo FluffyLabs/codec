@@ -7,31 +7,34 @@ import {
   state_vectors,
   state_merkleization as stateSer,
 } from "@typeberry/lib";
+import { blockExample } from "./examples/objects/block";
+import { extrinsicExample } from "./examples/objects/extrinsic";
+import { headerExample } from "./examples/objects/header";
+import { numericExamples } from "./examples/primitives/numerics";
 
 type Clazz = {
   // biome-ignore lint/suspicious/noExplicitAny: we can't properly name the type here.
   Codec: codec.Codec<any>;
 };
 
-function newKind(
-  name: string,
-  clazz: Clazz,
-  fullName: string = name,
-): {
+type Kind = {
   name: string;
   fullName: string;
   clazz: Clazz;
-} {
-  return { name, fullName, clazz };
+  example: unknown;
+};
+
+function newKind(name: string, clazz: Clazz, fullName: string = name, example: Kind["example"] = null): Kind {
+  return { name, fullName, clazz, example };
 }
 
-const headerKind = newKind("Header", block.Header);
-const blockKind = newKind("Block", block.Block);
+const headerKind = newKind("Header", block.Header, undefined, headerExample);
+const blockKind = newKind("Block", block.Block, undefined, blockExample);
 
 export const kinds = [
   headerKind,
   blockKind,
-  newKind("Extrinsic", block.Extrinsic),
+  newKind("Extrinsic", block.Extrinsic, undefined, extrinsicExample),
   newKind("EpochMarker", block.EpochMarker),
   newKind("AvailabilityAssurance", block.assurances.AvailabilityAssurance),
   newKind(
@@ -77,16 +80,16 @@ export const kinds = [
   newKind("WorkReport", block.workReport.WorkReport),
   newKind("WorkExecResult", block.workResult.WorkExecResult),
   newKind("WorkResult", block.workResult.WorkResult),
-  newKind("u8", { Codec: codec.codec.u8 }),
-  newKind("u16", { Codec: codec.codec.u16 }),
-  newKind("u24", { Codec: codec.codec.u24 }),
-  newKind("u32", { Codec: codec.codec.u32 }),
-  newKind("varU32", { Codec: codec.codec.varU32 }),
-  newKind("varU64", { Codec: codec.codec.varU64 }),
-  newKind("i8", { Codec: codec.codec.i8 }),
-  newKind("i16", { Codec: codec.codec.i16 }),
-  newKind("i24", { Codec: codec.codec.i24 }),
-  newKind("i32", { Codec: codec.codec.i32 }),
+  newKind("u8", { Codec: codec.codec.u8 }, undefined, numericExamples.u8),
+  newKind("u16", { Codec: codec.codec.u16 }, undefined, numericExamples.u16),
+  newKind("u24", { Codec: codec.codec.u24 }, undefined, numericExamples.u24),
+  newKind("u32", { Codec: codec.codec.u32 }, undefined, numericExamples.u32),
+  newKind("varU32", { Codec: codec.codec.varU32 }, undefined, numericExamples.varU32),
+  newKind("varU64", { Codec: codec.codec.varU64 }, undefined, numericExamples.varU64),
+  newKind("i8", { Codec: codec.codec.i8 }, undefined, numericExamples.i8),
+  newKind("i16", { Codec: codec.codec.i16 }, undefined, numericExamples.i16),
+  newKind("i24", { Codec: codec.codec.i24 }, undefined, numericExamples.i24),
+  newKind("i32", { Codec: codec.codec.i32 }, undefined, numericExamples.i32),
   newKind("Bytes<32>", { Codec: codec.codec.bytes(32) }),
   newKind("BytesBlob", { Codec: codec.codec.blob }),
   newKind("BitVec<?>", { Codec: codec.codec.bitVecVarLen }),

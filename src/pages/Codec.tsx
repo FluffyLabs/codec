@@ -4,7 +4,7 @@ import { useSearchParams } from "react-router-dom";
 import { CodecInput } from "../components/CodecInput";
 import { Controls } from "../components/Controls";
 import { ALL_CHAIN_SPECS, headerKind, kinds, tinyChainSpec } from "../components/constants";
-import { TEST_HEADER } from "../components/examples/header";
+import { TEST_HEADER } from "../components/examples/objects/header";
 import { Json } from "../components/Json";
 import { Resizable } from "../components/Resizable/Resizable";
 
