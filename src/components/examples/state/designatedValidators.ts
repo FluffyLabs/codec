@@ -1,3 +1,6 @@
 import { createValidatorDataSet } from "./validatorSets";
 
-export const designatedValidatorsExample: object = createValidatorDataSet(1);
+import { block, state } from "@typeberry/lib";
+import { createValidatorDataSet } from "./validatorSets";
+
+export const designatedValidatorsExample: block.PerValidator<state.ValidatorData> = createValidatorDataSet(1);
