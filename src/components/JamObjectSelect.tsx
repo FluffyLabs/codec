@@ -19,6 +19,7 @@ type JamObjectSelectProps = {
 export function JamObjectSelect({ setKind, kind }: JamObjectSelectProps) {
   const [search, setSearch] = useState("");
   const [filtered, setFiltered] = useState(kinds);
+  const isKindName = useCallback((value: string) => kinds.some((k) => k.name === value), []);
 
   useEffect(() => {
     const s = search.trim().toLowerCase();
@@ -65,7 +66,14 @@ export function JamObjectSelect({ setKind, kind }: JamObjectSelectProps) {
           />
         </div>
         <DropdownMenuSeparator />
-        <DropdownMenuRadioGroup value={kind} onValueChange={setKind}>
+        <DropdownMenuRadioGroup
+          value={kind}
+          onValueChange={(value) => {
+            if (isKindName(value)) {
+              setKind(value);
+            }
+          }}
+        >
           {filtered.map((k) => (
             <DropdownMenuRadioItem key={k.name} value={k.name} tabIndex={-1}>
               {k.fullName !== k.name ? `${k.fullName} (${k.name})` : `${k.name}`}

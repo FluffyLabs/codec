@@ -1,11 +1,9 @@
-import { Button, ButtonGroup } from "@fluffylabs/shared-ui";
+import { Button } from "@fluffylabs/shared-ui";
 import { bytes } from "@typeberry/lib";
 import { UploadIcon } from "lucide-react";
 import { useCallback } from "react";
 import { ChainSpecSelect } from "./ChainSpecSelect";
-import { blockKind, headerKind, kinds } from "./constants";
-import { TEST_BLOCK } from "./examples/block";
-import { TEST_HEADER } from "./examples/header";
+import { ALL_CHAIN_SPECS, kinds, tinyChainSpec } from "./constants";
 import { JamObjectSelect } from "./JamObjectSelect";
 
 type ControlsProps = {
@@ -17,15 +15,27 @@ type ControlsProps = {
 };
 
 export function Controls({ onChange, setKind, kind, setChainSpec, chainSpec }: ControlsProps) {
-  const setBlock = useCallback(() => {
-    onChange(TEST_BLOCK);
-    setKind(kinds.find((v) => v === blockKind)?.name ?? "Block");
-  }, [onChange, setKind]);
+  const loadExample = useCallback(() => {
+    const kindDescriptor = kinds.find((v) => v.name === kind);
+    if (!kindDescriptor || kindDescriptor.example == null) {
+      return;
+    }
 
-  const setHeader = useCallback(() => {
-    onChange(TEST_HEADER);
-    setKind(kinds.find((v) => v === headerKind)?.name ?? "Header");
-  }, [onChange, setKind]);
+    try {
+      const spec = ALL_CHAIN_SPECS.find((x) => x.name === chainSpec)?.spec ?? tinyChainSpec.spec;
+      const example = kindDescriptor.example(spec);
+
+      if (typeof example === "string") {
+        onChange(example);
+        return;
+      }
+
+      const encoded = kindDescriptor.encode(example, spec);
+      onChange(encoded.toString());
+    } catch (error) {
+      console.error("Failed to encode example", error);
+    }
+  }, [chainSpec, kind, onChange]);
 
   const load = useCallback(() => {
     const $input = document.createElement("input");
@@ -60,14 +70,14 @@ export function Controls({ onChange, setKind, kind, setChainSpec, chainSpec }: C
           <UploadIcon className="mr-2" />
           From file
         </Button>
-        <ButtonGroup>
-          <Button variant="tertiary" intent="neturalSoft" onClick={setBlock}>
-            Block Example
-          </Button>
-          <Button variant="tertiary" intent="neturalSoft" onClick={setHeader}>
-            Header Example
-          </Button>
-        </ButtonGroup>
+        <Button
+          variant="tertiary"
+          intent="neturalSoft"
+          onClick={loadExample}
+          disabled={!kinds.find((v) => v.name === kind)?.example}
+        >
+          Example {kind}
+        </Button>
       </div>
     </>
   );

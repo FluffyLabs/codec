@@ -19,21 +19,27 @@ vi.mock("@fluffylabs/shared-ui", () => ({
   ),
 }));
 
-// Mock @typeberry/lib
-vi.mock("@typeberry/lib", () => ({
-  utils: {
-    GpVersion: {
-      V1: "V1",
-      V2: "V2",
+vi.mock("@typeberry/lib", async () => {
+  const actual = await vi.importActual<typeof import("@typeberry/lib")>("@typeberry/lib");
+  return {
+    ...actual,
+    utils: {
+      ...actual.utils,
+      GpVersion: {
+        ...actual.utils.GpVersion,
+        V1: "V1",
+        V2: "V2",
+      },
+      TestSuite: {
+        ...actual.utils.TestSuite,
+        Suite1: "Suite1",
+        Suite2: "Suite2",
+      },
+      CURRENT_VERSION: "V1",
+      CURRENT_SUITE: "Suite1",
     },
-    TestSuite: {
-      Suite1: "Suite1",
-      Suite2: "Suite2",
-    },
-    CURRENT_VERSION: "V1",
-    CURRENT_SUITE: "Suite1",
-  },
-}));
+  };
+});
 
 // Mock window.process.env
 Object.defineProperty(window, "process", {
