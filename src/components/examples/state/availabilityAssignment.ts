@@ -1,18 +1,24 @@
-import { state } from "@typeberry/lib";
+import { type config, state } from "@typeberry/lib";
 
 import { timeSlot } from "../objects/helpers";
 import { workReportExample } from "../objects/workReport";
-import { stateExampleSpec } from "./common";
+import { getStateDimensions, resolveStateSpec } from "./common";
 
-const workReportValue = workReportExample;
+export const availabilityAssignmentExample = (
+  spec?: config.ChainSpec,
+): state.PerCore<state.AvailabilityAssignment | null> => {
+  const resolvedSpec = resolveStateSpec(spec);
+  const { coresCount } = getStateDimensions(resolvedSpec);
+  const workReportValue = workReportExample(resolvedSpec);
 
-export const availabilityAssignmentExample: object = state.tryAsPerCore(
-  [
-    state.AvailabilityAssignment.create({
-      workReport: workReportValue,
-      timeout: timeSlot(64),
-    }),
-    null,
-  ],
-  stateExampleSpec,
-);
+  const assignments = Array.from({ length: coresCount }, (_, index) =>
+    index === 0
+      ? state.AvailabilityAssignment.create({
+          workReport: workReportValue,
+          timeout: timeSlot(64),
+        })
+      : null,
+  );
+
+  return state.tryAsPerCore(assignments, resolvedSpec);
+};

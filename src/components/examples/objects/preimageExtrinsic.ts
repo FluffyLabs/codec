@@ -1,5 +1,6 @@
-import type { block } from "@typeberry/lib";
-import type { ClassInstance } from "../types";
+import { config } from "@typeberry/lib";
 import { preimageExample } from "./preimage";
 
-export const preimageExtrinsicExample: readonly ClassInstance<typeof block.preimage.Preimage>[] = [preimageExample];
+export const preimageExtrinsicExample = (
+  spec: config.ChainSpec = config.tinyChainSpec,
+): ReturnType<typeof preimageExample>[] => [preimageExample(spec)];

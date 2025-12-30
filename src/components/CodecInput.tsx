@@ -1,5 +1,4 @@
 import { cn, Textarea } from "@fluffylabs/shared-ui";
-import type { KindName } from "./constants";
 import { DiffHighlight } from "./DiffHighlight";
 import { KindFinder } from "./KindFinder";
 import { Checkbox } from "./ui/Checkbox";
@@ -12,7 +11,7 @@ type CodecInputProps = {
   isBytesEditable: boolean;
   setIsBytesEditable: (editable: boolean) => void;
   isDiffEnabled: boolean;
-  setKind: (name: KindName) => void;
+  setKind: (name: string) => void;
   chainSpec: string;
   controls: React.ReactNode;
 };

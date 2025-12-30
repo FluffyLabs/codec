@@ -1,6 +1,6 @@
+import type { block, config, state } from "@typeberry/lib";
+
 import { createValidatorDataSet } from "./validatorSets";
 
-import { block, state } from "@typeberry/lib";
-import { createValidatorDataSet } from "./validatorSets";
-
-export const designatedValidatorsExample: block.PerValidator<state.ValidatorData> = createValidatorDataSet(1);
+export const designatedValidatorsExample = (spec?: config.ChainSpec): block.PerValidator<state.ValidatorData> =>
+  createValidatorDataSet(1, spec);

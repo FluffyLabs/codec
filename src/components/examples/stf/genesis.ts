@@ -1,4 +1,5 @@
-import { bytes, type state_vectors } from "@typeberry/lib";
+import { bytes, config, type state_vectors } from "@typeberry/lib";
+
 import { headerExample } from "../objects/header";
 import { bytesBlobFrom, filledHash } from "../objects/helpers";
 
@@ -12,7 +13,9 @@ const genesisState = {
   ],
 };
 
-export const stfGenesisExample: state_vectors.StateTransitionGenesis = {
-  header: headerExample,
+export const stfGenesisExample = (
+  spec: config.ChainSpec = config.tinyChainSpec,
+): state_vectors.StateTransitionGenesis => ({
+  header: headerExample(spec),
   state: genesisState,
-};
+});

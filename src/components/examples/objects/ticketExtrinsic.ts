@@ -1,7 +1,7 @@
-import type { block } from "@typeberry/lib";
-import type { ClassInstance } from "../types";
+import { config } from "@typeberry/lib";
+
+import { asKnownSize } from "./helpers";
 import { signedTicketExample } from "./signedTicket";
 
-export const ticketExtrinsicExample: readonly ClassInstance<typeof block.tickets.SignedTicket>[] = [
-  signedTicketExample,
-];
+export const ticketExtrinsicExample = (spec: config.ChainSpec = config.tinyChainSpec) =>
+  asKnownSize([signedTicketExample(spec)]);

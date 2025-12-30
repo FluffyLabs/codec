@@ -2,7 +2,7 @@ import { Button } from "@fluffylabs/shared-ui";
 import { bytes } from "@typeberry/lib";
 import { InfoIcon } from "lucide-react";
 import { useMemo } from "react";
-import { ALL_CHAIN_SPECS, type KindName, kinds } from "./constants";
+import { ALL_CHAIN_SPECS, kinds, tinyChainSpec } from "./constants";
 
 export function KindFinder({
   value,
@@ -11,10 +11,10 @@ export function KindFinder({
 }: {
   value: string;
   chainSpec: string;
-  setKind: (name: KindName) => void;
+  setKind: (name: string) => void;
 }) {
   const foundKind = useMemo(() => {
-    const spec = ALL_CHAIN_SPECS.find((v) => v.name === chainSpec);
+    const spec = ALL_CHAIN_SPECS.find((v) => v.name === chainSpec) ?? tinyChainSpec;
     let blob: bytes.BytesBlob;
     try {
       blob = bytes.BytesBlob.parseBlob(value);
@@ -23,7 +23,7 @@ export function KindFinder({
     }
     for (const descriptor of kinds) {
       try {
-        descriptor.decode(blob, spec?.spec);
+        descriptor.decode(blob, spec.spec);
         return descriptor;
       } catch {
         // no-op

@@ -3,14 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { CodecInput } from "../components/CodecInput";
 import { Controls } from "../components/Controls";
-import {
-  ALL_CHAIN_SPECS,
-  headerKind,
-  type KindExampleValue,
-  type KindName,
-  kinds,
-  tinyChainSpec,
-} from "../components/constants";
+import { ALL_CHAIN_SPECS, headerKind, kinds, tinyChainSpec } from "../components/constants";
 import { TEST_HEADER } from "../components/examples/objects/header";
 import { Json } from "../components/Json";
 import { Resizable } from "../components/Resizable/Resizable";
@@ -56,7 +49,7 @@ export function Codec({ isDiffEnabled = false }: CodecProps) {
   const valueJson = editMode === "bytes" ? bytesResult : jsonInput;
 
   const [error, setError] = useState<string | null>(null);
-  const [kind, setKind] = useState<KindName>(validSearchParams.kind?.name ?? headerKind.name);
+  const [kind, setKind] = useState(validSearchParams.kind?.name ?? headerKind.name);
   const [chainSpec, setChainSpec] = useState(validSearchParams.chainSpec?.name ?? tinyChainSpec.name);
 
   const handleBytesToJson = (newInput: string) => {
@@ -73,9 +66,9 @@ export function Codec({ isDiffEnabled = false }: CodecProps) {
       if (!kindDescriptor) {
         throw new Error(`Invalid codec kind: ${kind}`);
       }
-      const spec = ALL_CHAIN_SPECS.find((x) => x.name === chainSpec);
+      const spec = ALL_CHAIN_SPECS.find((x) => x.name === chainSpec) ?? tinyChainSpec;
       const blob = bytes.BytesBlob.parseBlob(newInput);
-      const decoded = kindDescriptor.decode(blob, spec?.spec);
+      const decoded = kindDescriptor.decode(blob, spec.spec);
       const json = JSON.stringify(
         decoded,
         (_key, value) => {
@@ -129,7 +122,7 @@ export function Codec({ isDiffEnabled = false }: CodecProps) {
     });
   };
 
-  const handleSetKind = (newKind: KindName) => {
+  const handleSetKind = (newKind: string) => {
     setKind(newKind);
     updateUrlParams(newKind, chainSpec, bytesInput);
   };
@@ -152,9 +145,9 @@ export function Codec({ isDiffEnabled = false }: CodecProps) {
       if (!kindDescriptor) {
         throw new Error(`Invalid codec kind: ${kind}`);
       }
-      const spec = ALL_CHAIN_SPECS.find((x) => x.name === chainSpec);
+      const spec = ALL_CHAIN_SPECS.find((x) => x.name === chainSpec) ?? tinyChainSpec;
 
-      const jsonObject: KindExampleValue = JSON.parse(jsonString, (_key, value) => {
+      const jsonObject = JSON.parse(jsonString, (_key, value) => {
         if (typeof value === "string" && value.startsWith("0x")) {
           try {
             return bytes.BytesBlob.parseBlob(value);
@@ -165,7 +158,7 @@ export function Codec({ isDiffEnabled = false }: CodecProps) {
         return value;
       });
 
-      const encoded = kindDescriptor.encode(jsonObject, spec?.spec);
+      const encoded = kindDescriptor.encode(jsonObject, spec.spec);
       // make sure we can decode it back as well
       kindDescriptor.decode(encoded, spec?.spec);
 

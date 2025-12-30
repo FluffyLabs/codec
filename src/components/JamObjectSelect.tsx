@@ -9,17 +9,17 @@ import {
 } from "@fluffylabs/shared-ui";
 import { ChevronDownIcon } from "lucide-react";
 import { type ChangeEvent, type KeyboardEvent, useCallback, useEffect, useState } from "react";
-import { type KindName, kinds } from "./constants";
+import { kinds } from "./constants";
 
 type JamObjectSelectProps = {
-  setKind: (name: KindName) => void;
-  kind: KindName;
+  setKind: (name: string) => void;
+  kind: string;
 };
 
 export function JamObjectSelect({ setKind, kind }: JamObjectSelectProps) {
   const [search, setSearch] = useState("");
   const [filtered, setFiltered] = useState(kinds);
-  const isKindName = useCallback((value: string): value is KindName => kinds.some((k) => k.name === value), []);
+  const isKindName = useCallback((value: string) => kinds.some((k) => k.name === value), []);
 
   useEffect(() => {
     const s = search.trim().toLowerCase();

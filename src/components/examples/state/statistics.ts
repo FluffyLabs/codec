@@ -1,7 +1,7 @@
-import { block, state } from "@typeberry/lib";
+import { block, type config, state } from "@typeberry/lib";
 
 import { serviceGas, serviceId, u16, u32 } from "../objects/helpers";
-import { stateExampleSpec, validatorsCount } from "./common";
+import { getStateDimensions, resolveStateSpec } from "./common";
 
 const makeValidatorStats = (seed: number) =>
   state.ValidatorStatistics.create({
@@ -41,18 +41,25 @@ const makeServiceStats = (seed: number) =>
     onTransfersGasUsed: serviceGas(BigInt(seed) * 100n),
   });
 
-const validatorStatsSet = (offset: number) =>
-  block.tryAsPerValidator(
-    Array.from({ length: validatorsCount }, (_, index) => makeValidatorStats(offset + index)),
-    stateExampleSpec,
-  );
+export const statisticsExample = (spec?: config.ChainSpec): state.StatisticsData => {
+  const resolvedSpec = resolveStateSpec(spec);
+  const { validatorsCount, coresCount } = getStateDimensions(resolvedSpec);
 
-export const statisticsExample = state.StatisticsData.create({
-  current: validatorStatsSet(1),
-  previous: validatorStatsSet(10),
-  cores: state.tryAsPerCore([makeCoreStats(1), makeCoreStats(2)], stateExampleSpec),
-  services: new Map([
-    [serviceId(80), makeServiceStats(1)],
-    [serviceId(90), makeServiceStats(2)],
-  ]),
-});
+  const validatorStatsSet = (offset: number) =>
+    block.tryAsPerValidator(
+      Array.from({ length: validatorsCount }, (_, index) => makeValidatorStats(offset + index)),
+      resolvedSpec,
+    );
+
+  const coreStats = Array.from({ length: coresCount }, (_, index) => makeCoreStats(index + 1));
+
+  return state.StatisticsData.create({
+    current: validatorStatsSet(1),
+    previous: validatorStatsSet(10),
+    cores: state.tryAsPerCore(coreStats, resolvedSpec),
+    services: new Map([
+      [serviceId(80), makeServiceStats(1)],
+      [serviceId(90), makeServiceStats(2)],
+    ]),
+  });
+};

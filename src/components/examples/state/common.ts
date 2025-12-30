@@ -1,6 +1,18 @@
 import { config } from "@typeberry/lib";
 
-export const stateExampleSpec = config.tinyChainSpec;
-export const coresCount = Number(stateExampleSpec.coresCount);
-export const epochLength = Number(stateExampleSpec.epochLength);
-export const validatorsCount = Number(stateExampleSpec.validatorsCount);
+export const resolveStateSpec = (spec?: config.ChainSpec): config.ChainSpec => spec ?? config.tinyChainSpec;
+
+export const getStateDimensions = (
+  spec?: config.ChainSpec,
+): {
+  readonly coresCount: number;
+  readonly epochLength: number;
+  readonly validatorsCount: number;
+} => {
+  const resolved = resolveStateSpec(spec);
+  return {
+    coresCount: Number(resolved.coresCount),
+    epochLength: Number(resolved.epochLength),
+    validatorsCount: Number(resolved.validatorsCount),
+  };
+};

@@ -1,8 +1,10 @@
-import { collections, state } from "@typeberry/lib";
+import { collections, type config, state } from "@typeberry/lib";
 
 import { filledHash, serviceId } from "../objects/helpers";
 
-export const accumulationOutputLogExample: collections.SortedArray<state.AccumulationOutput> =
+export const accumulationOutputLogExample = (
+  _spec?: config.ChainSpec,
+): collections.SortedArray<state.AccumulationOutput> =>
   collections.SortedArray.fromArray(state.accumulationOutputComparator, [
     state.AccumulationOutput.create({
       serviceId: serviceId(5),

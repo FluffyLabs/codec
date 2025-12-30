@@ -1,8 +1,11 @@
-import { block } from "@typeberry/lib";
+import { block, config } from "@typeberry/lib";
+
 import type { ClassInstance } from "../types";
 import { filledHash, timeSlot } from "./helpers";
 
-export const refineContextExample: ClassInstance<typeof block.refineContext.RefineContext> =
+export const refineContextExample = (
+  _spec: config.ChainSpec = config.tinyChainSpec,
+): ClassInstance<typeof block.refineContext.RefineContext> =>
   block.refineContext.RefineContext.create({
     anchor: filledHash(20),
     stateRoot: filledHash(21),

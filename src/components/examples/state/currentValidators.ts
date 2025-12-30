@@ -1,3 +1,6 @@
+import type { config } from "@typeberry/lib";
+
 import { createValidatorDataSet } from "./validatorSets";
 
-export const currentValidatorsExample: object = createValidatorDataSet(20);
+export const currentValidatorsExample = (spec?: config.ChainSpec): ReturnType<typeof createValidatorDataSet> =>
+  createValidatorDataSet(20, spec);
