@@ -9,16 +9,17 @@ import {
 } from "@fluffylabs/shared-ui";
 import { ChevronDownIcon } from "lucide-react";
 import { type ChangeEvent, type KeyboardEvent, useCallback, useEffect, useState } from "react";
-import { kinds } from "./constants";
+import { type KindName, kinds } from "./constants";
 
 type JamObjectSelectProps = {
-  setKind: (name: string) => void;
-  kind: string;
+  setKind: (name: KindName) => void;
+  kind: KindName;
 };
 
 export function JamObjectSelect({ setKind, kind }: JamObjectSelectProps) {
   const [search, setSearch] = useState("");
   const [filtered, setFiltered] = useState(kinds);
+  const isKindName = useCallback((value: string): value is KindName => kinds.some((k) => k.name === value), []);
 
   useEffect(() => {
     const s = search.trim().toLowerCase();
@@ -65,7 +66,14 @@ export function JamObjectSelect({ setKind, kind }: JamObjectSelectProps) {
           />
         </div>
         <DropdownMenuSeparator />
-        <DropdownMenuRadioGroup value={kind} onValueChange={setKind}>
+        <DropdownMenuRadioGroup
+          value={kind}
+          onValueChange={(value) => {
+            if (isKindName(value)) {
+              setKind(value);
+            }
+          }}
+        >
           {filtered.map((k) => (
             <DropdownMenuRadioItem key={k.name} value={k.name} tabIndex={-1}>
               {k.fullName !== k.name ? `${k.fullName} (${k.name})` : `${k.name}`}

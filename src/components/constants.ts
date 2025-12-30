@@ -1,5 +1,6 @@
 import {
   block,
+  type bytes,
   codec,
   config,
   jam_host_calls as jam,
@@ -7,115 +8,186 @@ import {
   state_vectors,
   state_merkleization as stateSer,
 } from "@typeberry/lib";
+import { hostCallInfoAccountExample } from "./examples/host/infoAccount";
+import { assurancesExtrinsicExample } from "./examples/objects/assurancesExtrinsic";
+import { availabilityAssuranceExample } from "./examples/objects/availabilityAssurance";
 import { blockExample } from "./examples/objects/block";
+import { credentialExample } from "./examples/objects/credential";
+import { culpritExample } from "./examples/objects/culprit";
+import { disputesExtrinsicExample } from "./examples/objects/disputesExtrinsic";
+import { epochMarkerExample } from "./examples/objects/epochMarker";
 import { extrinsicExample } from "./examples/objects/extrinsic";
+import { faultExample } from "./examples/objects/fault";
+import { guaranteesExtrinsicExample } from "./examples/objects/guaranteesExtrinsic";
 import { headerExample } from "./examples/objects/header";
+import { importSpecExample } from "./examples/objects/importSpec";
+import { judgementExample } from "./examples/objects/judgement";
+import { preimageExample } from "./examples/objects/preimage";
+import { preimageExtrinsicExample } from "./examples/objects/preimageExtrinsic";
+import { refineContextExample } from "./examples/objects/refineContext";
+import { reportGuaranteeExample } from "./examples/objects/reportGuarantee";
+import { signedTicketExample } from "./examples/objects/signedTicket";
+import { ticketExample } from "./examples/objects/ticket";
+import { ticketExtrinsicExample } from "./examples/objects/ticketExtrinsic";
+import { verdictExample } from "./examples/objects/verdict";
+import { workExecResultExample } from "./examples/objects/workExecResult";
+import { workItemExample } from "./examples/objects/workItem";
+import { workItemExtrinsicSpecExample } from "./examples/objects/workItemExtrinsicSpec";
+import { workPackageExample } from "./examples/objects/workPackage";
+import { workPackageSpecExample } from "./examples/objects/workPackageSpec";
+import { workReportExample } from "./examples/objects/workReport";
+import { workResultExample } from "./examples/objects/workResult";
+import { bitVecExample, bytes32Example, bytesBlobExample } from "./examples/primitives/data";
 import { numericExamples } from "./examples/primitives/numerics";
+import { accumulationOutputLogExample } from "./examples/state/accumulationOutputLog";
+import { accumulationQueueExample } from "./examples/state/accumulationQueue";
+import { authPoolsExample } from "./examples/state/authPools";
+import { authQueuesExample } from "./examples/state/authQueues";
+import { availabilityAssignmentExample } from "./examples/state/availabilityAssignment";
+import { currentValidatorsExample } from "./examples/state/currentValidators";
+import { designatedValidatorsExample } from "./examples/state/designatedValidators";
+import { disputesRecordsExample } from "./examples/state/disputesRecords";
+import { entropyExample } from "./examples/state/entropy";
+import { lookupHistoryItemExample } from "./examples/state/lookupHistoryItem";
+import { previousValidatorsExample } from "./examples/state/previousValidators";
+import { privilegedServicesExample } from "./examples/state/privilegedServices";
+import { recentBlocksExample } from "./examples/state/recentBlocks";
+import { recentlyAccumulatedExample } from "./examples/state/recentlyAccumulated";
+import { safroleDataExample } from "./examples/state/safroleData";
+import { serviceAccountExample } from "./examples/state/serviceAccount";
+import { statisticsExample } from "./examples/state/statistics";
+import { timeslotExample } from "./examples/state/timeslot";
+import { stfGenesisExample } from "./examples/stf/genesis";
+import { stfVectorExample } from "./examples/stf/transition";
 
-type Clazz = {
-  // biome-ignore lint/suspicious/noExplicitAny: we can't properly name the type here.
-  Codec: codec.Codec<any>;
+type ExampleValue = object | string | number | bigint | boolean | null;
+
+type KindDescriptor = {
+  readonly name: string;
+  readonly fullName: string;
+  readonly example: ExampleValue;
+  readonly encode: (value: ExampleValue, context?: config.ChainSpec) => bytes.BytesBlob;
+  readonly decode: (blob: bytes.BytesBlob, context?: config.ChainSpec) => ExampleValue;
 };
 
-type Kind = {
-  name: string;
-  fullName: string;
-  clazz: Clazz;
-  example: unknown;
-};
+const encodeWithContext = codec.Encoder.encodeObject as (
+  encode: codec.Encode<never>,
+  value: never,
+  context?: config.ChainSpec,
+) => bytes.BytesBlob;
 
-function newKind(name: string, clazz: Clazz, fullName: string = name, example: Kind["example"] = null): Kind {
-  return { name, fullName, clazz, example };
-}
+const decodeWithContext = codec.Decoder.decodeObject as (
+  decode: codec.Decode<ExampleValue>,
+  blob: bytes.BytesBlob,
+  context?: config.ChainSpec,
+) => ExampleValue;
 
-const headerKind = newKind("Header", block.Header, undefined, headerExample);
-const blockKind = newKind("Block", block.Block, undefined, blockExample);
+const newKind = <T>(
+  name: string,
+  clazz: { Codec: codec.Codec<T> },
+  example: ExampleValue,
+  fullName: string = name,
+): KindDescriptor => ({
+  name,
+  fullName,
+  example,
+  encode: (value, context) => encodeWithContext(clazz.Codec as codec.Encode<never>, value as never, context),
+  decode: (blob, context) => decodeWithContext(clazz.Codec as codec.Decode<ExampleValue>, blob, context),
+});
 
-export const kinds = [
+const headerKind = newKind("Header", block.Header, headerExample);
+const blockKind = newKind("Block", block.Block, blockExample);
+
+export const kinds: KindDescriptor[] = [
   headerKind,
   blockKind,
-  newKind("Extrinsic", block.Extrinsic, undefined, extrinsicExample),
-  newKind("EpochMarker", block.EpochMarker),
-  newKind("AvailabilityAssurance", block.assurances.AvailabilityAssurance),
+  newKind("Extrinsic", block.Extrinsic, extrinsicExample),
+  newKind("EpochMarker", block.EpochMarker, epochMarkerExample),
+  newKind("AvailabilityAssurance", block.assurances.AvailabilityAssurance, availabilityAssuranceExample),
   newKind(
     "AssurancesExtrinsic",
     class AssurancesExtrinsic extends Array {
       static Codec = block.assurances.assurancesExtrinsicCodec;
     },
+    assurancesExtrinsicExample,
   ),
-  newKind("Culprit", block.disputes.Culprit),
-  newKind("Fault", block.disputes.Fault),
-  newKind("Judgement", block.disputes.Judgement),
-  newKind("Verdict", block.disputes.Verdict),
-  newKind("DisputesExtrinsic", block.disputes.DisputesExtrinsic),
-  newKind("Credential", block.guarantees.Credential),
-  newKind("ReportGuarantee", block.guarantees.ReportGuarantee),
+  newKind("Culprit", block.disputes.Culprit, culpritExample),
+  newKind("Fault", block.disputes.Fault, faultExample),
+  newKind("Judgement", block.disputes.Judgement, judgementExample),
+  newKind("Verdict", block.disputes.Verdict, verdictExample),
+  newKind("DisputesExtrinsic", block.disputes.DisputesExtrinsic, disputesExtrinsicExample),
+  newKind("Credential", block.guarantees.Credential, credentialExample),
+  newKind("ReportGuarantee", block.guarantees.ReportGuarantee, reportGuaranteeExample),
   newKind(
     "GuaranteesExtrinsic",
     class GuaranteesExtrinsic extends Array {
       static Codec = block.guarantees.guaranteesExtrinsicCodec;
     },
+    guaranteesExtrinsicExample,
   ),
-  newKind("Preimage", block.preimage.Preimage),
+  newKind("Preimage", block.preimage.Preimage, preimageExample),
   newKind(
     "PreimageExtrinsic",
     class PreimageExtrinsic extends Array {
       static Codec = block.preimage.preimagesExtrinsicCodec;
     },
+    preimageExtrinsicExample,
   ),
-  newKind("RefineContext", block.refineContext.RefineContext),
-  newKind("SignedTicket", block.tickets.SignedTicket),
-  newKind("Ticket", block.tickets.Ticket),
+  newKind("RefineContext", block.refineContext.RefineContext, refineContextExample),
+  newKind("SignedTicket", block.tickets.SignedTicket, signedTicketExample),
+  newKind("Ticket", block.tickets.Ticket, ticketExample),
   newKind(
     "TicketExtrinsic",
     class TicketExtrinsic extends Array {
       static Codec = block.tickets.ticketsExtrinsicCodec;
     },
+    ticketExtrinsicExample,
   ),
-  newKind("ImportSpec", block.workItem.ImportSpec),
-  newKind("WorkItem", block.workItem.WorkItem),
-  newKind("WorkItemExtrinsicSpec", block.workItem.WorkItemExtrinsicSpec),
-  newKind("WorkPackage", block.workPackage.WorkPackage),
-  newKind("WorkPackageSpec", block.workReport.WorkPackageSpec),
-  newKind("WorkReport", block.workReport.WorkReport),
-  newKind("WorkExecResult", block.workResult.WorkExecResult),
-  newKind("WorkResult", block.workResult.WorkResult),
-  newKind("u8", { Codec: codec.codec.u8 }, undefined, numericExamples.u8),
-  newKind("u16", { Codec: codec.codec.u16 }, undefined, numericExamples.u16),
-  newKind("u24", { Codec: codec.codec.u24 }, undefined, numericExamples.u24),
-  newKind("u32", { Codec: codec.codec.u32 }, undefined, numericExamples.u32),
-  newKind("varU32", { Codec: codec.codec.varU32 }, undefined, numericExamples.varU32),
-  newKind("varU64", { Codec: codec.codec.varU64 }, undefined, numericExamples.varU64),
-  newKind("i8", { Codec: codec.codec.i8 }, undefined, numericExamples.i8),
-  newKind("i16", { Codec: codec.codec.i16 }, undefined, numericExamples.i16),
-  newKind("i24", { Codec: codec.codec.i24 }, undefined, numericExamples.i24),
-  newKind("i32", { Codec: codec.codec.i32 }, undefined, numericExamples.i32),
-  newKind("Bytes<32>", { Codec: codec.codec.bytes(32) }),
-  newKind("BytesBlob", { Codec: codec.codec.blob }),
-  newKind("BitVec<?>", { Codec: codec.codec.bitVecVarLen }),
+  newKind("ImportSpec", block.workItem.ImportSpec, importSpecExample),
+  newKind("WorkItem", block.workItem.WorkItem, workItemExample),
+  newKind("WorkItemExtrinsicSpec", block.workItem.WorkItemExtrinsicSpec, workItemExtrinsicSpecExample),
+  newKind("WorkPackage", block.workPackage.WorkPackage, workPackageExample),
+  newKind("WorkPackageSpec", block.workReport.WorkPackageSpec, workPackageSpecExample),
+  newKind("WorkReport", block.workReport.WorkReport, workReportExample),
+  newKind("WorkExecResult", block.workResult.WorkExecResult, workExecResultExample),
+  newKind("WorkResult", block.workResult.WorkResult, workResultExample),
+  newKind("u8", { Codec: codec.codec.u8 }, numericExamples.u8),
+  newKind("u16", { Codec: codec.codec.u16 }, numericExamples.u16),
+  newKind("u24", { Codec: codec.codec.u24 }, numericExamples.u24),
+  newKind("u32", { Codec: codec.codec.u32 }, numericExamples.u32),
+  newKind("varU32", { Codec: codec.codec.varU32 }, numericExamples.varU32),
+  newKind("varU64", { Codec: codec.codec.varU64 }, numericExamples.varU64),
+  newKind("i8", { Codec: codec.codec.i8 }, numericExamples.i8),
+  newKind("i16", { Codec: codec.codec.i16 }, numericExamples.i16),
+  newKind("i24", { Codec: codec.codec.i24 }, numericExamples.i24),
+  newKind("i32", { Codec: codec.codec.i32 }, numericExamples.i32),
+  newKind("Bytes<32>", { Codec: codec.codec.bytes(32) }, bytes32Example),
+  newKind("BytesBlob", { Codec: codec.codec.blob }, bytesBlobExample),
+  newKind("BitVec<?>", { Codec: codec.codec.bitVecVarLen }, bitVecExample),
   // state stuff
-  newKind("C1", stateSer.serialize.authPools, "Authorization Pools"),
-  newKind("C2", stateSer.serialize.authQueues, "Authorization Queues"),
-  newKind("C3", stateSer.serialize.recentBlocks, "Recent Blocks"),
-  newKind("C4", stateSer.serialize.safrole, "Safrole Data"),
-  newKind("C5", stateSer.serialize.disputesRecords, "Disputes Records"),
-  newKind("C6", stateSer.serialize.entropy, "Entropy"),
-  newKind("C7", stateSer.serialize.designatedValidators, "Designated Validators"),
-  newKind("C8", stateSer.serialize.currentValidators, "Current Validators"),
-  newKind("C9", stateSer.serialize.previousValidators, "Previous Validators"),
-  newKind("C10", stateSer.serialize.availabilityAssignment, "Availability Assignment"),
-  newKind("C11", stateSer.serialize.timeslot, "Timeslot"),
-  newKind("C12", stateSer.serialize.privilegedServices, "Privileged Services"),
-  newKind("C13", stateSer.serialize.statistics, "Statistics"),
-  newKind("C14", stateSer.serialize.accumulationQueue, "Accumulation Queue"),
-  newKind("C15", stateSer.serialize.accumulationQueue, "Recently Accumulated"),
-  newKind("C16", stateSer.serialize.accumulationQueue, "Accumulation Output Log"),
-  newKind("C255", state.ServiceAccountInfo, "Service Account"),
+  newKind("C1", stateSer.serialize.authPools, authPoolsExample, "Authorization Pools"),
+  newKind("C2", stateSer.serialize.authQueues, authQueuesExample, "Authorization Queues"),
+  newKind("C3", stateSer.serialize.recentBlocks, recentBlocksExample, "Recent Blocks"),
+  newKind("C4", stateSer.serialize.safrole, safroleDataExample, "Safrole Data"),
+  newKind("C5", stateSer.serialize.disputesRecords, disputesRecordsExample, "Disputes Records"),
+  newKind("C6", stateSer.serialize.entropy, entropyExample, "Entropy"),
+  newKind("C7", stateSer.serialize.designatedValidators, designatedValidatorsExample, "Designated Validators"),
+  newKind("C8", stateSer.serialize.currentValidators, currentValidatorsExample, "Current Validators"),
+  newKind("C9", stateSer.serialize.previousValidators, previousValidatorsExample, "Previous Validators"),
+  newKind("C10", stateSer.serialize.availabilityAssignment, availabilityAssignmentExample, "Availability Assignment"),
+  newKind("C11", stateSer.serialize.timeslot, timeslotExample, "Timeslot"),
+  newKind("C12", stateSer.serialize.privilegedServices, privilegedServicesExample, "Privileged Services"),
+  newKind("C13", stateSer.serialize.statistics, statisticsExample, "Statistics"),
+  newKind("C14", stateSer.serialize.accumulationQueue, accumulationQueueExample, "Accumulation Queue"),
+  newKind("C15", stateSer.serialize.recentlyAccumulated, recentlyAccumulatedExample, "Recently Accumulated"),
+  newKind("C16", stateSer.serialize.accumulationOutputLog, accumulationOutputLogExample, "Accumulation Output Log"),
+  newKind("C255", state.ServiceAccountInfo, serviceAccountExample, "Service Account"),
   newKind(
     "Cl",
     class LookupHistoryItem extends Array {
       static Codec = codec.codec.sequenceVarLen(codec.codec.u32);
     },
+    lookupHistoryItemExample,
     "Lookup History Item",
   ),
   // host calls stuff
@@ -124,11 +196,15 @@ export const kinds = [
     class HostCallInfoAccount extends Object {
       static Codec = jam.hostCallInfoAccount;
     },
+    hostCallInfoAccountExample,
   ),
   // test stuff
-  newKind("STF Genesis", state_vectors.StateTransitionGenesis),
-  newKind("STF Vector", state_vectors.StateTransition),
+  newKind("STF Genesis", state_vectors.StateTransitionGenesis, stfGenesisExample),
+  newKind("STF Vector", state_vectors.StateTransition, stfVectorExample),
 ];
+
+export type KindName = KindDescriptor["name"];
+export type KindExampleValue = ExampleValue;
 
 type Spec = {
   readonly name: string;

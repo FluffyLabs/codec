@@ -1,15 +1,15 @@
 import { Button } from "@fluffylabs/shared-ui";
-import { bytes, codec } from "@typeberry/lib";
+import { bytes } from "@typeberry/lib";
 import { UploadIcon } from "lucide-react";
 import { useCallback } from "react";
 import { ChainSpecSelect } from "./ChainSpecSelect";
-import { ALL_CHAIN_SPECS, kinds } from "./constants";
+import { ALL_CHAIN_SPECS, type KindName, kinds } from "./constants";
 import { JamObjectSelect } from "./JamObjectSelect";
 
 type ControlsProps = {
   onChange: (v: string) => void;
-  kind: string;
-  setKind: (name: string) => void;
+  kind: KindName;
+  setKind: (name: KindName) => void;
   chainSpec: string;
   setChainSpec: (idx: string) => void;
 };
@@ -28,7 +28,7 @@ export function Controls({ onChange, setKind, kind, setChainSpec, chainSpec }: C
 
     try {
       const spec = ALL_CHAIN_SPECS.find((x) => x.name === chainSpec)?.spec;
-      const encoded = codec.Encoder.encodeObject(kindDescriptor.clazz.Codec, kindDescriptor.example, spec);
+      const encoded = kindDescriptor.encode(kindDescriptor.example, spec);
       onChange(encoded.toString());
     } catch (error) {
       console.error("Failed to encode example", error);

@@ -70,117 +70,10 @@ vi.mock("@fluffylabs/shared-ui", () => ({
   cn: (...classes: unknown[]) => classes.filter(Boolean).join(" "),
 }));
 
-// Mock the @typeberry/lib imports with minimal functionality
-vi.mock("@typeberry/lib", () => ({
-  block: {
-    Block: { Codec: {} },
-    EpochMarker: { Codec: {} },
-    Extrinsic: { Codec: {} },
-    Header: { Codec: {} },
-    assurances: {
-      AvailabilityAssurance: { Codec: {} },
-      assurancesExtrinsicCodec: {},
-    },
-    disputes: {
-      Culprit: { Codec: {} },
-      Fault: { Codec: {} },
-      Judgement: { Codec: {} },
-      Verdict: { Codec: {} },
-      DisputesExtrinsic: { Codec: {} },
-    },
-    guarantees: {
-      Credential: { Codec: {} },
-      ReportGuarantee: { Codec: {} },
-      guaranteesExtrinsicCodec: {},
-    },
-    preimage: {
-      Preimage: { Codec: {} },
-      preimagesExtrinsicCodec: {},
-    },
-    refineContext: {
-      RefineContext: { Codec: {} },
-    },
-    tickets: {
-      SignedTicket: { Codec: {} },
-      Ticket: { Codec: {} },
-      ticketsExtrinsicCodec: {},
-    },
-    workItem: {
-      ImportSpec: { Codec: {} },
-      WorkItem: { Codec: {} },
-      WorkItemExtrinsicSpec: { Codec: {} },
-    },
-    workPackage: {
-      WorkPackage: { Codec: {} },
-    },
-    workReport: {
-      WorkPackageSpec: { Codec: {} },
-      WorkReport: { Codec: {} },
-    },
-    workResult: {
-      WorkExecResult: { Codec: {} },
-      WorkResult: { Codec: {} },
-    },
-  },
-  bytes: {
-    BytesBlob: {
-      parseBlob: vi.fn().mockReturnValue(new Uint8Array()),
-      blobFrom: vi.fn().mockReturnValue({ toString: () => "" }),
-    },
-  },
-  codec: {
-    Decoder: {
-      decodeObject: vi.fn().mockReturnValue({}),
-    },
-    codec: {
-      u8: {},
-      u16: {},
-      u24: {},
-      u32: {},
-      varU32: {},
-      varU64: {},
-      i8: {},
-      i16: {},
-      i24: {},
-      i32: {},
-      bytes: vi.fn().mockReturnValue({}),
-      blob: {},
-      bitVecVarLen: {},
-      sequenceVarLen: vi.fn().mockReturnValue({}),
-    },
-  },
-  config: {
-    tinyChainSpec: {},
-  },
-  jam_host_calls: {
-    hostCallInfoAccount: { Codec: {} },
-  },
-  state: {
-    ServiceAccountInfo: { Codec: {} },
-  },
-  state_merkleization: {
-    serialize: {
-      authPools: { Codec: {} },
-      authQueues: { Codec: {} },
-      recentBlocks: { Codec: {} },
-      safrole: { Codec: {} },
-      disputesRecords: { Codec: {} },
-      entropy: { Codec: {} },
-      designatedValidators: { Codec: {} },
-      currentValidators: { Codec: {} },
-      previousValidators: { Codec: {} },
-      availabilityAssignment: { Codec: {} },
-      timeslot: { Codec: {} },
-      privilegedServices: { Codec: {} },
-      statistics: { Codec: {} },
-      accumulationQueue: { Codec: {} },
-    },
-  },
-  state_vectors: {
-    StateTransitionGenesis: { Codec: {} },
-    StateTransition: { Codec: {} },
-  },
-}));
+vi.mock("@typeberry/lib", async () => {
+  const actual = await vi.importActual<typeof import("@typeberry/lib")>("@typeberry/lib");
+  return actual;
+});
 
 describe("Codec", () => {
   it("renders the codec interface with main content", () => {
@@ -195,9 +88,8 @@ describe("Codec", () => {
     expect(screen.getByText("Parameters: Tiny")).toBeInTheDocument();
     expect(screen.getByText("From file")).toBeInTheDocument();
 
-    // Check that the example buttons are present
-    expect(screen.getByText("Block Example")).toBeInTheDocument();
-    expect(screen.getByText("Header Example")).toBeInTheDocument();
+    // Check that the example button reflects the current kind
+    expect(screen.getByRole("button", { name: "Example Header" })).toBeInTheDocument();
   });
 
   it("displays the correct default values", () => {

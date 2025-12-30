@@ -1,8 +1,8 @@
 import { Button } from "@fluffylabs/shared-ui";
-import { bytes, codec } from "@typeberry/lib";
+import { bytes } from "@typeberry/lib";
 import { InfoIcon } from "lucide-react";
 import { useMemo } from "react";
-import { ALL_CHAIN_SPECS, kinds } from "./constants";
+import { ALL_CHAIN_SPECS, type KindName, kinds } from "./constants";
 
 export function KindFinder({
   value,
@@ -11,7 +11,7 @@ export function KindFinder({
 }: {
   value: string;
   chainSpec: string;
-  setKind: (name: string) => void;
+  setKind: (name: KindName) => void;
 }) {
   const foundKind = useMemo(() => {
     const spec = ALL_CHAIN_SPECS.find((v) => v.name === chainSpec);
@@ -21,11 +21,13 @@ export function KindFinder({
     } catch {
       return null;
     }
-    for (const kind of kinds) {
+    for (const descriptor of kinds) {
       try {
-        codec.Decoder.decodeObject<unknown>(kind.clazz.Codec, blob, spec?.spec);
-        return kind;
-      } catch {}
+        descriptor.decode(blob, spec?.spec);
+        return descriptor;
+      } catch {
+        // no-op
+      }
     }
     return null;
   }, [value, chainSpec]);

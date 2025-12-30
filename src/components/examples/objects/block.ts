@@ -1,14 +1,16 @@
-import { block, codec, config } from "@typeberry/lib";
+import { block } from "@typeberry/lib";
+import type { ClassInstance } from "../types";
 import { extrinsicExample } from "./extrinsic";
 import { headerExample } from "./header";
+import { encodeWithExampleSpec } from "./helpers";
 
-const blockExampleObject = block.Block.create({
-  header: headerExample as block.Header,
-  extrinsic: extrinsicExample as block.Extrinsic,
+const blockExampleValue = block.Block.create({
+  header: headerExample,
+  extrinsic: extrinsicExample,
 });
 
-const blockExampleEncoded = codec.Encoder.encodeObject(block.Block.Codec, blockExampleObject, config.tinyChainSpec);
+const blockExampleEncoded = encodeWithExampleSpec(block.Block.Codec, blockExampleValue);
 
-export const blockExample: unknown = blockExampleObject;
+export const blockExample: ClassInstance<typeof block.Block> = blockExampleValue;
 
 export const TEST_BLOCK = blockExampleEncoded.toString();
