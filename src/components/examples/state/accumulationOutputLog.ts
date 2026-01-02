@@ -1,4 +1,6 @@
-import { collections, type config, state } from "@typeberry/lib";
+import * as collections from "@typeberry/lib/collections";
+import type * as config from "@typeberry/lib/config";
+import * as state from "@typeberry/lib/state";
 
 import { filledHash, serviceId } from "../objects/helpers";
 

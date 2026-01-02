@@ -1,4 +1,5 @@
-import { block, config } from "@typeberry/lib";
+import * as block from "@typeberry/lib/block";
+import * as config from "@typeberry/lib/config";
 
 import { bandersnatchSignature, encodeWithExampleSpec, zeroHash } from "./helpers";
 

@@ -21,11 +21,6 @@ vi.mock("@fluffylabs/shared-ui", () => ({
   ),
 }));
 
-vi.mock("@typeberry/lib", async () => {
-  const actual = await vi.importActual<typeof import("@typeberry/lib")>("@typeberry/lib");
-  return actual;
-});
-
 describe("KindFinder", () => {
   const mockSetKind = vi.fn();
 

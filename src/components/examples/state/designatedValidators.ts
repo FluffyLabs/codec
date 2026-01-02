@@ -1,4 +1,6 @@
-import type { block, config, state } from "@typeberry/lib";
+import type * as block from "@typeberry/lib/block";
+import type * as config from "@typeberry/lib/config";
+import type * as state from "@typeberry/lib/state";
 
 import { createValidatorDataSet } from "./validatorSets";
 

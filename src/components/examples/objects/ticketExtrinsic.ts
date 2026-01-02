@@ -1,4 +1,4 @@
-import { config } from "@typeberry/lib";
+import * as config from "@typeberry/lib/config";
 
 import { asKnownSize } from "./helpers";
 import { signedTicketExample } from "./signedTicket";

@@ -1,4 +1,5 @@
-import { type config, state } from "@typeberry/lib";
+import type * as config from "@typeberry/lib/config";
+import * as state from "@typeberry/lib/state";
 
 import { ed25519Key, filledHash } from "../objects/helpers";
 

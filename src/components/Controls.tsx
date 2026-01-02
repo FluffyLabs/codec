@@ -1,5 +1,5 @@
 import { Button } from "@fluffylabs/shared-ui";
-import { bytes } from "@typeberry/lib";
+import * as bytes from "@typeberry/lib/bytes";
 import { UploadIcon } from "lucide-react";
 import { useCallback } from "react";
 import { ChainSpecSelect } from "./ChainSpecSelect";
