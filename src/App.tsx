@@ -1,5 +1,5 @@
 import { AppsSidebar, Button, Header } from "@fluffylabs/shared-ui";
-import { utils } from "@typeberry/lib";
+import * as utils from "@typeberry/lib/utils";
 import { Settings } from "lucide-react";
 import { useState } from "react";
 import logo from "./assets/logo.svg";

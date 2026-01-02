@@ -19,25 +19,22 @@ vi.mock("@fluffylabs/shared-ui", () => ({
   ),
 }));
 
-vi.mock("@typeberry/lib", async () => {
-  const actual = await vi.importActual<typeof import("@typeberry/lib")>("@typeberry/lib");
+vi.mock("@typeberry/lib/utils", async () => {
+  const actual = await vi.importActual<typeof import("@typeberry/lib/utils")>("@typeberry/lib/utils");
   return {
     ...actual,
-    utils: {
-      ...actual.utils,
-      GpVersion: {
-        ...actual.utils.GpVersion,
-        V1: "V1",
-        V2: "V2",
-      },
-      TestSuite: {
-        ...actual.utils.TestSuite,
-        Suite1: "Suite1",
-        Suite2: "Suite2",
-      },
-      CURRENT_VERSION: "V1",
-      CURRENT_SUITE: "Suite1",
+    GpVersion: {
+      ...actual.GpVersion,
+      V1: "V1",
+      V2: "V2",
     },
+    TestSuite: {
+      ...actual.TestSuite,
+      Suite1: "Suite1",
+      Suite2: "Suite2",
+    },
+    CURRENT_VERSION: "V1",
+    CURRENT_SUITE: "Suite1",
   };
 });
 

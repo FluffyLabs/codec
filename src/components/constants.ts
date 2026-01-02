@@ -1,13 +1,11 @@
-import {
-  block,
-  type bytes,
-  codec,
-  config,
-  jam_host_calls as jam,
-  state,
-  state_vectors,
-  state_merkleization as stateSer,
-} from "@typeberry/lib";
+import * as block from "@typeberry/lib/block";
+import type * as bytes from "@typeberry/lib/bytes";
+import * as codec from "@typeberry/lib/codec";
+import * as config from "@typeberry/lib/config";
+import * as jam from "@typeberry/lib/jam-host-calls";
+import * as state from "@typeberry/lib/state";
+import * as stateSer from "@typeberry/lib/state-merkleization";
+import * as stateVectors from "@typeberry/lib/state-vectors";
 import { hostCallInfoAccountExample } from "./examples/host/infoAccount";
 import { assurancesExtrinsicExample } from "./examples/objects/assurancesExtrinsic";
 import { availabilityAssuranceExample } from "./examples/objects/availabilityAssurance";
@@ -214,8 +212,8 @@ const clKind = newKind(
   "Lookup History Item",
 );
 const hostInfoAccountKind = newKind("Host Call - Info: Account", jam.hostCallInfoAccount, hostCallInfoAccountExample);
-const stfGenesisKind = newKind("STF Genesis", state_vectors.StateTransitionGenesis.Codec, stfGenesisExample);
-const stfVectorKind = newKind("STF Vector", state_vectors.StateTransition.Codec, stfVectorExample);
+const stfGenesisKind = newKind("STF Genesis", stateVectors.StateTransitionGenesis.Codec, stfGenesisExample);
+const stfVectorKind = newKind("STF Vector", stateVectors.StateTransition.Codec, stfVectorExample);
 
 export const kinds = [
   headerKind,

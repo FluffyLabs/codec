@@ -1,4 +1,6 @@
-import { bytes, config, type state_vectors } from "@typeberry/lib";
+import * as bytes from "@typeberry/lib/bytes";
+import * as config from "@typeberry/lib/config";
+import type * as state_vectors from "@typeberry/lib/state-vectors";
 
 import { headerExample } from "../objects/header";
 import { bytesBlobFrom, filledHash } from "../objects/helpers";

@@ -1,4 +1,6 @@
-import { block, type config, state } from "@typeberry/lib";
+import * as block from "@typeberry/lib/block";
+import type * as config from "@typeberry/lib/config";
+import * as state from "@typeberry/lib/state";
 
 import { serviceGas, serviceId, u16, u32 } from "../objects/helpers";
 import { getStateDimensions, resolveStateSpec } from "./common";

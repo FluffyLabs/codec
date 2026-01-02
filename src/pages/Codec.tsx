@@ -1,4 +1,4 @@
-import { bytes } from "@typeberry/lib";
+import * as bytes from "@typeberry/lib/bytes";
 import { useEffect, useRef, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { CodecInput } from "../components/CodecInput";
