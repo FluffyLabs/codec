@@ -1,5 +1,5 @@
 import { Button } from "@fluffylabs/shared-ui";
-import { bytes } from "@typeberry/lib";
+import * as bytes from "@typeberry/lib/bytes";
 import { InfoIcon } from "lucide-react";
 import { useMemo } from "react";
 import { ALL_CHAIN_SPECS, kinds, tinyChainSpec } from "./constants";

@@ -1,4 +1,6 @@
-import { block, bytes, config } from "@typeberry/lib";
+import * as block from "@typeberry/lib/block";
+import * as bytes from "@typeberry/lib/bytes";
+import * as config from "@typeberry/lib/config";
 
 import type { ClassInstance } from "../types";
 import { filledHash, serviceGas, serviceId, u32 } from "./helpers";

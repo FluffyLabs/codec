@@ -1,4 +1,7 @@
-import { type codec, type config, type jam_host_calls as jam, state } from "@typeberry/lib";
+import type * as codec from "@typeberry/lib/codec";
+import type * as config from "@typeberry/lib/config";
+import type * as jam from "@typeberry/lib/jam-host-calls";
+import * as state from "@typeberry/lib/state";
 
 import { filledHash, serviceGas, serviceId, timeSlot, u32, u64 } from "../objects/helpers";
 

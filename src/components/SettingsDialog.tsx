@@ -1,5 +1,5 @@
 import { Button } from "@fluffylabs/shared-ui";
-import { utils } from "@typeberry/lib";
+import * as utils from "@typeberry/lib/utils";
 import { X } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 

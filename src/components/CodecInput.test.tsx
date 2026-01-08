@@ -34,11 +34,6 @@ vi.mock("@fluffylabs/shared-ui", () => ({
   cn: (...classes: unknown[]) => classes.filter(Boolean).join(" "),
 }));
 
-vi.mock("@typeberry/lib", async () => {
-  const actual = await vi.importActual<typeof import("@typeberry/lib")>("@typeberry/lib");
-  return actual;
-});
-
 // Mock child components
 vi.mock("./ChainSpecSelect", () => ({
   ChainSpecSelect: ({ chainSpec }: { setChainSpec: (spec: string) => void; chainSpec: string }) => (

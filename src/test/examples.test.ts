@@ -1,4 +1,4 @@
-import { bytes } from "@typeberry/lib";
+import * as bytes from "@typeberry/lib/bytes";
 import { describe, expect, it } from "vitest";
 
 import { ALL_CHAIN_SPECS, kinds } from "../components/constants";

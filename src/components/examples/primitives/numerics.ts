@@ -1,4 +1,5 @@
-import { type config, numbers } from "@typeberry/lib";
+import type * as config from "@typeberry/lib/config";
+import * as numbers from "@typeberry/lib/numbers";
 
 const { tryAsU8, tryAsU16, tryAsU32, tryAsU64 } = numbers;
 

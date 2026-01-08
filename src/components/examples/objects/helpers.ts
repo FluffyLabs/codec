@@ -1,4 +1,10 @@
-import { block, bytes, codec, collections, config, type crypto, numbers } from "@typeberry/lib";
+import * as block from "@typeberry/lib/block";
+import * as bytes from "@typeberry/lib/bytes";
+import * as codec from "@typeberry/lib/codec";
+import * as collections from "@typeberry/lib/collections";
+import * as config from "@typeberry/lib/config";
+import type * as crypto from "@typeberry/lib/crypto";
+import * as numbers from "@typeberry/lib/numbers";
 
 export const asKnownSize = collections.asKnownSize;
 export const FixedSizeArray = collections.FixedSizeArray;

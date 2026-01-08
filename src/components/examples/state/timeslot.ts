@@ -1,4 +1,4 @@
-import type { config } from "@typeberry/lib";
+import type * as config from "@typeberry/lib/config";
 
 import { timeSlot } from "../objects/helpers";
 

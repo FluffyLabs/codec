@@ -1,4 +1,7 @@
-import { block, bytes, type config, state } from "@typeberry/lib";
+import * as block from "@typeberry/lib/block";
+import * as bytes from "@typeberry/lib/bytes";
+import type * as config from "@typeberry/lib/config";
+import * as state from "@typeberry/lib/state";
 
 import { bandersnatchKey, clampByte, ed25519Key } from "../objects/helpers";
 import { getStateDimensions, resolveStateSpec } from "./common";

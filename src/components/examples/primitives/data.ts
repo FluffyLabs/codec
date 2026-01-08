@@ -1,4 +1,5 @@
-import { bytes, type config } from "@typeberry/lib";
+import * as bytes from "@typeberry/lib/bytes";
+import type * as config from "@typeberry/lib/config";
 
 import { bitVecFrom } from "../objects/helpers";
 
