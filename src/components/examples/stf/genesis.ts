@@ -1,9 +1,8 @@
 import * as bytes from "@typeberry/lib/bytes";
 import * as config from "@typeberry/lib/config";
-
+import type { StateTransitionGenesis } from "@typeberry/lib/state-vectors";
 import { headerExample } from "../objects/header";
 import { bytesBlobFrom, filledHash } from "../objects/helpers";
-import { StateTransitionGenesis } from "@typeberry/lib/state-vectors";
 
 const genesisState = {
   state_root: filledHash(130),
