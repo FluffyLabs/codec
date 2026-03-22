@@ -14,27 +14,27 @@
     "test": "vitest"
   },
   "dependencies": {
-    "@biomejs/biome": "^2.3.11",
-    "@fluffylabs/shared-ui": "^0.4.5",
-    "@tailwindcss/vite": "^4.1.17",
-    "@typeberry/lib": "^0.5.1-1534485f",
-    "lucide-react": "^0.562.0",
-    "react": "^19.0.0",
-    "react-dom": "^19.2.3",
-    "react-router-dom": "^7.9.5",
+    "@biomejs/biome": "^2.4.8",
+    "@fluffylabs/shared-ui": "^0.6.3",
+    "@tailwindcss/vite": "^4.2.2",
+    "@typeberry/lib": "^0.5.10",
+    "lucide-react": "^0.577.0",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4",
+    "react-router-dom": "^7.13.1",
     "react-tooltip": "^5.30.0",
-    "tailwindcss": "^4.1.17"
+    "tailwindcss": "^4.2.2"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^6.9.1",
-    "@testing-library/react": "^16.3.0",
+    "@testing-library/react": "^16.3.2",
     "@testing-library/user-event": "^14.6.1",
-    "@types/react": "^19.2.7",
+    "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
-    "@vitejs/plugin-react-swc": "^4.2.2",
-    "jsdom": "^27.4.0",
-    "typescript": "^5.2.2",
-    "vite": "^7.3.0",
-    "vitest": "^4.0.16"
+    "@vitejs/plugin-react-swc": "^4.3.0",
+    "jsdom": "^29.0.1",
+    "typescript": "^5.9.3",
+    "vite": "^8.0.1",
+    "vitest": "^4.1.0"
   }
 }

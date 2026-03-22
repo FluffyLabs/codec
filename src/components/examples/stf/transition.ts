@@ -1,3 +1,4 @@
+import * as block from "@typeberry/lib/block";
 import * as bytes from "@typeberry/lib/bytes";
 import * as config from "@typeberry/lib/config";
 import type * as state_vectors from "@typeberry/lib/state-vectors";
@@ -17,6 +18,6 @@ const makeTestState = (seed: number) => ({
 
 export const stfVectorExample = (spec: config.ChainSpec = config.tinyChainSpec): state_vectors.StateTransition => ({
   pre_state: makeTestState(1),
-  block: blockExample(spec),
+  block: block.reencodeAsView(block.Block.Codec, blockExample(spec), spec),
   post_state: makeTestState(2),
 });

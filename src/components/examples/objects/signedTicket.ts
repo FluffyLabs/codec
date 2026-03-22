@@ -6,8 +6,8 @@ import { bandersnatchProof } from "./helpers";
 
 export const signedTicketExample = (
   _spec: config.ChainSpec = config.tinyChainSpec,
-): ClassInstance<typeof block.tickets.SignedTicket> =>
-  block.tickets.SignedTicket.create({
-    attempt: block.tickets.tryAsTicketAttempt(1),
+): ClassInstance<typeof block.SignedTicket> =>
+  block.SignedTicket.create({
+    attempt: block.tryAsTicketAttempt(1),
     signature: bandersnatchProof(3),
   });

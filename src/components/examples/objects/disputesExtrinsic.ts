@@ -8,8 +8,8 @@ import { verdictExample } from "./verdict";
 
 export const disputesExtrinsicExample = (
   spec: config.ChainSpec = config.tinyChainSpec,
-): ClassInstance<typeof block.disputes.DisputesExtrinsic> =>
-  block.disputes.DisputesExtrinsic.create({
+): ClassInstance<typeof block.DisputesExtrinsic> =>
+  block.DisputesExtrinsic.create({
     verdicts: [verdictExample(spec)],
     culprits: [culpritExample(spec)],
     faults: [faultExample(spec)],

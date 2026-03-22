@@ -6,8 +6,8 @@ import { ed25519Signature, validatorIndex } from "./helpers";
 
 export const judgementExample = (
   _spec: config.ChainSpec = config.tinyChainSpec,
-): ClassInstance<typeof block.disputes.Judgement> =>
-  block.disputes.Judgement.create({
+): ClassInstance<typeof block.Judgement> =>
+  block.Judgement.create({
     isWorkReportValid: true,
     index: validatorIndex(0),
     signature: ed25519Signature(50),

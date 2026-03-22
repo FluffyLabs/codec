@@ -6,8 +6,8 @@ import { ed25519Key, ed25519Signature, filledHash } from "./helpers";
 
 export const faultExample = (
   _spec: config.ChainSpec = config.tinyChainSpec,
-): ClassInstance<typeof block.disputes.Fault> =>
-  block.disputes.Fault.create({
+): ClassInstance<typeof block.Fault> =>
+  block.Fault.create({
     workReportHash: filledHash(60),
     wasConsideredValid: false,
     key: ed25519Key(13),

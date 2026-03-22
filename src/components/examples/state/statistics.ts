@@ -39,8 +39,6 @@ const makeServiceStats = (seed: number) =>
     extrinsicCount: u16(seed + 1),
     accumulateCount: u32(seed + 5),
     accumulateGasUsed: serviceGas(BigInt(seed) * 700n),
-    onTransfersCount: u32(seed),
-    onTransfersGasUsed: serviceGas(BigInt(seed) * 100n),
   });
 
 export const statisticsExample = (spec?: config.ChainSpec): state.StatisticsData => {

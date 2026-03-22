@@ -6,8 +6,8 @@ import { filledHash, timeSlot } from "./helpers";
 
 export const refineContextExample = (
   _spec: config.ChainSpec = config.tinyChainSpec,
-): ClassInstance<typeof block.refineContext.RefineContext> =>
-  block.refineContext.RefineContext.create({
+): ClassInstance<typeof block.RefineContext> =>
+  block.RefineContext.create({
     anchor: filledHash(20),
     stateRoot: filledHash(21),
     beefyRoot: filledHash(22),

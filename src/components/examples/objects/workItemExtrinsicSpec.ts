@@ -6,8 +6,8 @@ import { filledHash, u32 } from "./helpers";
 
 export const workItemExtrinsicSpecExample = (
   _spec: config.ChainSpec = config.tinyChainSpec,
-): ClassInstance<typeof block.workItem.WorkItemExtrinsicSpec> =>
-  block.workItem.WorkItemExtrinsicSpec.create({
+): ClassInstance<typeof block.WorkItemExtrinsicSpec> =>
+  block.WorkItemExtrinsicSpec.create({
     hash: filledHash(33),
     len: u32(32),
   });

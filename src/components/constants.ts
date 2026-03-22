@@ -89,52 +89,52 @@ const extrinsicKind = newKind("Extrinsic", block.Extrinsic.Codec, extrinsicExamp
 const epochMarkerKind = newKind("EpochMarker", block.EpochMarker.Codec, epochMarkerExample);
 const availabilityAssuranceKind = newKind(
   "AvailabilityAssurance",
-  block.assurances.AvailabilityAssurance.Codec,
+  block.AvailabilityAssurance.Codec,
   availabilityAssuranceExample,
 );
 const assurancesExtrinsicKind = newKind(
   "AssurancesExtrinsic",
-  block.assurances.assurancesExtrinsicCodec,
+  block.assurancesExtrinsicCodec,
   assurancesExtrinsicExample,
 );
-const culpritKind = newKind("Culprit", block.disputes.Culprit.Codec, culpritExample);
-const faultKind = newKind("Fault", block.disputes.Fault.Codec, faultExample);
-const judgementKind = newKind("Judgement", block.disputes.Judgement.Codec, judgementExample);
-const verdictKind = newKind("Verdict", block.disputes.Verdict.Codec, verdictExample);
+const culpritKind = newKind("Culprit", block.Culprit.Codec, culpritExample);
+const faultKind = newKind("Fault", block.Fault.Codec, faultExample);
+const judgementKind = newKind("Judgement", block.Judgement.Codec, judgementExample);
+const verdictKind = newKind("Verdict", block.Verdict.Codec, verdictExample);
 const disputesExtrinsicKind = newKind(
   "DisputesExtrinsic",
-  block.disputes.DisputesExtrinsic.Codec,
+  block.DisputesExtrinsic.Codec,
   disputesExtrinsicExample,
 );
-const credentialKind = newKind("Credential", block.guarantees.Credential.Codec, credentialExample);
-const reportGuaranteeKind = newKind("ReportGuarantee", block.guarantees.ReportGuarantee.Codec, reportGuaranteeExample);
+const credentialKind = newKind("Credential", block.Credential.Codec, credentialExample);
+const reportGuaranteeKind = newKind("ReportGuarantee", block.ReportGuarantee.Codec, reportGuaranteeExample);
 const guaranteesExtrinsicKind = newKind(
   "GuaranteesExtrinsic",
-  block.guarantees.guaranteesExtrinsicCodec,
+  block.guaranteesExtrinsicCodec,
   guaranteesExtrinsicExample,
 );
-const preimageKind = newKind("Preimage", block.preimage.Preimage.Codec, preimageExample);
+const preimageKind = newKind("Preimage", block.Preimage.Codec, preimageExample);
 const preimageExtrinsicKind = newKind(
   "PreimageExtrinsic",
-  block.preimage.preimagesExtrinsicCodec,
+  block.preimagesExtrinsicCodec,
   preimageExtrinsicExample,
 );
-const refineContextKind = newKind("RefineContext", block.refineContext.RefineContext.Codec, refineContextExample);
-const signedTicketKind = newKind("SignedTicket", block.tickets.SignedTicket.Codec, signedTicketExample);
-const ticketKind = newKind("Ticket", block.tickets.Ticket.Codec, ticketExample);
-const ticketExtrinsicKind = newKind("TicketExtrinsic", block.tickets.ticketsExtrinsicCodec, ticketExtrinsicExample);
-const importSpecKind = newKind("ImportSpec", block.workItem.ImportSpec.Codec, importSpecExample);
-const workItemKind = newKind("WorkItem", block.workItem.WorkItem.Codec, workItemExample);
+const refineContextKind = newKind("RefineContext", block.RefineContext.Codec, refineContextExample);
+const signedTicketKind = newKind("SignedTicket", block.SignedTicket.Codec, signedTicketExample);
+const ticketKind = newKind("Ticket", block.Ticket.Codec, ticketExample);
+const ticketExtrinsicKind = newKind("TicketExtrinsic", block.ticketsExtrinsicCodec, ticketExtrinsicExample);
+const importSpecKind = newKind("ImportSpec", block.ImportSpec.Codec, importSpecExample);
+const workItemKind = newKind("WorkItem", block.WorkItem.Codec, workItemExample);
 const workItemExtrinsicSpecKind = newKind(
   "WorkItemExtrinsicSpec",
-  block.workItem.WorkItemExtrinsicSpec.Codec,
+  block.WorkItemExtrinsicSpec.Codec,
   workItemExtrinsicSpecExample,
 );
-const workPackageKind = newKind("WorkPackage", block.workPackage.WorkPackage.Codec, workPackageExample);
-const workPackageSpecKind = newKind("WorkPackageSpec", block.workReport.WorkPackageSpec.Codec, workPackageSpecExample);
-const workReportKind = newKind("WorkReport", block.workReport.WorkReport.Codec, workReportExample);
-const workExecResultKind = newKind("WorkExecResult", block.workResult.WorkExecResult.Codec, workExecResultExample);
-const workResultKind = newKind("WorkResult", block.workResult.WorkResult.Codec, workResultExample);
+const workPackageKind = newKind("WorkPackage", block.WorkPackage.Codec, workPackageExample);
+const workPackageSpecKind = newKind("WorkPackageSpec", block.WorkPackageSpec.Codec, workPackageSpecExample);
+const workReportKind = newKind("WorkReport", block.WorkReport.Codec, workReportExample);
+const workExecResultKind = newKind("WorkExecResult", block.WorkExecResult.Codec, workExecResultExample);
+const workResultKind = newKind("WorkResult", block.WorkResult.Codec, workResultExample);
 const u8Kind = newKind("u8", codec.codec.u8, numericExamples.u8);
 const u16Kind = newKind("u16", codec.codec.u16, numericExamples.u16);
 const u24Kind = newKind("u24", codec.codec.u24, numericExamples.u24);
