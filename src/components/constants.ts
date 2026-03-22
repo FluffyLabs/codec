@@ -101,11 +101,7 @@ const culpritKind = newKind("Culprit", block.Culprit.Codec, culpritExample);
 const faultKind = newKind("Fault", block.Fault.Codec, faultExample);
 const judgementKind = newKind("Judgement", block.Judgement.Codec, judgementExample);
 const verdictKind = newKind("Verdict", block.Verdict.Codec, verdictExample);
-const disputesExtrinsicKind = newKind(
-  "DisputesExtrinsic",
-  block.DisputesExtrinsic.Codec,
-  disputesExtrinsicExample,
-);
+const disputesExtrinsicKind = newKind("DisputesExtrinsic", block.DisputesExtrinsic.Codec, disputesExtrinsicExample);
 const credentialKind = newKind("Credential", block.Credential.Codec, credentialExample);
 const reportGuaranteeKind = newKind("ReportGuarantee", block.ReportGuarantee.Codec, reportGuaranteeExample);
 const guaranteesExtrinsicKind = newKind(
@@ -114,11 +110,7 @@ const guaranteesExtrinsicKind = newKind(
   guaranteesExtrinsicExample,
 );
 const preimageKind = newKind("Preimage", block.Preimage.Codec, preimageExample);
-const preimageExtrinsicKind = newKind(
-  "PreimageExtrinsic",
-  block.preimagesExtrinsicCodec,
-  preimageExtrinsicExample,
-);
+const preimageExtrinsicKind = newKind("PreimageExtrinsic", block.preimagesExtrinsicCodec, preimageExtrinsicExample);
 const refineContextKind = newKind("RefineContext", block.RefineContext.Codec, refineContextExample);
 const signedTicketKind = newKind("SignedTicket", block.SignedTicket.Codec, signedTicketExample);
 const ticketKind = newKind("Ticket", block.Ticket.Codec, ticketExample);

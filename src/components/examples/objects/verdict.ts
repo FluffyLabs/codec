@@ -4,9 +4,7 @@ import * as config from "@typeberry/lib/config";
 import type { ClassInstance } from "../types";
 import { asKnownSize, ed25519Signature, filledHash, resolveExampleSpec, validatorIndex } from "./helpers";
 
-export const verdictExample = (
-  spec: config.ChainSpec = config.tinyChainSpec,
-): ClassInstance<typeof block.Verdict> => {
+export const verdictExample = (spec: config.ChainSpec = config.tinyChainSpec): ClassInstance<typeof block.Verdict> => {
   const resolvedSpec = resolveExampleSpec(spec);
   const votesCount = Number(resolvedSpec.validatorsSuperMajority);
 
