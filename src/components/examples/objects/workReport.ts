@@ -9,21 +9,21 @@ import { workResultExample } from "./workResult";
 
 export const workReportExample = (
   spec: config.ChainSpec = config.tinyChainSpec,
-): ClassInstance<typeof block.workReport.WorkReport> => {
+): ClassInstance<typeof block.WorkReport> => {
   const workPackageSpec = workPackageSpecExample(spec);
-  const segmentInfo = block.refineContext.WorkPackageInfo.create({
+  const segmentInfo = block.WorkPackageInfo.create({
     workPackageHash: workPackageSpec.hash,
     segmentTreeRoot: workPackageSpec.exportsRoot,
   });
 
-  return block.workReport.WorkReport.create({
+  return block.WorkReport.create({
     workPackageSpec,
     context: refineContextExample(spec),
     coreIndex: coreIndex(3),
     authorizerHash: filledHash(42),
     authorizationOutput: bytesBlobFrom("auth output"),
     segmentRootLookup: [segmentInfo],
-    results: FixedSizeArray.new([workResultExample(spec)], block.workPackage.tryAsWorkItemsCount(1)),
+    results: FixedSizeArray.new([workResultExample(spec)], block.tryAsWorkItemsCount(1)),
     authorizationGasUsed: serviceGas(7_500n),
   });
 };

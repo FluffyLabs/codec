@@ -6,8 +6,8 @@ import { bitVecFrom, ed25519Signature, resolveExampleSpec, validatorIndex, zeroH
 
 export const availabilityAssuranceExample = (
   spec: config.ChainSpec = config.tinyChainSpec,
-): ClassInstance<typeof block.assurances.AvailabilityAssurance> =>
-  block.assurances.AvailabilityAssurance.create({
+): ClassInstance<typeof block.AvailabilityAssurance> =>
+  block.AvailabilityAssurance.create({
     anchor: zeroHash(),
     bitfield: bitVecFrom(Number(resolveExampleSpec(spec).coresCount), [0]),
     validatorIndex: validatorIndex(2),

@@ -35,13 +35,13 @@ export const safroleDataExample = (spec?: config.ChainSpec): ClassInstance<typeo
   );
 
   const ticketsAccumulator = collections.asKnownSize([
-    block.tickets.Ticket.create({
+    block.Ticket.create({
       id: bytes.Bytes.fill(32, 80),
-      attempt: block.tickets.tryAsTicketAttempt(0),
+      attempt: block.tryAsTicketAttempt(0),
     }),
-    block.tickets.Ticket.create({
+    block.Ticket.create({
       id: bytes.Bytes.fill(32, 81),
-      attempt: block.tickets.tryAsTicketAttempt(1),
+      attempt: block.tryAsTicketAttempt(1),
     }),
   ]);
 

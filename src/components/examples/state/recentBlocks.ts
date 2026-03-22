@@ -9,7 +9,7 @@ import type { ClassInstance } from "../types";
 const makeReported = (seeds: number[]) =>
   collections.HashDictionary.fromEntries(
     seeds.map((seed) => {
-      const info = block.refineContext.WorkPackageInfo.create({
+      const info = block.WorkPackageInfo.create({
         workPackageHash: filledHash(seed),
         segmentTreeRoot: filledHash(seed + 40),
       });

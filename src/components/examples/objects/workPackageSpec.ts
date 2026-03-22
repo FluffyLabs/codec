@@ -7,8 +7,8 @@ import { filledHash, u16, u32 } from "./helpers";
 
 export const workPackageSpecExample = (
   _spec: config.ChainSpec = config.tinyChainSpec,
-): ClassInstance<typeof block.workReport.WorkPackageSpec> =>
-  block.workReport.WorkPackageSpec.create({
+): ClassInstance<typeof block.WorkPackageSpec> =>
+  block.WorkPackageSpec.create({
     hash: filledHash(30),
     length: u32(4),
     erasureRoot: bytes.Bytes.fill(32, 9),

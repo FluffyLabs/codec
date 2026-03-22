@@ -6,8 +6,8 @@ import { filledHash } from "./helpers";
 
 export const importSpecExample = (
   _spec: config.ChainSpec = config.tinyChainSpec,
-): ClassInstance<typeof block.workItem.ImportSpec> =>
-  block.workItem.ImportSpec.create({
+): ClassInstance<typeof block.ImportSpec> =>
+  block.ImportSpec.create({
     treeRoot: filledHash(32),
     index: block.tryAsSegmentIndex(1),
   });

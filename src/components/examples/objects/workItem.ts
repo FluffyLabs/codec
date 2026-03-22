@@ -6,10 +6,8 @@ import { asKnownSize, bytesBlobFrom, filledHash, serviceGas, serviceId, u16 } fr
 import { importSpecExample } from "./importSpec";
 import { workItemExtrinsicSpecExample } from "./workItemExtrinsicSpec";
 
-export const workItemExample = (
-  spec: config.ChainSpec = config.tinyChainSpec,
-): ClassInstance<typeof block.workItem.WorkItem> =>
-  block.workItem.WorkItem.create({
+export const workItemExample = (spec: config.ChainSpec = config.tinyChainSpec): ClassInstance<typeof block.WorkItem> =>
+  block.WorkItem.create({
     service: serviceId(10),
     codeHash: filledHash(34),
     payload: bytesBlobFrom("work item payload"),

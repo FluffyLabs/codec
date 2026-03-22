@@ -8,8 +8,8 @@ import { workExecResultExample } from "./workExecResult";
 
 export const workResultExample = (
   spec: config.ChainSpec = config.tinyChainSpec,
-): ClassInstance<typeof block.workResult.WorkResult> => {
-  const loadExample = block.workResult.WorkRefineLoad.create({
+): ClassInstance<typeof block.WorkResult> => {
+  const loadExample = block.WorkRefineLoad.create({
     gasUsed: serviceGas(5_000n),
     importedSegments: u32(1),
     extrinsicCount: u32(1),
@@ -17,7 +17,7 @@ export const workResultExample = (
     exportedSegments: u32(0),
   });
 
-  return block.workResult.WorkResult.create({
+  return block.WorkResult.create({
     serviceId: serviceId(10),
     codeHash: filledHash(41),
     payloadHash: bytes.Bytes.fill(32, 3),

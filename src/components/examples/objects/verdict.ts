@@ -4,15 +4,13 @@ import * as config from "@typeberry/lib/config";
 import type { ClassInstance } from "../types";
 import { asKnownSize, ed25519Signature, filledHash, resolveExampleSpec, validatorIndex } from "./helpers";
 
-export const verdictExample = (
-  spec: config.ChainSpec = config.tinyChainSpec,
-): ClassInstance<typeof block.disputes.Verdict> => {
+export const verdictExample = (spec: config.ChainSpec = config.tinyChainSpec): ClassInstance<typeof block.Verdict> => {
   const resolvedSpec = resolveExampleSpec(spec);
   const votesCount = Number(resolvedSpec.validatorsSuperMajority);
 
   const votes = asKnownSize(
     Array.from({ length: votesCount }, (_, idx) =>
-      block.disputes.Judgement.create({
+      block.Judgement.create({
         isWorkReportValid: idx % 2 === 0,
         index: validatorIndex(idx),
         signature: ed25519Signature(60 + idx),
@@ -20,7 +18,7 @@ export const verdictExample = (
     ),
   );
 
-  return block.disputes.Verdict.create({
+  return block.Verdict.create({
     workReportHash: filledHash(62),
     votesEpoch: block.tryAsEpoch(1),
     votes,

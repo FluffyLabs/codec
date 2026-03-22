@@ -6,8 +6,8 @@ import { ed25519Signature, validatorIndex } from "./helpers";
 
 export const credentialExample = (
   _spec: config.ChainSpec = config.tinyChainSpec,
-): ClassInstance<typeof block.guarantees.Credential> =>
-  block.guarantees.Credential.create({
+): ClassInstance<typeof block.Credential> =>
+  block.Credential.create({
     validatorIndex: validatorIndex(0),
     signature: ed25519Signature(12),
   });
