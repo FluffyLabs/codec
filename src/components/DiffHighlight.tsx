@@ -1,5 +1,5 @@
+import { WithTooltip } from "@fluffylabs/shared-ui";
 import { useMemo } from "react";
-import { Tooltip } from "react-tooltip";
 import { calculateDiff, type DiffResult } from "../utils/diff";
 
 interface DiffHighlightProps {
@@ -49,74 +49,25 @@ export function DiffHighlight({
 
           if (segment.type === "changed") {
             return (
-              <span key={key}>
-                <span
-                  className="bg-yellow-200 dark:bg-yellow-800"
-                  data-tooltip-id={`diff-tooltip-${key}`}
-                  data-tooltip-content={`Before: ${segment.oldContent}\nAfter: ${segment.content}`}
-                >
-                  {segment.content}
-                </span>
-                <Tooltip
-                  id={`diff-tooltip-${key}`}
-                  place="top"
-                  style={{
-                    backgroundColor: "#2563eb",
-                    color: "white",
-                    fontSize: "12px",
-                    wordBreak: "break-all",
-                    whiteSpace: "pre",
-                  }}
-                />
-              </span>
+              <WithTooltip key={key} help={`Before: ${segment.oldContent}\nAfter: ${segment.content}`}>
+                <span className="bg-yellow-200 dark:bg-yellow-800">{segment.content}</span>
+              </WithTooltip>
             );
           }
 
           if (segment.type === "removed") {
             return (
-              <span key={key}>
-                <span
-                  className="bg-red-200 dark:bg-red-800"
-                  data-tooltip-id={`diff-tooltip-${key}`}
-                  data-tooltip-content={`Removed: ${segment.content}`}
-                >
-                  •
-                </span>
-                <Tooltip
-                  id={`diff-tooltip-${key}`}
-                  place="top"
-                  style={{
-                    backgroundColor: "#dc2626",
-                    color: "white",
-                    fontSize: "12px",
-                    wordBreak: "break-all",
-                  }}
-                />
-              </span>
+              <WithTooltip key={key} help={`Removed: ${segment.content}`}>
+                <span className="bg-red-200 dark:bg-red-800">•</span>
+              </WithTooltip>
             );
           }
 
           if (segment.type === "added") {
             return (
-              <span key={key}>
-                <span
-                  className="bg-green-200 dark:bg-green-800"
-                  data-tooltip-id={`diff-tooltip-${key}`}
-                  data-tooltip-content={`Added: ${segment.content}`}
-                >
-                  {segment.content}
-                </span>
-                <Tooltip
-                  id={`diff-tooltip-${key}`}
-                  place="top"
-                  style={{
-                    backgroundColor: "#16a34a",
-                    color: "white",
-                    fontSize: "12px",
-                    wordBreak: "break-all",
-                  }}
-                />
-              </span>
+              <WithTooltip key={key} help={`Added: ${segment.content}`}>
+                <span className="bg-green-200 dark:bg-green-800">{segment.content}</span>
+              </WithTooltip>
             );
           }
 
