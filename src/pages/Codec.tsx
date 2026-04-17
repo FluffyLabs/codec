@@ -1,4 +1,5 @@
 import * as bytes from "@typeberry/lib/bytes";
+import * as codec from "@typeberry/lib/codec";
 import { useEffect, useRef, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { CodecInput } from "../components/CodecInput";
@@ -72,6 +73,12 @@ export function Codec({ isDiffEnabled = false }: CodecProps) {
       const json = JSON.stringify(
         decoded,
         (_key, value) => {
+          if (value instanceof codec.ObjectView) {
+            return value.materialize();
+          }
+          if (value instanceof codec.SequenceView) {
+            return value.map((v) => v.materialize());
+          }
           if (value instanceof bytes.BytesBlob) {
             return value.toString();
           }
