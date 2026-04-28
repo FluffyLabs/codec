@@ -10,10 +10,10 @@ export const workPackageExample = (
   spec: config.ChainSpec = config.tinyChainSpec,
 ): ClassInstance<typeof block.WorkPackage> =>
   block.WorkPackage.create({
-    authorization: bytesBlobFrom("authorization"),
+    authToken: bytesBlobFrom("authorization"),
     authCodeHost: block.tryAsServiceId(99),
     authCodeHash: filledHash(40),
-    parametrization: bytesBlobFrom("params"),
+    authConfiguration: bytesBlobFrom("params"),
     context: refineContextExample(spec),
     items: FixedSizeArray.new([workItemExample(spec)], block.tryAsWorkItemsCount(1)),
   });
