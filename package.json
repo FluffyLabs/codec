@@ -16,14 +16,14 @@
   "dependencies": {
     "@fluffylabs/shared-ui": "^0.8.2",
     "@typeberry/lib": "^0.5.11",
-    "lucide-react": "^1.8.0",
+    "lucide-react": "^1.14.0",
     "react": "^19.2.5",
     "react-dom": "^19.2.5",
     "react-router-dom": "^7.14.2"
   },
   "devDependencies": {
-    "@biomejs/biome": "^2.4.12",
-    "@tailwindcss/vite": "^4.2.2",
+    "@biomejs/biome": "^2.4.14",
+    "@tailwindcss/vite": "^4.2.4",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.2",
     "@testing-library/user-event": "^14.6.1",
@@ -31,8 +31,8 @@
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react-swc": "^4.3.0",
     "jsdom": "^29.1.0",
-    "tailwindcss": "^4.2.3",
-    "typescript": "^5.9.3",
+    "tailwindcss": "^4.2.4",
+    "typescript": "^6.0.3",
     "vite": "^8.0.9",
     "vitest": "^4.1.0"
   }
