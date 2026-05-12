@@ -15,7 +15,7 @@
   },
   "dependencies": {
     "@fluffylabs/shared-ui": "^0.8.2",
-    "@typeberry/lib": "^0.5.11",
+    "@typeberry/lib": "^0.6.0",
     "lucide-react": "^1.14.0",
     "react": "^19.2.5",
     "react-dom": "^19.2.5",
