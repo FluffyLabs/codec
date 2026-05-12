@@ -18,7 +18,7 @@
     "@typeberry/lib": "^0.5.11",
     "lucide-react": "^1.14.0",
     "react": "^19.2.5",
-    "react-dom": "^19.2.5",
+    "react-dom": "^19.2.6",
     "react-router-dom": "^7.14.2"
   },
   "devDependencies": {
